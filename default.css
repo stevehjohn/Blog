@@ -12,7 +12,7 @@ body {
 .header {
     background-color: #1e1e1e;
     font-size: 8vh;
-    text-align: center;
+    padding-left: 12vw;
     text-transform: lowercase;
     padding-bottom: 1vh;
     color: #60bbff;
@@ -48,7 +48,6 @@ body {
 
 .fox {
     height: 5vh;
-    right: 0;
     margin-left: 50%;
 }
 

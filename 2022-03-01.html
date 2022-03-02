@@ -13,7 +13,7 @@
 </div>
 <div class="post">
     <div class="title">
-        <a id="the-beginning">The Beginning...</a>
+        <a id="the-beginning" href="#the-beginning">The Beginning...</a>
     </div>
     <hr/>
     <div class="content">
@@ -71,7 +71,7 @@
 </div>
 <div class="post">
     <div class="title">
-        <a id="tis-the-season">'Tis the Season</a>
+        <a id="tis-the-season" href="#tis-the-season">'Tis the Season</a>
     </div>
     <hr/>
     <div class="content">
@@ -91,7 +91,7 @@
 </div>
 <div class="post">
     <div class="title">
-        <a id="engaged">Links or, TL;DR</a>
+        <a id="links-or-tldr" href="#links-or-tldr">Links or, TL;DR</a>
     </div>
     <hr/>
     <div class="content">
@@ -99,10 +99,13 @@
             If you don't want to wade through all my ramblings in this series of posts, the meat is here:
             <ul>
                 <li>
+                    <a href="https://adventofcode.com/2021/events">Puzzles</a>.
+                </li>
+                <li>
                     <a href="https://github.com/stevehjohn/AoC">Source code</a>.
                 </li>
                 <li>
-                    <a href="https://www.youtube.com/playlist?list=PLBtwzTaAY-IWq6Mi1nvwsphMTw-HU13eM">All visualisations</a>.
+                    <a href="https://www.youtube.com/playlist?list=PLBtwzTaAY-IWq6Mi1nvwsphMTw-HU13eM">Visualisations</a>.
                 </li>
             </ul>
         </p>
@@ -110,7 +113,7 @@
 </div>
 <div class="post">
     <div class="title">
-        <a id="engaged">Engaged</a>
+        <a id="engaged" href="#engaged">Engaged</a>
     </div>
     <hr/>
     <div class="content">
@@ -136,7 +139,7 @@
 </div>
 <div class="post">
     <div class="title">
-        <a id="reflection">Reflection</a>
+        <a id="reflection" href="#reflection">Reflection</a>
     </div>
     <hr/>
     <div class="content">
@@ -205,7 +208,7 @@ foreach (var solution in solutions)
 </div>
 <div class="post">
     <div class="title">
-        <a id="plain-sailing">Plain Sailing</a>
+        <a id="plain-sailing" href="#plain-sailing">Plain Sailing</a>
     </div>
     <hr/>
     <div class="content">
@@ -250,7 +253,7 @@ foreach (var solution in solutions)
 </div>
 <div class="post">
     <div class="title">
-        <a id="multithreading">Multithreading</a>
+        <a id="multithreading" href="#multithreading">Multithreading</a>
     </div>
     <hr/>
     <div class="content">
@@ -270,7 +273,7 @@ foreach (var solution in solutions)
 </div>
 <div class="post">
     <div class="title">
-        <a id="of-thats-why">Oh, That's Why...</a>
+        <a id="oh-thats-why" href="#oh-thats-why">Oh, That's Why...</a>
     </div>
     <hr/>
     <div class="content">
@@ -288,7 +291,7 @@ foreach (var solution in solutions)
 </div>
 <div class="post">
     <div class="title">
-        <a id="blue-skies">Blue Skies</a>
+        <a id="blue-skies" href="#blue-skies">Blue Skies</a>
     </div>
     <hr/>
     <div class="content">
@@ -396,7 +399,7 @@ protected int Solve()
 </div>
 <div class="post">
     <div class="title">
-        <a id="a-side-note-on-hardware">A Side Note on Hardware</a>
+        <a id="a-side-note-on-hardware" href="#a-side-note-on-hardware">A Side Note on Hardware</a>
     </div>
     <hr/>
     <div class="content">
@@ -448,7 +451,7 @@ Intel MacBook Pro: 131,634ms
 </div>
 <div class="post">
     <div class="title">
-        <a id="multithreading-continued">Multithreading Continued...</a>
+        <a id="multithreading-continued" href="#multithreading-continued">Multithreading Continued...</a>
     </div>
     <hr/>
     <div class="content">
@@ -479,8 +482,16 @@ Intel MacBook Pro: 131,634ms
         <p>
             I approached the problem in two phases essentially.
             <ul>
-                <li>Find the distances between all the doors, keys and the start point (0:00 - 2:23).</li>
+                <li>Find the distances between all the doors, keys and the start point (start - 2:23).</li>
+                <li>Find the shortest path that opens every door given what was discovered in phase one.</li>
             </ul>
+        </p>
+        <p>
+            Phase 2 is not really engaging to visualise, so the remainder of the video (2:23 - end) is just the execution of the path that the code found.
+        </p>
+        <p>
+            While visualising using the console as in this video was a useful aid, I wish I'd switched to using <a href="https://www.monogame.net/">MonoGame</a> earlier for more performant and visually interesting illustrations.
+            More on that in a later post I expect.
         </p>
         <img src="logo.png" class="fox"/>
     </div>

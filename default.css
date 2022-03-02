@@ -78,3 +78,8 @@ pre {
 .fade { 
     color: #a0a0a0;
 }
+
+h2 {
+    font-size: 3vh;
+    color: #aaaadd;
+}

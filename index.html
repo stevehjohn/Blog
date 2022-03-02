@@ -493,6 +493,19 @@ Intel MacBook Pro: 131,634ms
             While visualising using the console as in this video was a useful aid, I wish I'd switched to using <a href="https://www.monogame.net/">MonoGame</a> earlier for more performant and visually interesting illustrations.
             More on that in a later post I expect.
         </p>
+        <h2>Phase 1</h2>
+        <p>
+            As you may be able to discern in the video, I start a "bot" at each significant point on the map (keys, doors and start point.)
+        </p>
+        <p>
+            Each of these bots will then try and explore the entire map. They do this by splitting into copies of themselves whenever there is a choice of more than one way to go. Each copy retains the history of the bot that spawned them.
+            While in the visualisation this may not look too efficient, it actually completes in ~200ms.
+        </p>
+        <p>
+            The hardest problem I faced in this exploration phase was the centre of the map. The maze exploring bots were designed to split at junctions, which is fine. However, the center of the map was an open 3&#215;3 square.
+            This caused a massive problem with any bots entering that area just splitting infinitely. I eventually solved this by ensuring each bot not only stores the important cells they had encountered, but their entire history of travel.
+            This way, I could prevent a bot from spawning a copy to visit a cell that it had already been to.
+        </p>
         <img src="logo.png" class="fox"/>
     </div>
 </div>

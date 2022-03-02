@@ -411,7 +411,7 @@ protected int Solve()
             Now that dotnet is cross platform friendly, I could run the AoC project in <a href="https://visualstudio.microsoft.com/vs/community/">Visual Studio</a> in Windows, or <a href="https://www.jetbrains.com/rider/">Rider</a> on macOS.
         </p>
         <p>
-            Running the project in either environment produced not discernible difference in performance, so it seems the choice of OS doesn't make much difference to dotnet's use of the bare metal.
+            Running the project in either environment produced no discernible difference in performance, so it seems the choice of OS doesn't make much difference to dotnet's use of the bare metal.
         </p>
         <p>
             So, the Intel MacBook specs that matter are:
@@ -505,6 +505,16 @@ Intel MacBook Pro: 131,634ms
             The hardest problem I faced in this exploration phase was the centre of the map. The maze exploring bots were designed to split at junctions, which is fine. However, the center of the map was an open 3&#215;3 square.
             This caused a massive problem with any bots entering that area just splitting infinitely. I eventually solved this by ensuring each bot not only stores the important cells they had encountered, but their entire history of travel.
             This way, I could prevent a bot from spawning a copy to visit a cell that it had already been to.
+        </p>
+        <p>
+            At the end of this phase, I now have a list of the routes between all significant points on the map.
+        </p>
+        <h2>Phase 2</h2>
+        <p>
+            To be continued... (mainly because it's late and there was actually <a href="https://github.com/stevehjohn/AoC/tree/master/AoC.Solutions/Solutions/2019/18">quite a lot of code</a> in my solution for this one which I need remind myself of how it works.)
+        </p>
+        <p>
+            I kind of have a policy that code should mostly not need comments if it is well thought out, well structured, good variable names etc... but sometimes, I wish I'd left myself some comments.
         </p>
         <img src="logo.png" class="fox"/>
     </div>

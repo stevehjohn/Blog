@@ -56,6 +56,12 @@ a {
     text-shadow: 0 0 1vw #ffffff;
 }
 
+.post .title a {
+    font-size: 4vh;
+    color: #aaaadd;
+    text-shadow: none;
+}
+
 pre {
     font-size: 1.5vh;
     font-family: monospace;
@@ -67,4 +73,8 @@ pre {
 .inline {
     font-family: monospace;
     color: #d7ba7d;
+}
+
+.fade { 
+    color: #a0a0a0;
 }

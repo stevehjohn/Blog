@@ -21,7 +21,7 @@ body {
 .post {
     margin-left: 10vw;
     margin-right: 10vw;
-    margin-top: 8vh;
+    margin-top: 5vh;
     background-color: #1e1e1e;
     padding: 2vw;
     /* ReSharper disable once CssBrowserCompatibility */
@@ -48,11 +48,23 @@ body {
 
 .fox {
     height: 5vh;
-    margin-left: 50%;
 }
 
 a {
     color: #ffffff;
     text-decoration: none;
     text-shadow: 0 0 1vw #ffffff;
+}
+
+pre {
+    font-size: 1.5vh;
+    font-family: monospace;
+    color: #60bbff;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.inline {
+    font-family: monospace;
+    color: #d7ba7d;
 }

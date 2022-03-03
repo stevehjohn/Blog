@@ -1,16 +1,24 @@
 ﻿<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta propery="og:url" content="https://outsidecontextproblem.com"/>
-    <meta propery="og:type" content="website"/>
-    <meta propery="og:title" content="outside context problem"/>
-    <meta propery="og:description" content="Stevo's rambings"/>
-    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png"/>
+    <meta propery="og:url" content="https://outsidecontextproblem.com" />
+    <meta propery="og:type" content="website" />
+    <meta propery="og:title" content="outside context problem" />
+    <meta propery="og:description" content="Stevo's rambings" />
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
     <title>Stevo's Blog</title>
-    <link rel="stylesheet" type="text/css" href="default.css"/>
+    <link rel="stylesheet" type="text/css" href="default.css" />
     <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
 </head>
 <body>
 <div class="header">
@@ -553,6 +561,23 @@ JK: 16
             of combinations of 2 of 53 (<span class="inline">a-z</span>, <span class="inline">A-Z</span>, <span class="inline">@</span>) characters.
             The number is simply the number of steps between the items in any orthogonal direction (up, down, left, right). So, in the above example, there are <span class="inline">5</span> steps between
             the door <span class="inline">W</span> and the key <span class="inline">z</span>.
+        </p>
+        <p>
+            I also have a dictionary of doors between points:
+        </p>
+        <pre>
+Bz: W
+iu: N
+Zm: K, J
+Hr: P, V, I
+...
+</pre>
+        <p>
+            So, in the above example, to get to door <span class="inline">H</span> from key <span class="inline">r</span> (or vice-versa), you need to pass through doors <span class="inline">P</span>, <span class="inline">V</span> and <span class="inline">I</span>.
+        </p>
+        <p>
+            I pass both of these into a <span class="inline">Graph</span> class which, unsurprisingly, constructs a graph of connected nodes from the first dictionary. At this point it just stores a reference to the doors dictionary, it is not
+            included in the node graph.
         </p>
         <img src="logo.png" class="fox"/>
     </div>

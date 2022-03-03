@@ -7,6 +7,7 @@ body {
     padding: 0;
     font-family: 'Montserrat', sans-serif;
     margin-bottom: 4vh;
+    padding-top: 10vh;
 }
 
 .header {
@@ -15,6 +16,17 @@ body {
     padding-left: 12vw;
     text-transform: lowercase;
     padding-bottom: 1vh;
+    color: #60bbff;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.header a {
+    text-shadow: none;
+    font-size: 7vh;
+    position: absolute;
+    right: 24vw;
     color: #60bbff;
 }
 
@@ -46,9 +58,7 @@ body {
     font-size: 2.5vh;
 }
 
-.fox {
-    height: 5vh;
-}
+.fox { height: 5vh; }
 
 a {
     color: #ffffff;
@@ -75,11 +85,29 @@ pre {
     color: #d7ba7d;
 }
 
-.fade { 
-    color: #a0a0a0;
-}
+.fade { color: #a0a0a0; }
 
 h2 {
     font-size: 3vh;
     color: #aaaadd;
+}
+
+@media only screen and (hover: none) and (pointer: coarse) {
+    .header { font-size: 3vh; }
+
+    .header span:after {
+        content: "\a";
+        white-space: pre;
+    }
+
+    .header a {
+        font-size: 2vh;
+        top: 4vh;
+    }
+
+    body { padding-top: 10vh; }
+
+    .post .title a {
+        font-size: 3vh;
+    }
 }

@@ -648,7 +648,137 @@ Hr: P, V, I
             I may have to revisit some of these posts as while my enthusiasm level is high, my energy levels are sometimes low (this is a side hobby to my full-time job). I feel I could explain some of my reasoning
             more clearly. Any <a href="contents.html#contact-details">feedback</a> on this would be appreciated.
         </p>
-        <img src="logo.png" class="fox" />
+        <img src="logo.png" class="fox"/>
+    </div>
+</div>
+<div class="post">
+    <div class="title">
+        <a id="drunken-rallying" href="#drunken-rallying">Drunken Rallying</a>
+    </div>
+    <hr/>
+    <div class="content">
+        <p>
+            Context switch in our multithreaded process, back to 2021 from 2019.
+        </p>
+        <p>
+            So, it's Saturday, December 18th. Can't really remember what I was up to, but an old friend phoned and he was up for a catch-up and some beer. This was around 8pm.
+            I was dubious as from where he lives, he wouldn't get here until 10pm, but my arm was twisted.
+        </p>
+        <p>
+            He turned up around 9:30pm which was a surprise because he's never early, and not a surprise because he, err, doesn't exactly hang around when driving.
+        </p>
+        <p>
+            We started on the beers and indulged in some <a href="https://www.gtomega.co.uk/products/art-racing-cockpit">drunken rallying</a>.
+        </p>
+        <p>
+            I think around 5am while it was his turn to race around the <a href="https://dirtgame.com/dirt5/news/blaze-a-trail">Norwegian countryside</a>, I remembered AoC would have unlocked for that day. Perfect opportunity to get in quick and
+            score a higher position on the leaderboard.
+        </p>
+        <p>
+            No chance, this one was a humdinger. Welcome to <a href="https://adventofcode.com/2021/day/19">2021.19</a>.
+        </p>
+        <p>
+            Reading through the puzzle (even with my beer and rally addled brain), I thought how interesting this one was. Between turns on the driving rig I found myself pondering the possible solutions.
+        </p>
+        <p>
+            The AoC description covers the puzzle in detail obviously, but the short version is:
+            <ul>
+                <li>
+                    You have a bunch of scanners in the ocean.
+                </li>
+                <li>
+                    These scanners report back to you a list of beacons they can detect within their sensor range.
+                </li>
+                <li>
+                    The scanners report back the beacon locations relative to the scanner's own position.
+                </li>
+            </ul>
+            And crucially...
+            <ul>
+                <li>
+                    The scanner doesn't know which way it is facing (a bit like me that evening to be honest.)
+                </li>
+            </ul>
+        </p>
+        <p>
+            That last point means you could have two scanners, in the exact same location, detecting exactly the same beacons, but reporting back two entirely different sets of coordinates.
+        </p>
+        <p>
+            What followed was a mixture of drinking, rallying and me and my mate using the <a href="https://en.wikipedia.org/wiki/Right-hand_rule">right hand rule</a> a lot.
+        </p>
+        <p>
+            Then we passed out.
+        </p>
+        <img src="logo.png" class="fox"/>
+    </div>
+</div>
+<div class="post">
+    <div class="title">
+        <a id="the-morning-afternoon-after" href="#the-morning-afternoon-after">The <span class="strikethrough">Morning</span> Afternoon After</a>
+    </div>
+    <hr/>
+    <div class="content">
+        <p>
+            Given a pretty much 12-hour beer and rally session, neither of us rose early the next day.
+        </p>
+        <p>
+            Cue coffee, fry-up and hair of the dog (for me anyway, as I was already home and didn't have to drive anywhere.)
+        </p>
+        <p>
+            Didn't progress much as I was just enjoying catching up with my old friend, but all good things come to an end (like weekends) and he had to go.
+        </p>
+        <p>
+            So, on with the puzzle...
+        </p>
+        <p>
+            This is one that I think would have really benefited from a visualisation to help me reason about it, but I hadn't yet progressed to using <a href="https://www.monogame.net/">MonoGame</a> yet, so there was no chance realistically of doing this in the console.
+        </p>
+        <p>
+            There was a well <a href="https://en.wikipedia.org/wiki/Telegraphing_(sports)">telegraphed</a> clue in the puzzle though:
+            <div class="quote">... such that there are at least 12 beacons that both scanners detect ...</div>
+        </p>
+        <p>
+            I don't know whether there is a mathematical reason that 12 is the magic number, or whether that is just the way the puzzle was designed, and frankly I can't be arsed to find out, but it was a clue.
+        </p>
+        <p>
+            After a while it dawned on me that I could use the distances of the beacons from the scanner to detect overlaps.
+            It didn't need to be <a href="https://en.wikipedia.org/wiki/Euclidean_distance">Euclidian</a>, <a href="https://en.wikipedia.org/wiki/Taxicab_geometry">Manhattan</a> would work just fine.
+        </p>
+        <p>
+            If two scanners had 12 or more beacons the same distance from itself, it's likely (turns out, definitely) they overlap.
+        </p>
+        <p>
+            Simple enough. Go through each scanner's data, and calculate each beacon's distance from the scanner:
+        </p>
+        <p>
+            <span class="inline">Math.Abs(scanner.X - beacon.X) + Math.Abs(scanner.Y - beacon.Y) + Math.Abs(scanner.Z - beacon.Z)</span>.
+        </p>
+        <p>
+            Then find which scanners have 12 or more common distances, and voilà, you know which scanners' ranges intersect each other.
+        </p>
+        <p>
+            Okay, so what next?
+        </p>
+        <p>
+            Part 1 expects the total number of beacons as the answer.
+        </p>
+        <p>
+            Looking at my GitHub history, it took me a couple of days to realise this, but once you have the overlapping beacons it's quite simple. It is basically a <a href="https://en.wikipedia.org/wiki/Union_(set_theory)">union</a>
+            of the distances.
+        </p>
+        <p>
+            If scanner A sees 20 beacons and scanner B sees 18 beacons and 12 of them overlap, then there must be 26 unique beacons.
+        </p>
+        <p>
+            Phew, part 1 done.
+        </p>
+        <p>
+            What's part 2 asking? Let's see. Okay, seems reasonable...
+        </p>
+        <p>
+            This turned out to be a descent into madness of sorts. I didn't end up solving it until January. And, it turns out, I was pretty close most of the time but for a one line bug. Fudge.
+        </p>
+        <img src="logo.png" class="fox"/>
     </div>
 </div>
 <!--<div class="post">

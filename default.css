@@ -92,6 +92,17 @@ h2 {
     color: #aaaadd;
 }
 
+.strikethrough {
+    text-decoration: line-through;
+}
+
+.quote {
+    border-left: 0.3vw solid #aaaadd;
+    border-radius: 0.15vw;
+    padding-left: 1vw;
+    color: #aaaadd;
+}
+
 @media only screen and (hover: none) and (pointer: coarse) {
     .header { font-size: 3vh; }
 

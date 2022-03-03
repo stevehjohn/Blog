@@ -1,20 +1,22 @@
 ﻿<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta propery="og:url" content="https://outsidecontextproblem.com" />
-    <meta propery="og:type" content="website" />
-    <meta propery="og:title" content="outside context problem" />
-    <meta propery="og:description" content="Stevo's rambings" />
-    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
+    <meta propery="og:url" content="https://outsidecontextproblem.com"/>
+    <meta propery="og:type" content="website"/>
+    <meta propery="og:title" content="outside context problem"/>
+    <meta propery="og:description" content="Stevo's rambings"/>
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png"/>
     <title>Stevo's Blog</title>
-    <link rel="stylesheet" type="text/css" href="default.css" />
+    <link rel="stylesheet" type="text/css" href="default.css"/>
     <link rel="icon" type="image/x-icon" href="logo.png">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+
+        function gtag() { dataLayer.push(arguments); }
+
         gtag('js', new Date());
 
         gtag('config', 'G-H7QJF2MQ5R');
@@ -578,6 +580,26 @@ Hr: P, V, I
         <p>
             I pass both of these into a <span class="inline">Graph</span> class which, unsurprisingly, constructs a graph of connected nodes from the first dictionary. At this point it just stores a reference to the doors dictionary, it is not
             included in the node graph.
+        </p>
+        <p>
+            This <span class="inline">Graph</span> class is passed into a <span class="inline">GraphSolver</span> class. This class maintains a queue of <span class="inline">INodeWalkers</span> which, like the bots in the discovery phase,
+            start at a point and split when reaching a junction. In this case though, we start with one at the maze start point. The queue is a <span class="inline">PriorityQueue</span> so nodes can be added with their distance as the priority,
+            and shorter ones will be evaluated first.
+        </p>
+        <p>
+            You may have noticed, this is essentially <a href="#blue-skies">Dijkstra's Algorithm</a> again to some extent. The reason for the extra layers of abstraction will become apparent when I cover part 2 of this puzzle.
+        </p>
+        <p>
+            Given that the priority queue evaluates shortest distances first, as soon as an <span class="inline">INodeWalker</span> has visited every key, we can return the number of steps required and answer the puzzle.
+            My implementation also returns the path taken, to make the visualisation possible.
+        </p>
+        <p>
+            For part 1 of this puzzle, the <span class="inline">INodeWalker</span> implementation is (drum-roll) <span class="inline">NodeWalker</span>. As mentioned, this is essentially like the discovery bots from phase 1,
+            but walks the graph constructed by the <span class="inline">Graph</span> class. It contains some additional logic to check whether a door that hasn't been unlocked exists between two nodes, but that's pretty much it.
+        </p>
+        <p>
+            I hope I've explained my approach in an understandable manner. I think the <a href="https://github.com/stevehjohn/AoC/tree/master/AoC.Solutions/Solutions/2019/18">code</a> is quite clean and 
+            class responsibilities are well delineated. Feel free to provide any constructive <a href="contents.html#contact-details">feedback</a>.
         </p>
         <img src="logo.png" class="fox"/>
     </div>

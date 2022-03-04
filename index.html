@@ -29,84 +29,6 @@
 </div>
 <div class="post">
     <div class="title">
-        <a id="the-beginning" href="#the-beginning">The Beginning...</a>
-    </div>
-    <hr/>
-    <div class="content">
-        <p>
-            Hi, my name is Steve and I'm a recovering <a href="https://adventofcode.com/">Advent-of-Code-aholic</a>.
-        </p>
-        <p>
-            I am a software engineer of 25+ years professionally and approximately 35 years as a hobby. My parents bought a <a href="https://en.wikipedia.org/wiki/Commodore_VIC-20">Commodore VIC-20</a> when I was about 8, and frankly I was hooked.
-        </p>
-        <p>
-            In those pre-internet days, things came with manuals. As an eager reader, this seemed like heaven to me. I could read a book which would teach me how to make the computer perform my bidding.
-            I quite enjoyed writing programs to generate and solve mazes which, it turns out, would come in handy nearly 40 years later.
-        </p>
-        <p>
-            At the time, I was devouring the <a href="https://usborne.com/gb/books/computer-and-coding-books">Usborne</a> coding books, and the magazine <a href="https://en.wikipedia.org/wiki/Input_(magazine)">Input</a>.
-        </p>
-        <p>
-            The VIC-20 was a gateway drug and I progressed to a <a href="https://en.wikipedia.org/wiki/ZX_Spectrum#ZX_Spectrum_+2A">ZX-Spectrum +2A</a> and then to a <a href="https://en.wikipedia.org/wiki/I386">386</a> PC.
-        </p>
-        <p>
-            I spent a lot of time writing clones or interpretations of other games that I couldn't afford to buy and enjoyed the writing as much as the playing the results with my friends.
-        </p>
-        <p>
-            Language-wise, I progressed from <a href="https://en.wikipedia.org/wiki/BASIC">BASIC</a> (on the VIC and Speccy) to <a href="https://en.wikipedia.org/wiki/Turbo_Pascal">Turbo Pascal</a> on the PC
-            (a revelation... breakpoints, variable watches, much wow.)
-        </p>
-        <p>
-            I also dabbled with <a href="https://en.wikipedia.org/wiki/Zilog_Z80">Z80</a> and 386 assembly language to extract more performance from those low megahertz computers, but man, that stuff is not easy without proper reference
-            material (remember, this was pre-internet.)
-        </p>
-        <p>
-            After the halcyon years, I went into programming professionally. Starting with a regression to <a href="https://en.wikipedia.org/wiki/Visual_Basic_(classic)">Visual BASIC</a>.
-            Some dalliances with <a href="https://en.wikipedia.org/wiki/C_(programming_language)">C</a>, <a href="https://en.wikipedia.org/wiki/C%2B%2B">C++</a>,
-            <a href="https://en.wikipedia.org/wiki/Java_(programming_language)">Java</a>, most modern (and <a href="https://en.wikipedia.org/wiki/IBM_i">not-so-modern</a>) operating systems and also taking in <a href="https://www.w3schools.com/">web technologies</a> along the way.
-            I've also been fortunate enough to come across some interesting <a href="https://en.wikipedia.org/wiki/Optical_jukebox">hardware</a> during my travels.
-        </p>
-        <p>
-            Nowadays, my weapon of choice is <a href="https://en.wikipedia.org/wiki/C_Sharp_(programming_language)">C#/dotnet</a>. I also am happy with most <a href="https://aws.amazon.com/">cloud technologies</a>
-            and database paradigms that are thrown in my general direction.
-        </p>
-        <p>
-            I've worked for small start-ups, multinational corporations and also done some consultancy work and contracting over the years.
-        </p>
-        <p>
-            Aside from coding, my other passions are <a href="https://en.wikipedia.org/wiki/BMW_M3">cars</a> and <a href="https://en.wikipedia.org/wiki/PRS_Guitars">guitars</a>.
-        </p>
-        <p>
-            I guess this unintentionally reads a bit like a CV or résumé, but I wanted to give some background as to how I managed to fall down this particular rabbit hole.
-        </p>
-        <p>
-            I am now a senior software engineer at <a href="https://www.justeattakeaway.com/">Just Eat Takeaway</a>, and this is where the addiction story begins...
-        </p>
-        <img src="logo.png" class="fox"/>
-    </div>
-</div>
-<div class="post">
-    <div class="title">
-        <a id="tis-the-season" href="#tis-the-season">'Tis the Season</a>
-    </div>
-    <hr/>
-    <div class="content">
-        <p>
-            One of the things I appreciate about <a href="https://www.justeattakeaway.com/">JET</a> is their support of self development, be that through hackathons, training budgets or other initiatives.
-            So, I'm not sure how (but probably through a <a href="https://slack.com/">Slack</a> channel), I got wind of <a href="https://adventofcode.com/">Advent of Code</a> in early December <a href="https://en.wikipedia.org/wiki/2021">last year</a>.
-        </p>
-        <p>
-            A colleague had set up a private JET leaderboard and started to publicise it within the company.
-            It seemed like a very fun thing to get involved with while also maybe learning something along the way.
-        </p>
-        <p>
-            Little was I to know how deep this rabbit hole would go...
-        </p>
-        <img src="logo.png" class="fox"/>
-    </div>
-</div>
-<div class="post">
-    <div class="title">
         <a id="links-or-tldr" href="#links-or-tldr">Links or, TL;DR</a>
     </div>
     <hr/>
@@ -751,7 +673,7 @@ Hr: P, V, I
             Simple enough. Go through each scanner's data, and calculate each beacon's distance from the scanner:
         </p>
         <p>
-            <span class="inline">Math.Abs(scanner.X - beacon.X) + Math.Abs(scanner.Y - beacon.Y) + Math.Abs(scanner.Z - beacon.Z)</span>.
+            <span class="inline">Math.Abs(scanner.X - beacon.X) + Math.Abs(scanner.Y - beacon.Y) + Math.Abs(scanner.Z - beacon.Z)</span>
         </p>
         <p>
             Then find which scanners have 12 or more common distances, and voilà, you know which scanners' ranges intersect each other.

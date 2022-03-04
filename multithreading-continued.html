@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com" />
+    <meta propery="og:type" content="website" />
+    <meta propery="og:title" content="outside context problem" />
+    <meta propery="og:description" content="Stevo's rambings" />
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
+    <title>Stevo's Blog - Multithreading Continued...</title>
+    <link rel="stylesheet" type="text/css" href="default.css" />
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        <a id="multithreading-continued" href="#multithreading-continued">Multithreading Continued...</a>
+    </div>
+    <hr />
+    <div class="content">
+        <p>
+            As I mentioned, a colleague recommended the 2019 series of puzzles because of the CPU emulation aspect. I'll go into that in a later entry.
+        </p>
+        <p>
+            A puzzle from 2019 that I particularly enjoyed was <a href="https://adventofcode.com/2019/day/18">2019.18</a>. A very interesting challenge.
+        </p>
+        <p>
+            Essentially, you are given a maze as input. The interesting aspect of this puzzle though is that there are <a href="https://www.youtube.com/watch?v=9-clrKOp5Co">upper- and lower-case</a> characters strewn throughout the maze.
+            The uppercase characters represent doors, while lowercase ones represent keys that will open the corresponding door.
+        </p>
+        <p>
+            Your job is to find the shortest path through the maze that unlocks all the doors. I was very intrigued with this one.
+        </p>
+        <p>
+            Here is a visualisation of how I solved the problem, and I'll explain my approach below.
+        </p>
+        <p>
+            <ul>
+                <li><a href="https://www.youtube.com/watch?v=pHIyrLsMJns">Advent of Code 2019 Day 18 Part 1</a>.</li>
+            </ul>
+        </p>
+        <p>
+            So, this is not necessarily a textbook CS approach to it, but it is how I decided to solve it (no doubt biased by my <a href="#the-beginning">maze solving</a> adventures as a child.)
+        </p>
+        <p>
+            I approached the problem in two phases essentially.
+            <ul>
+                <li>Find the distances between all the doors, keys and the start point (start - 2:23).</li>
+                <li>Find the shortest path that opens every door given what was discovered in phase one.</li>
+            </ul>
+        </p>
+        <p>
+            Phase 2 is not really engaging to visualise, so the remainder of the video (2:23 - end) is just the execution of the path that the code found.
+        </p>
+        <p>
+            While visualising using the console as in this video was a useful aid, I wish I'd switched to using <a href="https://www.monogame.net/">MonoGame</a> earlier for more performant and visually interesting illustrations.
+            More on that in a later post I expect.
+        </p>
+        <h2>Phase 1</h2>
+        <p>
+            As you may be able to discern in the video, I start a "bot" at each significant point on the map (keys, doors and start point.)
+        </p>
+        <p>
+            Each of these bots will then try and explore the entire map. They do this by splitting into copies of themselves whenever there is a choice of more than one way to go. Each copy retains the history of the bot that spawned them.
+            While in the visualisation this may not look too efficient, it actually completes in ~200ms.
+        </p>
+        <p>
+            The hardest problem I faced in this exploration phase was the centre of the map. The maze exploring bots were designed to split at junctions, which is fine. However, the center of the map was an open 3&#215;3 square.
+            This caused a massive problem with any bots entering that area just splitting infinitely. I eventually solved this by ensuring each bot not only stores the important cells they had encountered, but their entire history of travel.
+            This way, I could prevent a bot from spawning a copy to visit a cell that it had already been to.
+        </p>
+        <p>
+            At the end of this phase, I now have a list of the routes between all significant points on the map.
+        </p>
+        <h2>Phase 2</h2>
+        <p>
+            To be continued... (mainly because it's late and there was actually <a href="https://github.com/stevehjohn/AoC/tree/master/AoC.Solutions/Solutions/2019/18">quite a lot of code</a> in my solution for this one which I need remind myself of how it works.)
+        </p>
+        <p>
+            I kind of have a policy that code should mostly not need comments if it is well thought out, well structured, good variable names etc... but sometimes, I wish I'd left myself some comments.
+        </p>
+        <img src="logo.png" class="fox" />
+    </div>
+</div>
+</body>
+</html>

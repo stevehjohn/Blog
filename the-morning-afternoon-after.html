@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com" />
+    <meta propery="og:type" content="website" />
+    <meta propery="og:title" content="outside context problem" />
+    <meta propery="og:description" content="Stevo's rambings" />
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
+    <title>Stevo's Blog - The Morning Afternoon After</title>
+    <link rel="stylesheet" type="text/css" href="default.css" />
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        <a id="the-morning-afternoon-after" href="#the-morning-afternoon-after">The <span class="strikethrough">Morning</span> Afternoon After</a>
+    </div>
+    <hr />
+    <div class="content">
+        <p>
+            Given a pretty much 12-hour beer and rally session, neither of us rose early the next day.
+        </p>
+        <p>
+            Cue coffee, fry-up and hair of the dog (for me anyway, as I was already home and didn't have to drive anywhere.)
+        </p>
+        <p>
+            Didn't progress much as I was just enjoying catching up with my old friend, but all good things come to an end (like weekends) and he had to go.
+        </p>
+        <p>
+            So, on with the puzzle...
+        </p>
+        <p>
+            This is one that I think would have really benefited from a visualisation to help me reason about it, but I hadn't yet progressed to using <a href="https://www.monogame.net/">MonoGame</a> yet, and there was no chance realistically of doing this in the console.
+        </p>
+        <p>
+            There was a well <a href="https://en.wikipedia.org/wiki/Telegraphing_(sports)">telegraphed</a> clue in the puzzle though:
+            <div class="quote">... such that there are at least 12 beacons that both scanners detect ...</div>
+        </p>
+        <p>
+            I don't know whether there is a mathematical reason that 12 is the magic number, or whether that is just the way the puzzle was designed, and frankly I can't be arsed to find out, but it was a clue.
+        </p>
+        <p>
+            After a while it dawned on me that I could use the distances of the beacons from the scanner to detect overlaps.
+            It didn't need to be <a href="https://en.wikipedia.org/wiki/Euclidean_distance">Euclidian</a>, <a href="https://en.wikipedia.org/wiki/Taxicab_geometry">Manhattan</a> would work just fine.
+        </p>
+        <p>
+            If two scanners had 12 or more beacons the same distance from itself, it's likely (turns out, definitely) they overlap.
+        </p>
+        <p>
+            Simple enough. Go through each scanner's data, and calculate each beacon's distance from the scanner:
+        </p>
+        <p>
+            <span class="inline">Math.Abs(scanner.X - beacon.X) + Math.Abs(scanner.Y - beacon.Y) + Math.Abs(scanner.Z - beacon.Z)</span>
+        </p>
+        <p>
+            Then find which scanners have 12 or more common distances, and voilà, you know which scanners' ranges intersect each other.
+        </p>
+        <p>
+            Okay, so what next?
+        </p>
+        <p>
+            Part 1 expects the total number of beacons as the answer.
+        </p>
+        <p>
+            Looking at my GitHub history, it took me a couple of days to realise this, but once you have the overlapping beacons it's quite simple. It is basically a <a href="https://en.wikipedia.org/wiki/Union_(set_theory)">union</a>
+            of the distances.
+        </p>
+        <p>
+            If scanner A sees 20 beacons and scanner B sees 18 beacons and 12 of them overlap, then there must be 26 unique beacons.
+        </p>
+        <p>
+            Phew, part 1 done.
+        </p>
+        <p>
+            What's part 2 asking? Let's see. Okay, seems reasonable...
+        </p>
+        <p>
+            This turned out to be a descent into madness of sorts. I didn't end up solving it until January. And, it turns out, I was pretty close most of the time but for a one line bug. Fudge.
+        </p>
+        <img src="logo.png" class="fox" />
+    </div>
+</div>
+</body>
+</html>

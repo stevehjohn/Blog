@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com" />
+    <meta propery="og:type" content="website" />
+    <meta propery="og:title" content="outside context problem" />
+    <meta propery="og:description" content="Stevo's rambings" />
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
+    <title>Stevo's Blog - Blue Skies</title>
+    <link rel="stylesheet" type="text/css" href="default.css" />
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        <a id="blue-skies" href="#blue-skies">Blue Skies</a>
+    </div>
+    <hr />
+    <div class="content">
+        <p>
+            Anyway, this is going well, I'm having fun with the puzzles and chatting with colleagues in the AoC Slack channel.
+        </p>
+        <p>
+            Plain sailing, <a href="https://www.youtube.com/watch?v=DBT7nUxJpC4">blue skies</a>... wasn't struggling with any of the puzzles. May have been neglecting some downtime from the computer though, but hey, if it's fun, it's fun right?
+        </p>
+        <p>
+            Really enjoying the puzzles from both years (but still itching to finish them, so I could fill in the missing 2020 gap.)
+        </p>
+        <p>
+            Then <a href="https://adventofcode.com/2021/day/15">2021.15</a> dropped.
+        </p>
+        <p>
+            I am writing this a couple of months after the fact, so my memory isn't razor sharp, but I really struggled with this one even though I thought I knew what I needed to do.
+        </p>
+        <p>
+            This is where I had to start using <a href="https://www.youtube.com/playlist?list=PLBtwzTaAY-IWq6Mi1nvwsphMTw-HU13eM">visualisations</a> that would become more sophisticated as I progressed through the puzzles.
+        </p>
+        <p>
+            I started with these visualisations to help me reason about the problem:
+            <ul>
+                <li>
+                    <a href="https://www.youtube.com/watch?v=ezjp8jL6hSI">Small data set.</a>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <a href="https://www.youtube.com/watch?v=EcPOB13PyMM">Large data set.</a>
+                </li>
+            </ul>
+            But as you can see, especially from the second one, my approach was not going to finish any time soon.
+        </p>
+        <p>
+            Also, as I had set myself a performance target, I really didn't want the visualisations to impact the puzzle when not required. This ended up with a lot of conditional compilation, which I wasn't over the moon about.
+        </p>
+        <pre>
+protected int Solve()
+{
+    var queue = new PriorityQueue&lt;Node, int&gt;();
+
+    queue.Enqueue(_rootNode, int.MaxValue);
+
+    var costs = new Dictionary&lt;int, int&gt;
+                {
+                    { 0, 0 }
+                };
+<span class="fade">
+#if DUMP && DEBUG
+    Console.Clear();
+
+    Console.CursorVisible = false;
+
+    Console.ForegroundColor = ConsoleColor.DarkGray;
+#endif
+</span>
+    while (queue.Count > 0)
+    {
+        var node = queue.Dequeue();
+<span class="fade">
+#if DUMP && DEBUG
+        Console.CursorLeft = node.Position.X;
+
+        Console.CursorTop = node.Position.Y;
+
+        Console.Write('█');
+#endif
+</span>
+        if (node.Position.X == _width - 1 && node.Position.Y == _height - 1)
+        {
+            break;
+        }
+
+        foreach (var neighbor in node.Neighbors)
+        {
+            var cost = costs[node.Position.X + node.Position.Y * _width] + neighbor.Value;
+
+            if (! costs.TryGetValue(neighbor.Position.X + neighbor.Position.Y * _width, out var nextCost) || cost < nextCost)
+            {
+                costs[neighbor.Position.X + neighbor.Position.Y * _width] = cost;
+
+                queue.Enqueue(neighbor, cost);
+            }
+        }
+<span class="fade">
+#if DUMP && DEBUG
+        DrawPath(costs);
+#endif</span>
+    }
+}
+</pre>
+        <p>
+            I would solve the conditional compilation issue later on. For now I was focused on getting the puzzles completed.
+        </p>
+        <p>
+            After a lot of wrong turns, a geeky friend of mine told me to look up <a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">Dijkstra's Algorithm</a> which I duly implemented (code above.)
+        </p>
+        <p>
+            This was a bit of a revelation and worked a treat as you can see from <a href="https://www.youtube.com/watch?v=BVissVcc_EY">this visualisation</a>. Without outputting to the console, the puzzle executes in about 4ms.
+        </p>
+        <img src="logo.png" class="fox" />
+    </div>
+</div>
+</body>
+</html>

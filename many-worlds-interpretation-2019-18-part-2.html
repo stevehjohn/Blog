@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com" />
+    <meta propery="og:type" content="website" />
+    <meta propery="og:title" content="outside context problem" />
+    <meta propery="og:description" content="Stevo's rambings" />
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
+    <title>Stevo's Blog - Many-Worlds Interpretation (2019.18) Part 2</title>
+    <link rel="stylesheet" type="text/css" href="default.css" />
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        <a id="many-worlds-interpretation-2019-18-part-2" href="#many-worlds-interpretation-2019-18-part-2">Many-Worlds Interpretation (2019.18) Part 2</a>
+    </div>
+    <hr />
+    <div class="content">
+        <p>
+            Part 2 of this puzzle ups the ante on the interest level...
+        </p>
+        <p>
+            The map is to be modified so the centre 3&#215;3 square that gave me a headache in part one is to be closed off, dividing the maze into 4 separate parts with no path between them.
+        </p>
+        <p>
+            You now have an actor in each quadrant and have to coordinate them to collect all the keys since a key for a door in one quadrant might be in a different quadrant. Interesting!
+        </p>
+        <p>
+            Here is the visualisation for the solution to this problem.
+        </p>
+        <p>
+            <ul>
+                <li><a href="https://www.youtube.com/watch?v=tLmdPu_1zgY">Advent of Code 2019 Day 18 Part 2</a>.</li>
+            </ul>
+        </p>
+        <p>
+            Now, I think you'll see why the levels of abstraction over a simpler pathfinding algorithm were required.
+        </p>
+        <p>
+            As in <a href="#multithreading-continued">part 1</a>, there is a discovery phase and then the solving phase. The discovery phase is pretty much the same, but there are four origins instead of one.
+        </p>
+        <p>
+            We now create 4 instances of the <span class="inline">Graph</span> class (one for each quadrant) and pass them into the single <span class="inline">GraphSolver</span> class. The instance of <span class="inline">INodeWalker</span>
+            is now <span class="inline">MultiGraphNodeWalker</span> and 4 of them are added to the initial queue, one for each actor's starting point.
+        </p>
+        <p>
+            The <span class="inline">MultiGraphNodeWalker</span> is similar to the other "bots" described in the posts regarding this puzzle, except when it reaches a junction point it will spawn alternate "timelines" if you will.
+            The alternate timelines (not sure this is the right phrase, but I'll run with it) allow the other actors to try out possible moves before the current actor makes its next move.
+        </p>
+        <p>
+            This approach allows for actors to unlock doors for the other actors in different quadrants.
+        </p>
+        <p>
+            I may have to revisit some of these posts as while my enthusiasm level is high, my energy levels are sometimes low (this is a side hobby to my full-time job). I feel I could explain some of my reasoning
+            more clearly. Any <a href="contents.html#contact-details">feedback</a> on this would be appreciated.
+        </p>
+        <img src="logo.png" class="fox" />
+    </div>
+</div>
+</body>
+</html>

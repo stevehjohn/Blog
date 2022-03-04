@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com"/>
+    <meta propery="og:type" content="website"/>
+    <meta propery="og:title" content="outside context problem"/>
+    <meta propery="og:description" content="Stevo's rambings"/>
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png"/>
+    <title>Stevo's Blog - Reflection</title>
+    <link rel="stylesheet" type="text/css" href="default.css"/>
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        <a id="reflection" href="#reflection">Reflection</a>
+    </div>
+    <hr/>
+    <div class="content">
+        <p>
+            The obvious route (to me, anyway) was to create a base class that puzzle solutions could inherit from. Then, I could have a <a href="https://en.wikipedia.org/wiki/Console_application">console</a> application that would scan
+            the assembly using <a href="https://en.wikipedia.org/wiki/Reflective_programming">reflection</a> for concrete implementations of this class, execute them, and check the answer against a text file.
+        </p>
+        <p>So, this is the base class I came up with.</p>
+        <pre>
+public abstract class Solution
+{
+    protected string[] Input;
+
+    public abstract string Description { get; }
+
+    protected Solution()
+    {
+        var nameSpace = GetType().Namespace ?? string.Empty;
+
+        var parts = nameSpace.Split('.');
+
+        var path = parts.Skip(2).Select(s => s.Replace("_", string.Empty)).ToArray();
+
+        Input = File.ReadAllLines($"{string.Join(Path.DirectorySeparatorChar, path)}{Path.DirectorySeparatorChar}input.txt");
+    }
+
+    public abstract string GetAnswer();
+}
+</pre>
+        <p>
+            The constructor loads the puzzle input file and makes it available to subclasses via the <span class="inline">Input</span> field. The <span class="inline">Description</span> property is for inheritors to implement to describe the puzzle they are solving. Lastly, surprise surprise,
+            <span class="inline">GetAnswer</span> should be used by implementors (i.e. <a href="https://twitter.com/SteveHuwJohn">me</a>) to solve the puzzle and return the answer as a string. So far, <a href="https://adventofcode.com/">AoC</a> had only required integer answers but, I've been around the block and kept my options open.
+        </p>
+        <p>
+            So, apart from some timing code (competitive, see?) and some other things added later, the main console app was:
+        </p>
+        <pre>        
+var solutions = Assembly.GetExecutingAssembly()
+                        .GetTypes()
+                        .Where(t => t.IsSubclassOf(typeof(Solution)) && ! t.IsAbstract)
+                        .OrderBy(t => t.Namespace)
+                        .ThenBy(t => t.Name);
+
+foreach (var solution in solutions)
+{
+    var instance = Activator.CreateInstance(solution) as Solution;
+    
+    var answer = instance.GetAnswer();
+
+    CheckAnswer(instance.GetType(), answer);
+}
+</pre>
+        <p>
+            Where <span class="inline">CheckAnswer</span> would look in a text file for a line formatted <span class="inline">2021.5.1: abc</span> meaning that the answer to 2021, December the 5th, part one was <span class="inline">abc</span>.
+            If they didn't match, it will throw an exception.
+        </p>
+        <p>
+            Obviously, when embarking on each puzzle I didn't know the answer. Once I had the correct answer, I added it to the text file.
+            The idea behind this mechanism was to prevent regressions as I anticipated code sharing somewhere down the line.
+        </p>
+        <p>
+            So, my framework was largely in place, I was having fun and... possibly getting a bit cocky.
+        </p>
+        <img src="logo.png" class="fox"/>
+    </div>
+</div>
+</body>
+</html>

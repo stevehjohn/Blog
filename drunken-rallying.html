@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com" />
+    <meta propery="og:type" content="website" />
+    <meta propery="og:title" content="outside context problem" />
+    <meta propery="og:description" content="Stevo's rambings" />
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
+    <title>Stevo's Blog - Drunken Rallying</title>
+    <link rel="stylesheet" type="text/css" href="default.css" />
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        <a id="drunken-rallying" href="#drunken-rallying">Drunken Rallying</a>
+    </div>
+    <hr />
+    <div class="content">
+        <p>
+            Context switch in our multithreaded process, back to 2021 from 2019.
+        </p>
+        <p>
+            So, it's Saturday, December 18th. Can't really remember what I was up to, but an old friend phoned and he was up for a catch-up and some beer. This was around 8pm.
+            I was dubious as from where he lives, he wouldn't get here until 10pm, but my arm was twisted.
+        </p>
+        <p>
+            He turned up around 9:30pm which was a surprise because he's never early, and not a surprise because he, err, doesn't exactly hang around when driving.
+        </p>
+        <p>
+            We started on the beers and indulged in some <a href="https://www.gtomega.co.uk/products/art-racing-cockpit">drunken rallying</a>.
+        </p>
+        <p>
+            I think around 5am while it was his turn to race around the <a href="https://dirtgame.com/dirt5/news/blaze-a-trail">Norwegian countryside</a>, I remembered AoC would have unlocked for that day. Perfect opportunity to get in quick and
+            score a higher position on the leaderboard.
+        </p>
+        <p>
+            No chance, this one was a humdinger. Welcome to <a href="https://adventofcode.com/2021/day/19">2021.19</a>.
+        </p>
+        <p>
+            Reading through the puzzle (even with my beer and rally addled brain), I thought how interesting this one was. Between turns on the driving rig I found myself pondering the possible solutions.
+        </p>
+        <p>
+            The AoC description covers the puzzle in detail obviously, but the short version is:
+            <ul>
+                <li>
+                    You have a bunch of scanners in the ocean.
+                </li>
+                <li>
+                    These scanners report back to you a list of beacons they can detect within their sensor range.
+                </li>
+                <li>
+                    The scanners report back the beacon locations relative to the scanner's own position.
+                </li>
+            </ul>
+            And crucially...
+            <ul>
+                <li>
+                    The scanner doesn't know which way it is facing (a bit like me that evening to be honest.)
+                </li>
+            </ul>
+        </p>
+        <p>
+            That last point means you could have two scanners, in the exact same location, detecting exactly the same beacons, but reporting back two entirely different sets of coordinates.
+        </p>
+        <p>
+            What followed was a mixture of drinking, rallying and me and my mate using the <a href="https://en.wikipedia.org/wiki/Right-hand_rule">right hand rule</a> a lot.
+        </p>
+        <p>
+            Then we passed out.
+        </p>
+        <img src="logo.png" class="fox" />
+    </div>
+</div>
+</body>
+</html>

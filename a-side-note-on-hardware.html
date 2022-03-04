@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com" />
+    <meta propery="og:type" content="website" />
+    <meta propery="og:title" content="outside context problem" />
+    <meta propery="og:description" content="Stevo's rambings" />
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
+    <title>Stevo's Blog - A Side Note on Hardware</title>
+    <link rel="stylesheet" type="text/css" href="default.css" />
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        <a id="a-side-note-on-hardware" href="#a-side-note-on-hardware">A Side Note on Hardware</a>
+    </div>
+    <hr />
+    <div class="content">
+        <p>
+            I have been working on these puzzles on my personal machine which is a high spec 16" 2020 Intel MacBook Pro. I have it dual booted between macOS and Windows so I can switch to whichever suits my current task.
+            Usually, Windows for coding and <a href="https://rtypefinal2.com/">gaming</a> and macOS for playing with <a href="https://soundcloud.com/s-h-john/game-of-thrones-metal-wip">music creation</a>.
+        </p>
+        <p>
+            Now that dotnet is cross platform friendly, I could run the AoC project in <a href="https://visualstudio.microsoft.com/vs/community/">Visual Studio</a> in Windows, or <a href="https://www.jetbrains.com/rider/">Rider</a> on macOS.
+        </p>
+        <p>
+            Running the project in either environment produced no discernible difference in performance, so it seems the choice of OS doesn't make much difference to dotnet's use of the bare metal.
+        </p>
+        <p>
+            So, the Intel MacBook specs that matter are:
+        </p>
+        <pre>
+Processor:          Intel Core i9-9980HK
+Base Speed:         2.40GHz
+Cores:              8
+Logical Processors: 16
+RAM:                32GB
+</pre>
+        <p>
+            I recently got a work laptop refresh to a 13" M1 MacBook Pro with the following specs:
+        </p>
+        <pre>
+Processor:          Apple M1
+Base Speed:         <a href="https://www.youtube.com/watch?v=7wbie3lcjiQ">Nobody Knows</a>
+Cores:              8 (4 performance, 4 efficiency)
+RAM:                16GB
+</pre>
+        <p>
+            I thought it would be interesting, given Apple's bold claims, to see how my code performed on this machine.
+        </p>
+        <p>
+            Wow.
+        </p>
+        <p>Execution times for all 343 (7 years &#215; 49, since Christmas day doesn't have a part 2) puzzles:</p>
+        <pre>
+Intel MacBook Pro: 131,634ms
+<span class="inline">M1 MacBook Pro:    113,161ms</span>
+</pre>
+        <p>
+            That's a <span class="inline">14%</span> reduction in execution time on a MacBook that was probably around half the cost of my personal one. Seems Apple may have some substance behind their claims.
+        </p>
+        <img src="logo.png" class="fox" />
+    </div>
+</div>
+</body>
+</html>

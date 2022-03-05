@@ -37,10 +37,45 @@
             The question posed for part 2 was: what is the <a href="https://en.wikipedia.org/wiki/Taxicab_geometry">Manhattan Distance</a> between the two scanners that are furthest apart.
         </p>
         <p>
-            This means finding all the scanners' positions relative to each other, which in turn means we need to determine each scanners orientation in 3D space.
+            This means finding all the scanners' positions relative to each other, which in turn means we need to determine each scanner''s orientation in 3D space.
         </p>
         <p>
             Not the easiest thing to reason about, but I didn't think it would challenge me as much as it did.
+        </p>
+        <p>
+            I iterated over this problem more times than I care to admit, and as it was approaching Christmas, quite often with some alcohol inside me. I'll describe the approach that eventually worked for me in this post.
+        </p>
+        <p>
+            At a high level, I arbitrarily decide the first scanner is located at <span class="inline">(0, 0)</span>. All other scanners have a position of <span class="inline">null</span> at this point.
+            Then the main routine is basically trying to locate scanner's positions relative to each other. It compares scanners with unknown positions with scanners that have a know position.
+        </p>
+        <pre>
+while (Scanners.Any(s => s.Value.Position == null))
+{
+    for (var s1 = 0; s1 < Scanners.Count; s1++)
+    {
+        var originScanner = Scanners[s1];
+
+        if (originScanner.Position == null)
+        {
+            continue;
+        }
+
+        for (var s2 = 0; s2 < Scanners.Count; s2++)
+        {
+            if (s1 == s2 || Scanners[s2].Position != null)
+            {
+                continue;
+            }
+
+            Scanners[s2].LocateRelativeTo(originScanner);
+        }
+    }
+}
+</pre>
+        <p>
+            Okay, reasonable starting point. So, <span class="inline">LocateRelativeTo</span> compares the distances of each scanner's beacons as described in <a href="the-morning-afternoon-after.html">part 1</a>.
+            If there are enough matching beacon distances, we know that the scanner's areas overlap and can now try and work out the rest of the puzzle.
         </p>
     </div>
 </div>

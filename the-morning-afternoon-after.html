@@ -1,15 +1,15 @@
 ﻿<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta propery="og:url" content="https://outsidecontextproblem.com" />
-    <meta propery="og:type" content="website" />
-    <meta propery="og:title" content="outside context problem" />
-    <meta propery="og:description" content="Stevo's rambings" />
-    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
+    <meta propery="og:url" content="https://outsidecontextproblem.com"/>
+    <meta propery="og:type" content="website"/>
+    <meta propery="og:title" content="outside context problem"/>
+    <meta propery="og:description" content="Stevo's rambings"/>
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png"/>
     <title>Stevo's Blog - The Morning Afternoon After</title>
-    <link rel="stylesheet" type="text/css" href="default.css" />
+    <link rel="stylesheet" type="text/css" href="default.css"/>
     <link rel="icon" type="image/x-icon" href="logo.png">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
     <script>
@@ -31,7 +31,7 @@
     <div class="title">
         The <span class="strikethrough">Morning</span> Afternoon After
     </div>
-    <hr />
+    <hr/>
     <div class="content">
         <p>
             Given a pretty much 12-hour beer and rally session, neither of us rose early the next day.
@@ -56,21 +56,30 @@
             I don't know whether there is a mathematical reason that 12 is the magic number, or whether that is just the way the puzzle was designed, and frankly I can't be arsed to find out, but it was a clue.
         </p>
         <p>
-            After a while it dawned on me that I could use the distances of the beacons from the scanner to detect overlaps.
-            It didn't need to be <a href="https://en.wikipedia.org/wiki/Euclidean_distance">Euclidian</a>, <a href="https://en.wikipedia.org/wiki/Taxicab_geometry">Manhattan</a> would work just fine.
+            After a while, it dawned on me that I could use the distances between pairs of beacons detected by a scanner to determine overlaps.
         </p>
         <p>
-            If two scanners had 12 or more beacons the same distance from itself, it's likely (turns out, definitely) they overlap.
-        </p>
+            If a pair of beacons detected by scanner A are the same distance apart as a pair of beacons detected by scanner B, then it makes sense that those are the same beacons.
         <p>
-            Simple enough. Go through each scanner's data, and calculate each beacon's distance from the scanner:
+            Right, so now go through each scanner's data, and calculate each beacon's distance from every other beacon's distance:
         </p>
-        <p>
-            <span class="inline">Math.Abs(scanner.X - beacon.X) + Math.Abs(scanner.Y - beacon.Y) + Math.Abs(scanner.Z - beacon.Z)</span>
-        </p>
-        <p>
-            Then find which scanners have 12 or more common distances, and voilà, you know which scanners' ranges intersect each other.
-        </p>
+        <pre>
+_distances = new List&lt;Distance&gt;();
+
+for (var ob = 0; ob < Beacons.Count; ob++)
+{
+    for (var b = ob + 1; b < Beacons.Count; b++)
+    {
+        var outerBeacon = Beacons[ob];
+
+        var beacon = Beacons[b];
+
+        var distance = new Point(Math.Abs(outerBeacon.X - beacon.X), Math.Abs(outerBeacon.Y - beacon.Y), Math.Abs(outerBeacon.Z - beacon.Z));
+
+        _distances.Add(new Distance(distance, outerBeacon, beacon));
+    }
+}
+</pre>
         <p>
             Okay, so what next?
         </p>
@@ -78,11 +87,40 @@
             Part 1 expects the total number of beacons as the answer.
         </p>
         <p>
-            Looking at my GitHub history, it took me a couple of days to realise this, but once you have the overlapping beacons it's quite simple. It is basically a <a href="https://en.wikipedia.org/wiki/Union_(set_theory)">union</a>
-            of the distances.
+            Looking at my GitHub history, it took me a couple of days to realise this, but once you have the identified beacons that are the same between scanners, it's quite simple. 
+            It is basically a <a href="https://en.wikipedia.org/wiki/Union_(set_theory)">union</a> of the distances.
         </p>
         <p>
-            If scanner A sees 20 beacons and scanner B sees 18 beacons and 12 of them overlap, then there must be 26 unique beacons.
+            If scanner A sees 20 beacons and scanner B sees 18 beacons and 12 of them are the same beacon, then there must be 26 unique beacons.
+        </p>
+        <p>
+            I actually achieved this removing matching beacons from one of a pair of scanners, so we are left with a unique set of beacons. For instance, as stated above, if scanner A has 20 beacons, scanner B has 18 and 12 are the same, I'll
+            remove that 12 from scanner B. When this is done, I can just count each scanner's beacons to get the answer.
+        </p>
+        <pre>
+for (var s1 = 0; s1 < Scanners.Count; s1++)
+{
+    var originScanner = Scanners[s1];
+
+    for (var s2 = s1 + 1; s2 < Scanners.Count; s2++)
+    {
+        originScanner.RemoveMatchingBeacons(Scanners[s2]);
+    }
+}
+
+var beaconCount = 0;
+
+for (var s = 0; s < Scanners.Count; s++)
+{
+    beaconCount += Scanners[s].BeaconCount;
+}
+</pre>
+        <p>
+            <span class="inline">RemoveMatchingBeacons</span> involves a little more than just finding each pair of beacons. If we know a pair of beacons detected by scanner A are the same distance apart as a pair of beacons
+            detected by scanner B, we assume the are the same beacons. We now need to figure out how the pair from one scanner maps to the pair from the other, i.e. which are the same beacons?
+        </p>
+        <p>
+            This is done in the method <span class="inline">ResolveMatchingBeacons</span>. TODO - Explain.
         </p>
         <p>
             Phew, part 1 done.
@@ -93,7 +131,7 @@
         <p>
             This turned out to be a descent into madness of sorts. I didn't end up solving it until January. And, it turns out, I was pretty close most of the time but for a one line bug. Fudge.
         </p>
-        <img src="logo.png" class="fox" />
+        <img src="logo.png" class="fox"/>
     </div>
 </div>
 <div>

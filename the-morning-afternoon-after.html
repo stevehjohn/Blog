@@ -46,7 +46,8 @@
             So, on with the puzzle...
         </p>
         <p>
-            This is one that I think would have really benefited from a visualisation to help me reason about it, but I hadn't yet progressed to using <a href="https://www.monogame.net/">MonoGame</a> yet, and there was no chance realistically of doing this in the console.
+            This is one that I think would have really benefited from a visualisation to help me reason about it, but I hadn't yet progressed to using <a href="https://www.monogame.net/">MonoGame</a>, and there was
+            no chance realistically of doing this in the console.
         </p>
         <p>
             There was a well <a href="https://en.wikipedia.org/wiki/Telegraphing_(sports)">telegraphed</a> clue in the puzzle though:
@@ -87,7 +88,7 @@ for (var ob = 0; ob < Beacons.Count; ob++)
             Part 1 expects the total number of beacons as the answer.
         </p>
         <p>
-            Looking at my GitHub history, it took me a couple of days to realise this, but once you have the identified beacons that are the same between scanners, it's quite simple. 
+            Looking at my GitHub history, it took me a couple of days to realise this, but once you have the identified beacons that are the same between scanners, it's quite simple.
             It is basically a <a href="https://en.wikipedia.org/wiki/Union_(set_theory)">union</a> of the distances.
         </p>
         <p>
@@ -117,10 +118,59 @@ for (var s = 0; s < Scanners.Count; s++)
 </pre>
         <p>
             <span class="inline">RemoveMatchingBeacons</span> involves a little more than just finding each pair of beacons. If we know a pair of beacons detected by scanner A are the same distance apart as a pair of beacons
-            detected by scanner B, we assume the are the same beacons. We now need to figure out how the pair from one scanner maps to the pair from the other, i.e. which are the same beacons?
+            detected by scanner B, we assume they are the same beacons. We now need to figure out how the pair from one scanner maps to the pair from the other, i.e. which are the same beacons?
         </p>
         <p>
-            This is done in the method <span class="inline">ResolveMatchingBeacons</span>. TODO - Explain.
+            This is done in the method <span class="inline">ResolveMatchingBeacons</span>:
+        </p>
+        <pre>
+private static List&lt;Pair&gt; ResolveMatchingBeacons(List&lt;DistancePair&gt; matchingBeacons)
+{
+    var pairs = new List&lt;Pair&gt;();
+
+    var distinctOrigins = matchingBeacons.Select(p => p.Origin.Beacon1)
+                                         .Distinct()
+                                         .Union(matchingBeacons.Select(p => p.Origin.Beacon2).Distinct());
+
+    foreach (var originBeacon in distinctOrigins)
+    {
+        var candidates = new List&lt;Point&gt;();
+
+        foreach (var candidatePair in matchingBeacons)
+        {
+            if (! (originBeacon.Equals(candidatePair.Origin.Beacon1) || originBeacon.Equals(candidatePair.Origin.Beacon2)))
+            {
+                continue;
+            }
+
+            if (candidates.Any(c => Equals(c, candidatePair.Target.Beacon1)))
+            {
+                pairs.Add(new Pair(originBeacon, candidatePair.Target.Beacon1));
+
+                break;
+            }
+
+            if (candidates.Any(c => Equals(c, candidatePair.Target.Beacon2)))
+            {
+                pairs.Add(new Pair(originBeacon, candidatePair.Target.Beacon2));
+
+                break;
+            }
+
+            candidates.Add(candidatePair.Target.Beacon1);
+
+            candidates.Add(candidatePair.Target.Beacon2);
+        }
+    }
+
+    return pairs;
+}
+</pre>
+        <p>
+            Which, frankly, I cannot remember what I was thinking when I wrote it. TODO: remember what you were thinking when you wrote it and explain here.
+        </p>
+        <p>
+            With this done, we are now able to count the number of unique scanners and answer the puzzle.
         </p>
         <p>
             Phew, part 1 done.

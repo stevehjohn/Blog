@@ -117,10 +117,35 @@ for (var s = 0; s < Scanners.Count; s++)
 }
 </pre>
         <p>
-            <span class="inline">RemoveMatchingBeacons</span> involves a little more than just finding each pair of beacons. If we know a pair of beacons detected by scanner A are the same distance apart as a pair of beacons
-            detected by scanner B, we assume they are the same beacons. We now need to figure out how the pair from one scanner maps to the pair from the other, i.e. which are the same beacons?
+            <span class="inline">RemoveMatchingBeacons</span> involves a little more than just finding each pair of beacons.
         </p>
         <p>
+            The method looks like this.
+        </p>
+        <pre>
+public void RemoveMatchingBeacons(Scanner origin)
+{
+    var matchingBeacons = GetMatchingDistances(origin);
+
+    var beaconPairs = ResolveMatchingBeacons(matchingBeacons);
+
+    Beacons.RemoveAll(b => beaconPairs.Any(p => p.Beacon2.Equals(b)));
+}
+</pre>
+        <p>
+            <span class="inline">GetMatchingDistances</span> is fairly straightforward, the meat of it being a method that finds matching beacons regardless off their orientation in 3D space.
+        </p>
+        <pre>
+return left.X == right.X && left.Y == right.Y && left.Z == right.Z
+       || left.X == right.Y && left.Y == right.X && left.Z == right.Z
+       || left.X == right.Z && left.Y == right.X && left.Z == right.Y
+       || left.X == right.X && left.Y == right.Z && left.Z == right.Y
+       || left.X == right.Y && left.Y == right.Z && left.Z == right.X
+       || left.X == right.Z && left.Y == right.Y && left.Z == right.X;
+</pre>
+        <p>
+            If we know a pair of beacons detected by scanner A are the same distance apart as a pair of beacons
+            detected by scanner B, we assume they are the same beacons. We now need to figure out how the pair from one scanner maps to the pair from the other, i.e. which are the same beacons?
             This is done in the method <span class="inline">ResolveMatchingBeacons</span>:
         </p>
         <pre>

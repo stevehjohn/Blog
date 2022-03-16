@@ -47,7 +47,7 @@
         </p>
         <p>
             At a high level, I arbitrarily decide the first scanner is located at <span class="inline">(0, 0)</span>. All other scanners have a position of <span class="inline">null</span> at this point.
-            Then the main routine is basically trying to locate scanner's positions relative to each other. It compares scanners with unknown positions with scanners that have a know position.
+            Then the main routine is basically trying to locate scanner's positions relative to each other. It compares scanners with unknown positions with scanners that have a known position.
         </p>
         <pre>
 while (Scanners.Any(s => s.Value.Position == null))

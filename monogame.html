@@ -51,8 +51,8 @@
             I'm sure there are many options for visualising data, creating animations etc... but I went with MonoGame because I had been playing about with it in my spare time prior to discovering Advent of Code.
         </p>
         <p>
-            I'd been messing around with creation of an <a href="https://www.youtube.com/watch?v=8xQK8NBF6sQ">isometric engine</a> using it (using <a href="https://en.wikipedia.org/wiki/Perlin_noise">Perlin noise</a> for terrain generation
-            , and also completed a friend's <a href="https://www.youtube.com/watch?v=iNwRN328T7w">space invaders challenge</a> with it. I also just seemed to gel with the framework, frankly.
+            I'd been messing around with creation of an <a href="https://www.youtube.com/watch?v=8xQK8NBF6sQ">isometric engine</a> using it (using <a href="https://en.wikipedia.org/wiki/Perlin_noise">Perlin noise</a> for terrain generation, 
+            and also completed a friend's <a href="https://www.youtube.com/watch?v=iNwRN328T7w">space invaders challenge</a> with it. I also just seemed to gel with the framework, frankly.
         </p>
         <p>
             I also thought it would be fun to draw the tracks and carts and watch them play out the scenario. However, doing the maths, even on my QHD monitors, that map size only left 9.6 pixels per map tile.
@@ -99,7 +99,7 @@ protected Base(IVisualiser&lt;PuzzleState&gt; visualiser)
             <span class="inline">PuzzleState</span> is a class implemented per puzzle to represent the visualisable elements of the puzzle. What the visualiser does with this is up to it.
         </p>
         <p>
-            The puzzle class can then simply have a method it calls when the state has changed. If there is no visualiser present, nothing happens, so the only cost is a <span class="inline">null</span> check.
+            The puzzle class can then simply has a method it calls when the state has changed. If there is no visualiser present, nothing happens, so the only cost is a <span class="inline">null</span> check.
             This will vary from puzzle to puzzle, but looks like this in 2018.13.
         </p>
         <pre>

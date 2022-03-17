@@ -109,6 +109,36 @@ h2 {
 
 .previous { left: 12vw; }
 
+.deleted {
+    background-color: #402a2f;
+    display: inline-block;
+    width: 100%;
+    padding-top: 0.25vh;
+    padding-bottom: 0.25vh;
+}
+
+.added {
+    background-color: #22362e;
+    display: inline-block;
+    width: 100%;
+    padding-top: 0.25vh;
+    padding-bottom: 0.25vh;
+}
+
+.deletedWord {
+    color: #ffffff;
+    background-color: #604a4f;
+}
+
+.addedWord {
+    color: #ffffff;
+    background-color: #42564e;
+}
+
+.diffSymbol {
+    color: #ffffff;
+}
+
 @media only screen and (hover: none) and (pointer: coarse) {
     .header { font-size: 3vh; }
 

@@ -77,6 +77,133 @@ while (Scanners.Any(s => s.Value.Position == null))
             Okay, reasonable starting point. So, <span class="inline">LocateRelativeTo</span> compares the distances of each scanner's beacons as described in <a href="the-morning-afternoon-after.html">part 1</a>.
             If there are enough matching beacon distances, we know that the scanner's areas overlap and can now try and work out the rest of the puzzle.
         </p>
+        <p>
+            So, after calling methods <span class="inline">GetMatchingDistances</span> and <span class="inline">ResolveMatchingBeacons</span> which I have previously covered, <span class="inline">LocateRelativeTo</span> then calls <span class="inline">FindTranslation</span>.
+        </p>
+        <p>
+            <span class="inline">FindTranslation</span> take a list of pairs of beacon coordinates (a pair being the coordinates from scanner A's perspective and scanner B's perspective).
+            It creates two <span class="inline">PointCloud</span> classes, one with scanner A's beacons the other with scanner B's.
+        </p>
+        <P>
+            The <span class="inline"PointCloud></span> class finds a centre point of all the beacons and calls this <span class="inline">(0, 0)</span>, it then translates all the beacons' coordinates relative to this.
+        </P>
+        <p>
+            One of the clouds can now be rotated around this centre point until all the beacons line up with the other. We now know how the scanners are oriented relative to each other. This is done in <span class="inline">CheckCloudsMatch</span>.
+        </p>
+        <pre>
+private bool CheckCloudsMatch(TransformParameters parameters)
+{
+    foreach (var targetPoint in _target.Points)
+    {
+        var transformed = RotatePoint(targetPoint, parameters);
+
+        var match = _origin.Points.SingleOrDefault(p => p.Equals(transformed));
+
+        if (match == null)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+</pre>
+        <p>The parameters are generated in the following fashion:</p>
+        <pre>
+var permutations = new List&lt;TransformParameters&gt;();
+
+var axisPermutations = new[] { Axis.X, Axis.Y, Axis.Z }.GetPermutations();
+
+foreach (var axisPermutation in axisPermutations)
+{
+    permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Positive, Sign.Positive, Sign.Positive }));
+
+    permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Positive, Sign.Positive, Sign.Negative }));
+
+    permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Positive, Sign.Negative, Sign.Positive }));
+
+    permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Positive, Sign.Negative, Sign.Negative }));
+
+    permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Negative, Sign.Positive, Sign.Positive }));
+
+    permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Negative, Sign.Positive, Sign.Negative }));
+
+    permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Negative, Sign.Negative, Sign.Positive }));
+
+    permutations.Add(new TransformParameters(axisPermutation, new[] { Sign.Negative, Sign.Negative, Sign.Negative }));
+}
+
+return permutations;
+</pre>
+        <p>
+            Once we know the scanners' orientation relative to each other and which beacon on scanner A maps to which beacon on scanner B, we can calculate their positions relative to each other.
+        </p>
+        <p>
+            Having done this, we now have a complete map of the space with all beacons and scanners locations relative to a fixed point.
+        </p>
+        <p>
+            After that, it is just a case of calculating the Manhattan distances between the scanner and returning the largest.
+        </p>
+        <pre>
+var highestDistance = 0;
+
+for (var s1 = 0; s1 < Scanners.Count; s1++)
+{
+    var originScanner = Scanners[s1];
+
+    for (var s2 = 0; s2 < Scanners.Count; s2++)
+    {
+        if (s1 == s2)
+        {
+            continue;
+        }
+
+        var distance = originScanner.GetManhattanDistanceFrom(Scanners[s2]);
+
+        if (distance > highestDistance)
+        {
+            highestDistance = distance;
+        }
+    }
+}
+</pre>
+        <p>
+            I had all this code in place, and it seemed to return expected results for one or two scanners, but not for all of them.
+        </p>
+        <p>
+            I tried tweaking all sorts of things to get this to work, all to no avail. This was driving me quite mad. It all looked like it should work.
+        </p>
+        <p>
+            After a long time and a lot of hair pulling, I spotted the issue and was able to move on.
+        </p>
+        <p>
+            The bug was in <span class="inline">CheckCloudsMatch</span>...
+        </p>
+        <pre>
+<span class="deleted"><span class="diffSymbol">-</span> foreach (var <span class="deletedWord">originPoint</span> in <span class="deletedWord">_origin</span>.Points)</span>
+<span class="added"><span class="diffSymbol">+</span> foreach (var <span class="addedWord">targetPoint</span> in <span class="addedWord">_target</span>.Points)</span>
+  {
+<span class="deleted"><span class="diffSymbol">-</span>     var transformed = RotatePoint(<span class="deletedWord">originPoint</span>, parameters);</span>
+<span class="added"><span class="diffSymbol">+</span>     var transformed = RotatePoint(<span class="addedWord">targetPoint</span>, parameters);</span>
+
+<span class="deleted"><span class="diffSymbol">-</span>     var match = <span class="deletedWord">_origin</span>.Points.SingleOrDefault(p => p.Equals(transformed));</span>
+<span class="added"><span class="diffSymbol">+</span>     var match = <span class="addedWord">_target</span>.Points.SingleOrDefault(p => p.Equals(transformed));</span>
+
+      if (match == null)
+      {
+          return false;
+      }
+  }
+
+  return true;
+</pre>
+        <p>
+            Because this comparison was the wrong way around, I'd get the correct result for any scanner that overlaps with the arbitrary origin
+            but incorrect results for scanners further along the chain.
+        </p>
+        <p>
+            Fudge.
+        </p>
     </div>
 </div>
 <div>

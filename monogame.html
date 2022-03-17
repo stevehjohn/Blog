@@ -1,0 +1,243 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com"/>
+    <meta propery="og:type" content="website"/>
+    <meta propery="og:title" content="outside context problem"/>
+    <meta propery="og:description" content="Stevo's rambings"/>
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png"/>
+    <title>Stevo's Blog - MonoGame</title>
+    <link rel="stylesheet" type="text/css" href="default.css"/>
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        MonoGame
+    </div>
+    <hr/>
+    <div class="content">
+        <p>
+            As I'm writing this blog after the fact, rather than during the puzzle solving process, I'm going to jump around between topics that come to my head when I have time to write a post.
+        </p>
+        <p>
+            In this one, I'd like to cover how I came to use <a href="https://www.monogame.net">MonoGame</a> for visualisations.
+        </p>
+        <p>
+            As <a href="blue-skies.html">previously mentioned</a>, I was dissatisfied with all the conditional compilation in my code for visualising tricky problems.
+            Also, the console driven visualisations could be incredibly slow.
+        </p>
+        <p>
+            What finally made me change my approach was <a href="https://adventofcode.com/2018/day/13">2018.13</a>, a fun puzzle with an <a href="https://www.youtube.com/watch?v=iv8uxdchhi8">Indiana Jones</a> vibe.
+            The size of the map was 150 &times; 150, just unrealistically doable in the console.
+        </p>
+        <p>
+            I'm sure there are many options for visualising data, creating animations etc... but I went with MonoGame because I had been playing about with it in my spare time prior to discovering Advent of Code.
+        </p>
+        <p>
+            I'd been messing around with creation of an <a href="https://www.youtube.com/watch?v=8xQK8NBF6sQ">isometric engine</a> using it (using <a href="https://en.wikipedia.org/wiki/Perlin_noise">Perlin noise</a> for terrain generation
+            , and also completed a friend's <a href="https://www.youtube.com/watch?v=iNwRN328T7w">space invaders challenge</a> with it. I also just seemed to gel with the framework, frankly.
+        </p>
+        <p>
+            I also thought it would be fun to draw the tracks and carts and watch them play out the scenario. However, doing the maths, even on my QHD, monitors that map size only left 9.6 pixels per map tile.
+            As there were so many actors present at different points on the map, scrolling wasn't really a viable option.
+            The input also kind of put me in mind of a circuit board so I changed the tracks to wires and the carts to electrical sparks.
+        </p>
+        <p>
+            You can see the results here:
+        </p>
+        <p>
+            <ul>
+                <li><a href="https://www.youtube.com/watch?v=W_SWgfYOCD4">Part 1</a></li>
+                <li><a href="https://www.youtube.com/watch?v=3kolbEBj3rk">Part 2</a></li>
+            </ul>
+        </p>
+        <p>
+            I won't go into how I solved this puzzle right now, but I want to talk about how I went about using MonoGame for visualisations without being too intrusive on the puzzle solving code.
+        </p>
+        <p>
+            As an aside, if you watch the <a href="https://www.youtube.com/playlist?list=PLBtwzTaAY-IWq6Mi1nvwsphMTw-HU13eM">videos</a> in chronological order,
+            you'll notice I try to make them more interesting by adding YouTube's royalty-free music over the top. And then as I get more used to using YouTube studio,
+            how I try to match the timing of the music to what is happening in the visualisation.
+        </p>
+        <p>
+            The solution I settled on is as follows. I created an <span class="inline">IVisualiser</span> interface which the visualiser implements. This is designed to allow the puzzle to report to the visualiser when a notable
+            state change that should be rendered is reached.
+        </p>
+        <pre>
+public interface IVisualiser&lt;in T&gt;
+{
+    void PuzzleStateChanged(T state);
+}
+</pre>
+        <p>
+            A puzzle class that wants visualisation just needs to expose a constructor that takes an <span class="inline">IVisualiser</span>.
+        </p>
+        <pre>
+protected Base(IVisualiser&lt;PuzzleState&gt; visualiser)
+{
+    _visualiser = visualiser;
+}
+</pre>
+        <p>
+            <span class="inline">PuzzleState</span> is a class implemented per puzzle to represent the visualisable elements of the puzzle. What the visualiser does with this is up to it.
+        </p>
+        <p>
+            The puzzle class can then simply have a method it calls when the state has changed. If there is no visualiser present, nothing happens, so the only cost is a <span class="inline">null</span> check.
+            This will vary from puzzle to puzzle, but looks like this in 2018.13.
+        </p>
+        <pre>
+protected void Visualise(Point collisionPoint = null, bool isFinalState = false)
+{
+    if (_visualiser != null)
+    {
+        _visualiser.PuzzleStateChanged(new PuzzleState 
+                                           { 
+                                               Map = _map, 
+                                               Carts = Carts.Select(c => new Cart(c)).ToList(), 
+                                               CollisionPoint = collisionPoint, 
+                                               IsFinalState = isFinalState 
+                                           });
+    }
+}
+</pre>
+        <p>
+            That's it from the puzzle's perspective. Much cleaner than the plethora of conditional compilation sections I was using.
+        </p>
+        <p>
+            On to the visualiser...
+        </p>
+        <p>
+            There is a base class that all visualisations will inherit from.
+        </p>
+        <pre>
+public abstract class VisualisationBase&lt;T&gt; : Game, IVisualiser&lt;T&gt;, IMultiPartVisualiser
+{
+    protected bool HasNextState => _stateQueue.Count > 0;
+
+    private readonly Queue&lt;T&gt; _stateQueue = new();
+
+    protected Solution Puzzle { get; set; }
+
+    private Task _puzzleTask;
+
+    private readonly CancellationTokenSource _cancellationTokenSource = new();
+
+    public abstract void SetPart(int part);
+
+    protected override void Initialize()
+    {
+        _puzzleTask = new Task(() => Puzzle.GetAnswer(), _cancellationTokenSource.Token);
+
+        _puzzleTask.Start();
+
+        base.Initialize();
+    }
+
+    protected override void OnExiting(object sender, EventArgs args)
+    {
+        _cancellationTokenSource.Cancel();
+
+        base.OnExiting(sender, args);
+    }
+
+    public void PuzzleStateChanged(T state)
+    {
+        if (_stateQueue.Count > 1000)
+        {
+            Thread.Sleep(1000);
+        }
+
+        _stateQueue.Enqueue(state);
+    }
+
+    protected T GetNextState()
+    {
+        return _stateQueue.Dequeue();
+    }
+}
+</pre>
+        <p>
+            <span class="inline">IMultiPartVisualiser</span> and <span class="inline">SetPart</span> are just to deal with the fact each puzzle has 2 parts.
+        </p>
+        <p>
+            The rest is really about managing the state.
+        </p>
+        <p>
+            The basic architecture is that the puzzle is kicked off in its own thread and will add items to the state queue as it deems necessary.
+            The visualiser can pull items off this queue when it needs them. In some cases this will be every frame, in others it may wait for an animation to finish before doing so.
+        </p>
+        <p>
+            I can't quite remember why I had to add the throttling in <span class="inline">PuzzleStateChanged</span> as with modern hardware and memory space, I can't see the queue filling up, but
+            I put the code there so there must have been a reason. Maybe one particular puzzle just provided too many state changes while the visualisation was catching up.
+        </p>
+        <p>
+            Even though this isn't a game as such, I'm using MonoGame. At a basic level, a game program is the following in an infinite loop:
+        </p>
+        <p>
+            <ul>
+                <li>
+                    Process input.
+                </li>
+                <li>
+                    Update game object state.
+                </li>
+                <li>
+                    Render view.
+                </li>
+            </ul>
+        </p>
+        <p>
+            Process input is irrelevant to these visualisations, so we are left with the other two.
+        </p>
+        <p>
+            Update game object state pulls an item off the queue if required (i.e. any non-key-frame animations are complete), and render view is <a href="https://www.youtube.com/watch?v=e7dx2Z9G7Mk">Ronseal</a>.
+        </p>
+        <p>
+            That's it really. I found MonoGame really easy to work with regarding sprite manipulation etc... I'm firmly old-school and happy working with graphics in 2D planes.
+            I'm sure MonoGame is also great for 3D, but that's a learning journey for another time.
+        </p>
+        <p>
+            On a personal note, my favourite visualisations are:
+        </p>
+        <p>
+            <ul>
+                <li>
+                    <a href="https://www.youtube.com/watch?v=yVSg5PY0OTM">2020.20</a>
+                </li>
+                <li>
+                    <a href="https://www.youtube.com/watch?v=n_E53JhsOOE">2018.17</a>
+                </li>
+            </ul>
+        </p>
+        <p>
+            And I find this non-MonoGame based one quite therapeutic.
+            <ul>
+                <li>
+                    <a href="https://www.youtube.com/watch?v=pHIyrLsMJns">2019.18</a>
+                </li>
+            </ul>
+        </p>
+    </div>
+</div>
+<div>
+    <a href="beacon-scanner-part-2.html" class="previous">Previous</a>
+</div>
+</body>
+</html>

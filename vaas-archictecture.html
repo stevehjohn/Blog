@@ -62,7 +62,7 @@
         </p>
         <p>
             Notifying the user that the visualisation is complete? Assuming we're avoiding taking their email address, the best thing is probably to store some state somewhere such as <a href="https://aws.amazon.com/dynamodb/">Dynamo DB</a>.
-            The API could expose a status endpoint that will check Dynamo and let the user know when their file is ready for download.
+            The API could expose a status endpoint that will check Dynamo and let the user know when their file is ready for download. They can then check back at their leisure.
         </p>
         <p>
             All good so far. But users don't want to interact with an API! True, but once you have an API, slapping a UI on the front of it isn't hard.

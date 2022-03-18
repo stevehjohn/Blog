@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com" />
+    <meta propery="og:type" content="website" />
+    <meta propery="og:title" content="outside context problem" />
+    <meta propery="og:description" content="Stevo's rambings" />
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
+    <title>Stevo's Blog - VaaS Part 2</title>
+    <link rel="stylesheet" type="text/css" href="default.css" />
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        VaaS Part 2
+    </div>
+    <hr />
+    <div class="content">
+        <p>
+            So, I've been pondering how to expose the visualisations as a service. As I <a href="vaas-part-1.html">mentioned</a>, cost is a slight concern as the generated files are so large.
+            I want this to be a free service, but I don't want to pay a large amount for it. For a fun project to share, I'm willing to pay for it but only up to a point.
+        </p>
+        <p>
+            The generated AVIs are going to be too big to fit on the EC2 instances 12GB free after Windows has consumed 18GB of the 30 available. This will require attached EBS storage.
+            Cursory investigation shows I could attach a 50GB drive for about £2.50 a month. Cool.
+        </p>
+        <p>
+            The next concern is bandwidth. If users will be downloading 20GB files for each visualisation, that's going to add up.
+            I haven't found another (free) library for generating the video files that can use compression so, how about zipping them up?
+        </p>
+        <p>
+            Good news, an 18GB AVI zips to about 0.5GB. Bad news, it took about 3 minutes.
+        </p>
+        <p>
+            So far, the visualisations vary from 1 minute long to 4 minutes. The average across them is about 2 minutes. Let's look at the worst case scenario.
+        </p>
+        <p>
+            A slightly improved version of <a href="https://www.youtube.com/watch?v=yVSg5PY0OTM">this</a> visualisation comes in at 41GB as an AVI (ouch) and is about 3 minutes 20 seconds long.
+            Zipping this reduces it to about 0.9GB, but took an astonishing 15 minutes, 30 seconds to do so. Locally. On a high-end MacBook Pro. Fans ablazing all the while.
+        </p>
+        <p>
+            At this point, I think I need to find another library to natively output an MP4 or something similar with adjustable lossy compression rather than an AVI. But, for the purposes of this post let's crack on.
+        </p>
+        <p>
+            At the moment, we are at just shy of 19 minutes (3:20 video length, 15:30 to zip) to generate the video and then compress it. I suspect this would be rather longer on a free tier EC2 instance, but I'll work with the numbers I have for now.
+        </p>
+        <p>
+            No-one is going to stare at a web page for nearly 20 minutes waiting for it to output something for them. And this is assuming they are the only user - there's no queue of visualisations being generated ahead of them. 
+            Another option would be to allow them to upload a file and get an email
+            when it is complete. I think this would work quite well, but I'm very wary of handing over my email address to unknown sites and am making the assumption that many other people would be also.
+        </p>
+        <p>
+            Given all of this, I'm thinking VaaS, while a fun idea probably isn't economically viable.
+        </p>
+        <p>
+            But, for fun, I'm just going to ponder the architecture given a money-no-object scenario...
+        </p>
+    </div>
+</div>
+<div>
+    <a href="vaas-part-1.html" class="previous">Previous</a>
+    <a href="vaas-archictecture.html" class="next">Next</a>
+</div>
+</body>
+</html>

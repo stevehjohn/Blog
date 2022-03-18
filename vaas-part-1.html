@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com"/>
+    <meta propery="og:type" content="website"/>
+    <meta propery="og:title" content="outside context problem"/>
+    <meta propery="og:description" content="Stevo's rambings"/>
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png"/>
+    <title>Stevo's Blog - VaaS Part 1</title>
+    <link rel="stylesheet" type="text/css" href="default.css"/>
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        VaaS Part 1
+    </div>
+    <hr/>
+    <div class="content">
+        <p>
+            Thinking about how to approach the <a href="visualisations-as-a-service.html">VaaS</a> idea, I figured the path of least resistance was to modify the visualisation executable to take an
+            optional second parameter; the name of a file to output a recording to (the first parameter is which visualisation to run.)
+        </p>
+        <p>
+            Next was to investigate how to output a recording. A bit of Googling turned up the <a href="https://github.com/baSSiLL/SharpAvi">SharpAvi</a> NuGet package, which looked like it would do
+            exactly what I needed. According to its documentation, you just throw bitmaps at it. Perfect.
+        </p>
+        <p>
+            Before proceeding I needed to make sure I can get bitmaps of what is being rendered to the screen. Google to the rescue again. I found a method to do such a thing. Excellent, looks like
+            the pieces are in place.
+        </p>
+        <p>
+            I added a property, <span class="inline">OutputAviPath</span> to my <span class="inline">VisualisationBase</span> class. If this is set, it will setup SharpAvi during initialisation.
+        </p>
+        <pre>
+if (! string.IsNullOrWhiteSpace(OutputAviPath))
+{
+    _aviWriter = new AviWriter(OutputAviPath)
+                 {
+                     FramesPerSecond = 30,
+                     EmitIndex1 = true
+                 };
+
+    _aviStream = _aviWriter.AddVideoStream();
+
+    _aviStream.Width = GraphicsDeviceManager.PreferredBackBufferWidth;
+
+    _aviStream.Height = GraphicsDeviceManager.PreferredBackBufferHeight;
+
+    _aviStream.BitsPerPixel = BitsPerPixel.Bpp24;
+}
+</pre>
+        <p>
+            Cool. MonoGame has an overridable <span class="inline">EndDraw</span> method that is called right after a frame is rendered to the window. This looked like a great place to hook into for capturing frames.
+            So in my base class, I overrode it as follows.
+        </p>
+        <pre>
+if (_aviStream != null)
+{
+    using (var bitmap = new Bitmap(GraphicsDeviceManager.PreferredBackBufferWidth,
+                                   GraphicsDeviceManager.PreferredBackBufferHeight,
+                                   PixelFormat.Format24bppRgb))
+    {
+        using (Graphics graphics = Graphics.FromImage(bitmap))
+        {
+            var bounds = Window.ClientBounds;
+
+            graphics.CopyFromScreen(new Point(bounds.Left, bounds.Top), 
+                                    Point.Empty, 
+                                    new Size(bounds.Size.X, bounds.Size.Y));
+        }
+
+        using (var stream = new MemoryStream())
+        {
+            bitmap.Save(stream, ImageFormat.Bmp);
+
+            _aviStream.WriteFrame(true, stream.ToArray());
+        }
+    }
+}
+</pre>
+        <p>
+            Once the visualisation is complete, we just need to close the writer.
+        </p>
+        <pre>
+if (_aviWriter != null)
+{
+    _aviStream = null;
+
+    _aviWriter.Close();
+    
+    Application.Exit();
+}
+</pre>
+        <p>
+            Aside from some logic changes to determine when recording should stop (I went for 10 seconds after the end-state of the puzzle has been rendered), that's pretty much it.
+        </p>
+        <p>
+            Next steps are:
+            <ul>
+                <li>
+                    Figure out how to expose this as an API and/or web page.
+                </li>
+                <li>
+                    Calculate whether this is going to cost much to host. I'm hoping to use components within AWS' generous <a href="https://aws.amazon.com/free">free tier</a>. However, the AVI files
+                    generated are BIG, <a href="https://www.youtube.com/watch?v=n_E53JhsOOE">2018.17</a> comes in at a whopping 20GB in this format.
+                </li>
+            </ul>
+        </p>
+    </div>
+</div>
+<div>
+    <a href="visualisations-as-a-service.html" class="previous">Previous</a>
+    <a href="vaas-part-2.html" class="next">Next</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com" />
+    <meta propery="og:type" content="website" />
+    <meta propery="og:title" content="outside context problem" />
+    <meta propery="og:description" content="Stevo's rambings" />
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
+    <title>Stevo's Blog - VaaS Architecture</title>
+    <link rel="stylesheet" type="text/css" href="default.css" />
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        VaaS Architecture
+    </div>
+    <hr />
+    <div class="content">
+        <p>
+            In my previous <a href="vaas-part-2.html">post</a>, I talked about how I was looking into actually implementing Visualisations as a Service.
+            I didn't really run into technical issues, but I did potentially uncover some cost-related ones. In this post, I'm going to describe my money-no-object architecture.
+        </p>
+        <p>
+            The obvious way to get around the video generation problem is to throw compute at it. So, a cluster of beefy EC2 instances would be required.
+        </p>
+        <p>
+            On these, I would run a Windows Service wrapper around my visualisation executable. When the service was idle, it should poll an <a href="https://aws.amazon.com/sqs/">SQS</a> queue.
+            The cluster could even <a href="https://aws.amazon.com/ec2/autoscaling">autoscale</a> on demand.
+        </p>
+        <p>
+            Nice. We have a mechanism to generate and zip video files. This is the core problem solved. Now, how do we make the service available?
+        </p>
+        <p>
+            Quick aside, instead of zipping the AVIs, there may be a possibility of using AWS' <a href="https://aws.amazon.com/elastictranscoder/">Amazon Elastic Transcoder</a> service.
+        </p>
+        <p>
+            Update: maybe not. It seems AVI as a source isn't <a href="https://aws.amazon.com/elastictranscoder/details/">supported</a>.
+        </p>
+        <p>
+            To make the service available, I think I'd expose an <a href="https://aws.amazon.com/api-gateway/">API Gateway</a> REST API with an endpoint that accepts a puzzle id and input file. 
+            It would save the input file to <a href="https://aws.amazon.com/s3/">S3</a> and pop a message on the SQS queue to notify an EC2 instance that there is something to be processed.
+        </p>
+        <p>
+            Once the EC2 instance has generated the video and zipped or transcoded it, it can write the result to S3. This object could have an expiration, so it is not hanging around in the bucket for too long.
+        </p>
+        <p>
+            Notifying the user that the visualisation is complete? Assuming we're avoiding taking their email address, the best thing is probably to store some state somewhere such as <a href="https://aws.amazon.com/dynamodb/">Dynamo DB</a>.
+            The API could expose a status endpoint that will check Dynamo and let the user know when their file is ready for download.
+        </p>
+        <p>
+            All good so far. But users don't want to interact with an API! True, but once you have an API, slapping a UI on the front of it isn't hard.
+        </p>
+        <p>
+            In fact, though I've never done it, I assume you could probably host the web front-end using API Gateway also. It's just HTTP requests and responses ultimately...
+        </p>
+        <p>
+            Anyway, that's all I've got for today, <a href="https://youtube.com/clip/Ugkx1sN3dSakjBCVJupPdEmc3HQ5pzn7g6C4">go away now</a>.
+        </p>
+    </div>
+</div>
+<div>
+    <a href="vaas-part-2.html" class="previous">Previous</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com"/>
+    <meta propery="og:type" content="website"/>
+    <meta propery="og:title" content="outside context problem"/>
+    <meta propery="og:description" content="Stevo's rambings"/>
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png"/>
+    <title>Stevo's Blog - Custom Visualisations</title>
+    <link rel="stylesheet" type="text/css" href="default.css"/>
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        Custom Visualisations
+    </div>
+    <hr/>
+    <div class="content">
+        <p>
+            If you've read the previous posts discussing <a href="visualisations-as-a-service.html">Visualisations as a Service</a>, you will know that at this point I think it is probably not a viable project to put up on the internet for free.
+        </p>
+        <p>
+            However, I think it would be quite cool to see visualisations of other people's puzzle input, and also, the graphics they choose to use to represent them.
+        </p>
+        <p>
+            So, I'm going to quickly summarise how you can generate your own visualisations using my code if you wish to. At this point, I have 3 MonoGame based visualisations available.
+        </p>
+        <p>
+            Essentially, if you want to create your own visualisations, clone the <a href="https://github.com/stevehjohn/AoC">repository</a> and make the changes described below.
+        </p>
+        <h1>2018, Day 13</h1>
+        <p>
+            This visualisation works for part 1 and 2, as they are different enough to be worthwhile.
+        </p>
+        <p>
+            <ul>
+                <li>
+                    Replace the data in <span class="inline">AoC.Solutions\Solutions\2018\13\input.txt</span> with your input.
+                </li>
+                <li>
+                    Edit the <span class="inline">PNG</span> files in <span class="inline">AoC\AoC.Visualisations\_Content\2018\13</span> if you wish to customise the graphics.
+                </li>
+            </ul>
+        </p>
+        <h1>2018, Day 17</h1>
+        <p>
+            This visualisation only works for part 1 of the puzzle as part 2 is exactly the same, just with a different counting method.
+        </p>
+        <p>
+            <ul>
+                <li>
+                    Replace the data in <span class="inline">AoC.Solutions\Solutions\2018\17\input.txt</span> with your input.
+                </li>
+                <li>
+                    Edit the <span class="inline">PNG</span> files in <span class="inline">AoC\AoC.Visualisations\_Content\2018\17</span> if you wish to customise the graphics.
+                </li>
+            </ul>
+        </p>
+        <h1>2020, Day 20</h1>
+        <p>
+            This visualisation only works for part 1 of the puzzle as part 2 wouldn't really benefit from one.
+        </p>
+        <p>
+            <ul>
+                <li>
+                    Replace the data in <span class="inline">AoC.Solutions\Solutions\2020\20\input.txt</span> with your input.
+                </li>
+                <li>
+                    Edit the <span class="inline">PNG</span> files in <span class="inline">AoC\AoC.Visualisations\_Content\2020\20</span> if you wish to customise the graphics.
+                </li>
+            </ul>
+        </p>
+        <h1>
+            Notes on Running these Visualisations
+        </h1>
+        <p>
+            Keep the graphics and tiles the same size as the originals. For instance, 2018.17 uses tiles of 8 &times; 8 pixels to create the map.
+            2020.20 requires the final image to be 900 &times; 900 pixels.
+        </p>
+        <p>
+            Run the visualisation by executing <span class="inline">AoC.Visualisations.exe</span>.
+        </p>
+        <p>
+            The first parameter is the puzzle you would like to visualise, so for 2018 day 13 part 1, you would write the command:
+        </p>
+        <pre>
+AoC.Visualisations.exe 2018.13.1
+</pre>
+        <p>
+            From within the folder where the project has been built, obviously.
+        </p>
+        <p>
+            If you want to automatically generate an AVI, simply add a second parameter with the output file name.
+        </p>
+        <pre>
+AoC.Visualisations.exe 2018.13.1 woah-cool.avi
+</pre>
+        <p>
+            That's pretty much it. The <a href="https://www.youtube.com/playlist?list=PLBtwzTaAY-IWq6Mi1nvwsphMTw-HU13eM">visualisations</a> I've recorded so far we done using <a href="https://obsproject.com/">OBS</a> for the console based ones
+            and Window's built-in <a href="https://support.microsoft.com/en-us/windows/record-a-game-clip-on-your-pc-with-xbox-game-bar-2f477001-54d4-1276-9144-b0416a307f3c">Xbox game bar</a> for the MonoGame ones. This is because I've only
+            just added the auto-AVI output functionality.
+        </p>
+        <p>
+            If you do create visualisations with this code (and especially if you've customised the graphics), I'd love to see it. Please do <a hred="https://twitter.com/SteveHuwJohn">let me know</a>.
+        </p>
+    </div>
+</div>
+<div>
+    <a href="vaas-archictecture.html" class="previous">Previous</a>
+</div>
+</body>
+</html>

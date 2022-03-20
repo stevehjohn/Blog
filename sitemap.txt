@@ -19,3 +19,4 @@ http://www.outsidecontextproblem.com/visualisations-as-a-service.html
 http://www.outsidecontextproblem.com/vaas-part-1.html
 http://www.outsidecontextproblem.com/vaas-part-2.html
 http://www.outsidecontextproblem.com/vaas-archictecture.html
+http://www.outsidecontextproblem.com/custom-visualisations.html

@@ -75,7 +75,7 @@ if (_aviStream != null)
 {
     using (var bitmap = new Bitmap(GraphicsDeviceManager.PreferredBackBufferWidth,
                                    GraphicsDeviceManager.PreferredBackBufferHeight,
-                                   PixelFormat.Format24bppRgb))
+                                   PixelFormat.Format32bppRgb))
     {
         using (Graphics graphics = Graphics.FromImage(bitmap))
         {
@@ -86,12 +86,15 @@ if (_aviStream != null)
                                     new Size(bounds.Size.X, bounds.Size.Y));
         }
 
-        using (var stream = new MemoryStream())
-        {
-            bitmap.Save(stream, ImageFormat.Bmp);
+        var bitmapData = bitmap.LockBits(new Rectangle(0, 0, bounds.Size.X, bounds.Size.Y), 
+                                         ImageLockMode.ReadOnly, 
+                                         PixelFormat.Format32bppRgb);
 
-            _aviStream.WriteFrame(true, stream.ToArray());
-        }
+        var span = new Span&lt;byte&gt;(bitmapData.Scan0.ToPointer(), bitmapData.Stride * bitmapData.Height);
+
+        _aviStream?.WriteFrame(true, span);
+
+        bitmap.UnlockBits(bitmapData);
     }
 }
 </pre>
@@ -104,8 +107,6 @@ if (_aviWriter != null)
     _aviStream = null;
 
     _aviWriter.Close();
-    
-    Application.Exit();
 }
 </pre>
         <p>

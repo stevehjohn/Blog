@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com" />
+    <meta propery="og:type" content="website" />
+    <meta propery="og:title" content="outside context problem" />
+    <meta propery="og:description" content="Stevo's rambings" />
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
+    <title>Stevo's Blog - Threading</title>
+    <link rel="stylesheet" type="text/css" href="default.css" />
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        Threading
+    </div>
+    <hr />
+    <div class="content">
+        <p>
+            When revisiting some of my visualisations to ensure they worked using <a href="https://github.com/baSSiLL/SharpAvi">SharpAvi</a>, I regenerated the one for <a href="https://adventofcode.com/2020/day/20">2020.20.1</a>.
+            It got me thinking of how I approached the visualisations and how the parameters could be tweaked such as the "threads" of this visualisation.
+        </p>
+        <p>
+            As a side note here, I have to say that the maintainer of SharpAvi responded very rapidly to a query I had. It's a free, open source project and he really didn't need to respond as quickly as he did.
+            I'd say, better support than a lot of commercial software.
+        </p>
+        <p>
+            <h1>
+                TL;DR
+            </h1>
+        <p>
+            <ul>
+                <li>
+                    Visualisation is <a href="">here</a>.
+                </li>
+                <li>
+                    <a href="https://github.com/baSSiLL/SharpAvi">SharpAvi</a> is a good, maintained project.
+                </li>
+            </ul>
+        </p>
+        <p>
+            So, I had a visualisation of this puzzle working in the console, which you can see <a href="https://www.youtube.com/watch?v=6xswdv76gos">here</a>.
+            This is maybe a better one than my MonoGame one as while not as visually interesting, it illustrates the matching process in a better fashion.
+            It highlights the edges that were matched before moving them to the puzzle "mat".
+        </p>
+        <p>
+            While I think this is a good illustration of the logic going into solving this puzzle, when I went to do it in MonoGame I wanted something more visually appealing.
+        </p>
+        <p>
+            The most obvious thing that came to mind was to make it like a jigsaw. Use an image that would ultimately be reassembled from the input data.
+        </p>
+        <p>
+            As a big Star Trek fan, I chose an image of the <a href="https://www.youtube.com/watch?v=hpAalCbs2bk">Enterprise-E</a> which is my favourite ship design. Well, maybe apart from the 
+            <a href="https://www.youtube.com/watch?v=gFI3vPa5Tvg">Executor Class Super Star Destroyer</a>. It did come across a bit bland though as most of the background was black,
+            so instead I used an image of <a href="https://en.wikipedia.org/wiki/USS_Voyager_(Star_Trek)">Voyager</a> (which I've always loved the design of.)
+        </p>
+        <p>
+            This is where things got quite interesting...
+        </p>
+        <p>
+            In my next post, I'll talk about how I solved the puzzle, and how I went about visualising it in an engaging manner. In the meantime, this post is a reminder for me to do just that while the idea is in my head.
+        </p>
+    </div>
+</div>
+<div>
+    <a href="custom-visualisations.html" class="previous">Previous</a>
+</div>
+</body>
+</html>

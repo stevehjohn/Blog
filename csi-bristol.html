@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com" />
+    <meta propery="og:type" content="website" />
+    <meta propery="og:title" content="outside context problem" />
+    <meta propery="og:description" content="Stevo's rambings" />
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
+    <title>Stevo's Blog - CSI: Bristol</title>
+    <link rel="stylesheet" type="text/css" href="default.css" />
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        CSI: Bristol
+    </div>
+    <hr />
+    <div class="content">
+        <p>
+            When I envisaged this visualisation, I had in mind as CSI-style image enhancement scene. So I imagined a panel on the right of the screen with the tiles being zoomed in upon and then being placed on a "jigsaw mat" on the left of the screen.
+        </p>
+        <p>
+            I'm quite pleased with the end <a href="https://youtu.be/XvJ0MobHnk8">result</a>.
+        </p>
+        <p>
+            Anyway, on to how I went about solving the puzzle.
+        </p>
+        <p>
+            As with many of the puzzles, the input data is provided as dots and hashes.
+        </p>
+        <pre>
+Tile 2053:
+......#.#.
+#....#....
+#.#.......
+.##.#..#.#
+.##...####
+#.#....#.#
+##.##.#.#.
+...##.....
+####.##..#
+#..##...##
+
+Tile 1543:
+.####.##..
+.......#.#
+..........
+..#.......
+#......#..
+#....##...
+#.#....#..
+#..##....#
+#.#..#....
+#.#...####
+</pre>
+        <p>
+            Part 1 requires you to provide the product of the ids of the four corner tiles, so we can ignore the contents of the tiles mostly for now and just focus on the edges.
+        </p>
+    </div>
+</div>
+<div>
+    <a href="threading.html" class="previous">Previous</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com"/>
+    <meta propery="og:type" content="website"/>
+    <meta propery="og:title" content="outside context problem"/>
+    <meta propery="og:description" content="Stevo's rambings"/>
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png"/>
+    <title>Stevo's Blog - 2022 Summary</title>
+    <link rel="stylesheet" type="text/css" href="default.css"/>
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        2022 - Summary
+    </div>
+    <hr/>
+    <div class="content">
+        <p>
+            So, 2022 is now done and dusted. I was really enjoying the puzzles. Always feels a bit empty when done.
+        </p>
+        <p>
+            I made a rod for my own back again this year when well into Advent, I noticed all my solutions were all running in around a few milliseconds.
+        </p>
+        <p>
+            So, personal challenge... Can I get the runtime of all puzzles combined to be less than one second? I also mentioned this in the <a href="https://www.justeattakeaway.com/">Just Eat Takeaway</a> AoC Slack channel, like a muppet.
+        </p>
+        <p>
+            I started getting worried when the puzzles got more complicated and the times crept up quickly. I think at one point the longest running was around the 8 - 10 minute mark!
+        </p>
+        <p>
+            Anyway, some determined optimisation later and these are the current statistics. Not quite there, but not far off.
+        </p>
+        <p>
+            I will cover optimisations in future blog posts.
+        </p>
+        <h2>
+            Hardware
+        </h2>
+        <p>
+            2020 16" Intel MacBook Pro with TouchBar
+
+            <ul>
+                <li>Intel Core i9-9980HK</li>
+                <li>Base Speed: 2.40 GHz</li>
+                <li>Max Speed: 5.0 GHz</li>
+                <li>8 Cores</li>
+                <li>16 Logical Processors</li>
+                <li>
+                    Cache:
+                    <ul>
+                        <li>L1: 512 KB</li>
+                        <li>L2: 2.0 MB</li>
+                        <li>L3: 16.0 MB</li>
+                    </ul>
+                </li>
+                <li>32 GB RAM</li>
+                <li>Apple SSD</li>
+            </ul>
+        </p>
+        <pre>
+ 2022  1.1: 66487                          0ms     Calorie counting
+ 2022  1.2: 197301                         1ms
+ 2022  2.1: 10310                          0ms     Rock paper scissors
+ 2022  2.2: 14859                          0ms
+ 2022  3.1: 7597                           0ms     Rucksack reorganization
+ 2022  3.2: 2607                           0ms
+ 2022  4.1: 657                            0ms     Camp cleanup
+ 2022  4.2: 938                            0ms
+ 2022  5.1: BSDMQFLSP                      0ms     Supply stacks
+ 2022  5.2: PGSQBFLDP                      0ms
+ 2022  6.1: 1647                           0ms     Tuning trouble
+ 2022  6.2: 2447                           1ms
+ 2022  7.1: 2104783                        2ms     No space left on device
+ 2022  7.2: 5883165                        1ms
+ 2022  8.1: 1794                           1ms     Treetop tree house
+ 2022  8.2: 199272                         1ms
+ 2022  9.1: 5683                           3ms     Rope bridge
+ 2022  9.2: 2372                           3ms
+ 2022 10.1: 12460                          0ms     Cathode-Ray tube
+ 2022 10.2: EZFPRAKL                       0ms
+ 2022 11.1: 120384                         1ms     Monkey in the middle
+ 2022 11.2: 32059801242                    7ms
+ 2022 12.1: 408                            7ms     Hill climbing algorithm
+ 2022 12.2: 399                            4ms
+ 2022 13.1: 6428                           0ms     Distress signal
+ 2022 13.2: 22464                          1ms
+ 2022 14.1: 1199                           3ms     Regolith reservoir
+ 2022 14.2: 23925                          9ms
+ 2022 15.1: 5256611                        1ms     Beacon exclusion zone
+ 2022 15.2: 13337919186981                 24ms
+ 2022 16.1: 2059                           40ms    Proboscidea volcanium
+ 2022 16.2: 2790                           598ms
+ 2022 17.1: 3048                           2ms     Pyroclastic flow
+ 2022 17.2: 1504093567249                  3ms
+ 2022 18.1: 4504                           1ms     Boiling boulders
+ 2022 18.2: 2556                           3ms
+ 2022 19.1: 1346                           80ms    Not enough minerals
+ 2022 19.2: 7644                           18ms
+ 2022 20.1: 2203                           56ms    Grove positioning system
+ 2022 20.2: 6641234038999                  257ms
+ 2022 21.1: 168502451381566                1ms     Monkey math
+ 2022 21.2: 3343167719435                  1ms
+ 2022 22.1: 43466                          2ms     Monkey map
+ 2022 22.2: 162155                         2ms
+ 2022 23.1: 3766                           11ms    Unstable diffusion
+ 2022 23.2: 954                            705ms
+ 2022 24.1: 305                            241ms   Blizzard basin
+ 2022 24.2: 905                            495ms
+ 2022 25.1: 2-20=01--0=0=0=2-120           0ms     Full of hot air
+                                           -------
+                                           2586ms
+</pre>
+        <p>
+            I could always throw them at a beefy AWS instance, but that's not the spirit of my challenge. Has to be on my personal laptop.
+        </p>
+        <img src="logo.png" class="fox"/>
+    </div>
+</div>
+<div>
+    <a href="twenty-twenty-two-day-three.html" class="previous">Previous</a>
+</div>
+</body>
+</html>

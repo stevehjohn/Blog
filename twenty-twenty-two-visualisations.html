@@ -47,6 +47,10 @@
                 As usual, <a href="https://www.monogame.net/">MonoGame</a> was my weapon of choice.
             </p>
             <p>
+                The pattern is the same as before... the visualisation kicks of the puzzle in a separate thread. The puzzle the pops relevant state changes onto a queue for the visualisation to pick up when it needs a new state.
+                This allows for animating the visualisation. It also means that the puzzle is often finished before the first few frames of the visualisation have rendered.
+            </p>
+            <p>
                 The new ones I created this year were:
                 <ul>
                     <li>

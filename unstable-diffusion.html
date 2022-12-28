@@ -169,6 +169,7 @@ protected int RunSimulationStep()
 
     foreach (var elf in _elves)
     {
+        <span class="comment">// Get the elf's proposed move</span>
         var proposedMove = GetProposedMove(elf);
 
         _proposedMoves.Add(elf, proposedMove);
@@ -197,13 +198,16 @@ protected int RunSimulationStep()
 
     foreach (var elf in _elves)
     {
+        <span class="comment">// Get the elf's proposed move (again)</span>
         var proposedMove = _proposedMoves[elf];
 
+        <span class="comment">// Already added in first pass through</span>
         if (proposedMove == null)
         {
             continue;
         }
 
+        <span class="comment">// Move was blocked, add original position to set</span>
         if (_blocked.Contains(proposedMove))
         {
             elves.Add(elf);
@@ -211,6 +215,7 @@ protected int RunSimulationStep()
             continue;
         }
 
+        <span class="comment">// This elf can move, so add new position to set</span>
         elves.Add(proposedMove);
 
         moved++;

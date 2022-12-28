@@ -90,6 +90,11 @@ h2 {
     color: #aaaadd;
 }
 
+h3 {
+    font-size: 2.5vh;
+    color: #aaaadd;
+}
+
 .strikethrough { text-decoration: line-through; }
 
 .quote {

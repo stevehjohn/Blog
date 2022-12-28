@@ -151,9 +151,9 @@
         <p>
             This not only halves the number of iterations over the elves, but also removed 3 temporary hashsets from my method, so fewer allocations also which is another win.
         </p>
-        <p>
-            The method went from this...
-        </p>
+        <h3>
+            Original Method
+        </h3>
         <pre>
 protected int RunSimulationStep()
 {
@@ -229,9 +229,9 @@ protected int RunSimulationStep()
     return moved;
 }
 </pre>
-        <p>
-            To this...
-        </p>
+        <h3>
+            New Method
+        </h3>
     <pre>
 protected int RunSimulationStep()
 {

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com"/>
+    <meta propery="og:type" content="website"/>
+    <meta propery="og:title" content="outside context problem"/>
+    <meta propery="og:description" content="Stevo's rambings"/>
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png"/>
+    <title>Stevo's Blog - Unstable Diffusion</title>
+    <link rel="stylesheet" type="text/css" href="default.css"/>
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        Unstable Diffusion
+    </div>
+    <hr/>
+    <div class="content">
+        <p>
+            So, here we have another <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Conway's Game of Life</a>-esque puzzle. These are a bit of a staple, and that is not a criticism, they are often quite fun.
+        </p>
+        <p>
+            I suspected the bottleneck in my initial solution here was having to do two passes over the elves for each cycle. This was due to the statement...
+        </p>
+        <div class="quote">
+            During the first half of each round, each Elf considers the eight positions adjacent to them self ... After each Elf has had a chance to propose a move, the second half of the round can begin ...
+            <strong>Simultaneously, each Elf moves to their proposed destination tile if they were the only Elf to propose moving to that position. If two or more Elves propose moving to the same position, none of those Elves move.</strong>
+        </div>
+        <p>
+            So, as we don't know how big the arena will get, and we also don't really care about the empty spaces, I store the elves locations in a <span class="inline">HashSet&lt;Point&gt;</span> rather than a 2D array which would have to grow on every round.
+        </p>
+        <p>
+            My first solution was to do a double-pass over all the elves.
+            <ul>
+                <li>
+                    Go through the hashset building up a list of proposed moves for all elves.
+                </li>
+                <li>
+                    Then, move any elves that didn't have the same proposed move as any other.
+                </li>
+            </ul>
+        </p>
+        <p>
+            Makes sense, right? You can't move an elf on the first pass in case a later elf proposes the same move.
+        </p>
+        <p>
+            In my data, there were 2,396 elves. Also my part 2 answer ended up being 954 cycles to the end. So:
+            <ul>
+                <li>
+                    Part 1 passes over the elves 47,920 times (as this is the "trial run", only doing 10 cycles.)
+                </li>
+                <li>
+                    Part 2 passes over the elves 4,571,568 times.
+                </li>
+            </ul>
+        </p>
+        <p>
+            Halving that number, especially for part 2 should have a decent impact. And it did.
+        </p>
+        <h2>
+            The Problem
+        </h2>
+        <p>
+            Consider the first two steps in the example shown on the <a href="https://adventofcode.com/2022/day/23">puzzle</a>. Hashes replaced with numbers for clarity.
+            I've used the hash here to show the collision point.
+        </p>
+        <pre>
+.....         ..12.
+..12.         .....
+..3..   -->   ..3..
+..#..         ...5.
+..45.         ..4..
+.....         .....
+</pre>
+        <p>
+            The description states:
+        </p>
+        <div class="quote">
+            The northernmost two Elves [1, 2] and southernmost two Elves [4, 5] all propose moving north, while the middle Elf [3] cannot move north and proposes moving south.
+            The middle Elf proposes the same destination as the southwest Elf [4], so neither of them move, but the other three do [1, 2, 5].
+        </div>
+        <p>
+            So, in the initial implementation, your would manipulate your "possible moves" list as follows.
+            <ul>
+                <li>
+                    1 can move north.
+                </li>
+                <li>
+                    2 can move north.
+                </li>
+                <li>
+                    3 can move south.
+                </li>
+                <li>
+                    4 can move north.
+                </li>
+                <li>
+                    3 and 4 have proposed moving to the same cell, remove both of their moves from the list.
+                </li>
+                <li>
+                    5 can move north.
+                </li>
+            </ul>
+        </p>
+        <p>
+            Then, you cycle through the elves again and if they have a possible move in the list, you update their position.
+        </p>
+        <h2>
+            The Optimisation
+        </h2>
+        <p>
+            The one-pass solution is quite simple. If you realise <strong>two elves proposing the same move will be coming from opposite directions</strong>.
+        </p>
+        <p>
+            In the one and only pass over the elves, you don't maintain a "possible moves" list, you just move each elf as you get to it...
+            <ul>
+                <li>
+                    Try to move 1 north. Done.
+                </li>
+                <li>
+                    Try to move 2 north. Done.
+                </li>
+                <li>
+                    Try to move 3 south. Done.
+                </li>
+                <li>
+                    Try to move 4 north. On no, collision. <strong>Don't move 4, but then push 3 back the way 4 was trying to move, i.e. move 3 back north</strong>.
+                </li>
+                <li>
+                    5 can move north.
+                </li>
+            </ul>
+        </p>
+        <p>
+            This not only halves the number of iterations over the elves, but also removed 3 temporary hashsets from my method, so fewer allocations also which is another win.
+        </p>
+        <p>
+            The method went from this...
+        </p>
+        <pre>
+protected int RunSimulationStep()
+{
+    <span class="comment">// The 3 temporary HashSets I can ditch</span>
+    _visited.Clear();
+
+    _blocked.Clear();
+
+    _proposedMoves.Clear();
+
+    <span class="comment">// The new positions of the elves after this round</span>
+    var elves = new HashSet&lt;Point&gt;(SetMaxSize);
+
+    foreach (var elf in _elves)
+    {
+        var proposedMove = GetProposedMove(elf);
+
+        _proposedMoves.Add(elf, proposedMove);
+
+        <span class="comment">// Elf happy where he is, add his current position to the new positions set</span>
+        if (proposedMove == null)
+        {
+            elves.Add(elf);
+
+            continue;
+        }
+
+        <span class="comment">// An elf has already proposed here, so add to the blocked list</span>
+        if (_visited.Contains(proposedMove))
+        {
+            _blocked.Add(proposedMove);
+
+            continue;
+        }
+        
+        <span class="comment">// No elf has proposed here, so add as a potential move</span>
+        _visited.Add(proposedMove);
+    }
+
+    var moved = 0;
+
+    foreach (var elf in _elves)
+    {
+        var proposedMove = _proposedMoves[elf];
+
+        if (proposedMove == null)
+        {
+            continue;
+        }
+
+        if (_blocked.Contains(proposedMove))
+        {
+            elves.Add(elf);
+
+            continue;
+        }
+
+        elves.Add(proposedMove);
+
+        moved++;
+    }
+
+    <span class="comment">// Replace the current elf positions with the new ones</span>
+    _elves = elves;
+
+    RotateEvaluations();
+
+    return moved;
+}
+</pre>
+        <p>
+            To this...
+        </p>
+    <pre>
+protected int RunSimulationStep()
+{
+    <span class="comment">// The new positions of the elves after this round</span>
+    var elves = new HashSet&lt;Point&gt;(SetMaxSize);
+
+    var moved = 0;
+
+    foreach (var elf in _elves)
+    {
+        var proposedMove = GetProposedMove(elf);
+
+        <span class="comment">// Elf happy where he is, add his current position to the new positions set</span>
+        if (proposedMove == null)
+        {
+            elves.Add(elf);
+
+            continue;
+        }
+
+        <span class="comment">// Try to move the elf, whoops collision!</span>
+        if (elves.Contains(elf + proposedMove))
+        {
+            <span class="comment">// Add his current position to the new positions set as he now can't move</span>
+            elves.Add(elf);
+
+            <span class="comment">/* <strong>Here is the bounce!</strong></span>
+            <span class="comment">// Remove the elf he collided with from the new positions set</span>
+            elves.Remove(elf + proposedMove);
+
+            <span class="comment">// Add the elf he collided with back to the new positions set in his original position</span>
+            elves.Add(elf + proposedMove + proposedMove);
+            <span class="comment">*/</span>
+
+            moved--;
+
+            continue;
+        }
+
+        <span class="comment">// Move the elf</span>
+        elves.Add(elf + proposedMove);
+
+        moved++;
+    }
+
+    <span class="comment">// Replace the current elf positions with the new ones</span>
+    _elves = elves;
+
+    RotateEvaluations();
+
+    return moved;
+}
+</pre>
+        <p>
+            Pretty cool, I thought.
+        </p>
+        <img src="logo.png" class="fox"/>
+    </div>
+</div>
+<div>
+    <a href="twenty-twenty-two-general-optimisations.html" class="previous">Previous</a>
+</div>
+</body>
+</html>

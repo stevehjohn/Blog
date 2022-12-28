@@ -74,6 +74,10 @@ pre {
     white-space: pre-wrap;
 }
 
+.comment {
+    color: #aaddaa;
+}
+
 .inline {
     font-family: monospace;
     color: #d7ba7d;

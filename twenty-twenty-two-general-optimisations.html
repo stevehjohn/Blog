@@ -86,6 +86,16 @@ Memoisation:
                 </li>
             </ul>
         </p>
+        <h2>
+            Compiler Hints
+        </h2>
+        <p>
+            Again, C# specific though other languages might have equivalents. Sometimes (and I mean, not very often in my experience), the compiler hints for methods <span class="inline">[MethodImpl(MethodImplOptions.AggressiveOptimization)]</span>
+            and/or <span class="inline">[MethodImpl(MethodImplOptions.AggressiveInlining)]</span> can speed things up. I'm guessing the fact that it only rarely helps is why the compiler doesn't do it all the time for everything.
+        </p>
+        <p>
+            Over the next few posts, I'll dive into some optimisations I discovered specific to particular puzzles. They will be in the order that they pop into my head...
+        </p>
         <img src="logo.png" class="fox"/>
     </div>
 </div>

@@ -33,10 +33,60 @@
     </div>
     <hr />
     <div class="content">
+        I'm sure I thought of more items for this page when lying in bed the other night, but this is what I can come up with now...
         <h2>
             Caching / Memoisation
         </h2>
-        <img src="logo.png" class="fox" />
+        <p>
+            I don't recall having used this in previous years, but I may be wrong. It did make a big difference to at least one puzzle this year.
+        </p>
+        <p>
+            The use cases I can think of (though there may well be more):
+            <ul>
+                <li>
+                    Storing a reasonably expensive state to generate, that will likely be required again. The second time it can just be looked up rather than calculated.
+                </li>
+                <li>
+                Storing the output from a deterministic function or method and keying it on the parameters passed in.
+                See <a href="">this method</a>.
+                <pre>
+No memoisation: 
+
+  2022 24.1: 401ms   Blizzard basin
+  2022 24.2: 831ms
+             -------
+             1232ms
+
+Memoisation:
+
+  2022 24.1: 241ms   Blizzard basin
+  2022 24.2: 495ms
+             -------
+             736ms
+</pre>
+            </ul>
+        </p>
+        <h2>
+            Data Types
+        </h2>
+        <p>
+            This is C# specific, though the collections can have similar/wildly different names across languages.
+        </p>
+        <p>
+            <ul>
+                <li>
+                    If you don't care about order, use a <span class="inline">HashSet&lt;T&gt;</span> rather than a <span class="inline">List&lt;T&gt;</span>, <span class="inline">T[]</span> or whatever. Should be much faster.
+                </li>
+                <li>
+                    Quite specific to some puzzles, but if the "arena" is small enough and the use case supports it, store the values as bits.
+                    Convoluted example, but if a cell has 2 states and the arena is 1 x 64, that can be accommodated in a <span class="inline">ulong</span> rather than <span class="inline">byte[64]</span> or <span class="inline">char[64]</span>.
+                    Less state data to copy if required. Also, bit manipulation techniques can be used for comparisons/moves, which will be super fast.
+                    I've definitely used this to good effect in at least a few puzzles.
+                    E.g. for storing opened valves in <a href="https://github.com/stevehjohn/AoC/blob/0e94e848ab3566e486645fd0ab5356d43cf9ca66/AoC.Solutions/Solutions/2022/16/Part1.cs#L33">day 22</a>.
+                </li>
+            </ul>
+        </p>
+        <img src="logo.png" class="fox"/>
     </div>
 </div>
 <div>

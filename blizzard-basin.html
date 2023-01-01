@@ -155,26 +155,26 @@
 #################################### #
 </pre>
         <p>
-            For the sake of making my next illustration easier to draw, let's say we are on the first cycle. We can pass <span class="inline">cycle + 1</span> to <a href="https://github.com/stevehjohn/AoC/blob/f99525839478a4af187d195b74b4e2ec23c4d5f2/AoC.Solutions/Solutions/2022/24/Base.cs#L233">IsOccupied</a> and it will determine the positions
-            of the blizzards after one cycle and return <span class="inline">true</span> or <span class="inline">false</span> depending on whether a point on the board contains a blizzard.
+            We can pass <span class="inline">cycle + 1</span> to <a href="https://github.com/stevehjohn/AoC/blob/f99525839478a4af187d195b74b4e2ec23c4d5f2/AoC.Solutions/Solutions/2022/24/Base.cs#L233">IsOccupied</a> and it will determine the positions
+            of the blizzards after that cycle and return <span class="inline">true</span> or <span class="inline">false</span> depending on whether a point on the board contains a blizzard.
         </p>
         <p>
-            After one cycle, the state will look like this (using numbers to represent where more than one blizzard exists):
+            After one cycle, the state will look like this:
         </p>
         <pre>
 # ####################################
-#   ^^ ^      ^        ^v&gt;v^ ^       #
-# &gt;&gt;    &lt;&gt;&lt;&lt;   &lt;   &gt;&lt;&gt; 22<span class="highlight"> </span>v&gt; &lt;    &lt;&gt; #
-#  v ^v   ^    v v   ^^ ^<span class="glow">&lt;</span><span class="highlight"> </span> 2^^vvv  v#
-# 2   &lt;   &gt; &lt;2&lt;&lt;   &gt;  &lt;  &gt;2   &lt;&lt; &lt;&lt;  #
-# v v v          v vv    &gt;^&gt;     v  v#
 #                                    #
-#                       v&gt; &gt;         #
+#                      &lt;   &gt;         #
+#                     &lt; ^<span class="glow">E</span>&lt;          #
 #                                    #
+#                         v          #
+#                        v           #
+#                                    #
+#                        ^           #
 #################################### #
 </pre>
         <p>
-            A blizzard has moved to where our expedition was, and the expedition now has the choice of moving up or right.
+            We can see blizzards have moved to block our left and right moves, but up and down are available.
         </p>
         <p>
             Pass the <span class="inline">IsOccupied</span> method any cycle number and it will be able to tell you whether a cell is occupied by a blizzard during that cycle.

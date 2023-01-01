@@ -156,13 +156,13 @@
             of the blizzards after one cycle and return <span class="inline">true</span> or <span class="inline">false</span> depending on whether a point on the board contains a blizzard.
         </p>
         <p>
-            After one cycle, the state will look like this:
+            After one cycle, the state will look like this (using numbers to represent where more than one blizzard exists):
         </p>
         <pre>
 #.####################################
-#                       &gt; v          #
-#&gt;&gt;v^^v^&gt;&lt; &lt;&lt; ^v&lt;v&gt;.&gt;&lt;&gt;^&lt;&lt;&gt;^v^&lt;vvv&gt;&lt;v#
-#                       ^<span class="glow">E</span>&lt;          #
+#   ^^ ^      ^        ^&gt; v^ ^       #
+#&gt;&gt;     &gt;&lt; &lt;&lt;   &lt; &gt; &gt;&lt;&gt; &lt;&lt;&gt;   &lt;   &gt;&lt; #
+#  v  v        v v      ^<span class="glow">E</span>&lt; v  vvv  v#
 #&gt; &lt; ^ &lt; &gt;^ &gt;&lt;&lt;&lt;&lt; &gt;  ^^&lt;^&gt;v&lt;^^^&lt;&lt; &lt;&lt; #
 # v v v          v vv   &gt; &gt;      v  v#
 #                       v ^          #

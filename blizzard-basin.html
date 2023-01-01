@@ -69,9 +69,9 @@
             This not only well exceeded the <a href="https://adventofcode.com/2022/about#:~:text=every%20problem%20has%20a%20solution%20that%20completes%20in%20at%20most%2015%20seconds%20on%20ten%2Dyear%2Dold%20hardware.">15 seconds on ten-year-old hardware claim</a>,
             but also put a big thorn in my &Sigma; < 1s personal challenge.
         </p>
-        <h2>
+        <h1>
             The Optimisation
-        </h2>
+        </h1>
         <p>
             The win here is to not have to copy all that state around, and also not to have to move every storm for each step the path-finding algorithm takes.
         </p>
@@ -116,18 +116,18 @@
 ####################################.#
 </pre>
         <p>
-            Therefore, we only need to worry about the position of these blizzards during the next execution cycle...
+            Therefore, we only need to worry about the position of these blizzards during the next execution cycle, since they are the only ones that can move into blocking positions...
         </p>
         <pre>
 #.####################################
-#&gt;&lt;^.^&gt;v^&lt;&gt;&lt;^&lt;&gt;&gt;&gt;^&lt;&gt;&gt;&lt;&gt;v<span class="highlight">&gt;</span>^<span class="highlight">v</span>&lt;^&gt;&gt;^v&lt;&gt;&gt;.#
-#<span class="highlight">&gt;&gt;v^^v^&gt;&lt;.&lt;&lt;.^v&lt;v&gt;.&gt;&lt;&gt;^&lt;&lt;&gt;^v^&lt;vvv&gt;&lt;v</span>#
-#&gt;&gt;^&lt;^&gt;^^&lt;&lt;&gt;^&lt;&lt;^v^^v^&lt;&lt;&lt;<span class="highlight">^</span><span class="glow">E</span><span class="highlight">&lt;</span>&lt;^v&gt;&lt;&gt;.vvv#
-#<span class="highlight">&gt;v&lt;v^v&lt;.&gt;^.&gt;&lt;&lt;&lt;&lt;v&gt;vv^^&lt;^&gt;v&lt;^^^&lt;&lt;v&lt;&lt;v</span>#
-#&gt;&gt;^&lt;v&gt;.&lt;^&lt;v&gt;^&lt;v.^^.v&lt;v&gt;<span class="highlight">&gt;</span>v<span class="highlight">&gt;</span>.&gt;&gt;.&gt;v^&lt;&lt;&lt;#
-#&lt;^^^v&lt;&lt;v&lt;.&lt;^.^&lt;&lt;^&gt;^&gt;&gt;&gt;&lt;<span class="highlight">v</span>^<span class="highlight">^</span>.^v&lt;v^^.vv#
-#&lt;&lt;v&lt;^^v&gt;^&gt;v&gt;&lt;v&gt;v^&lt;&lt;.^vv<span class="highlight">&gt;</span>&lt;<span class="highlight">&gt;</span>v^v&lt;vv&lt;vvv#
-#&lt;&lt;&lt;v&gt;^^&lt;^&lt;^v.&gt;&lt;&gt;^vv&gt;&lt;^&gt;<span class="highlight">v</span>.<span class="highlight">v</span>&lt;&gt;.&lt;vv.&gt;&gt;&lt;#
+#&gt;&lt;^.^&gt;v^&lt;&gt;&lt;^&lt;&gt;&gt;&gt;^&lt;&gt;&gt;&lt;&gt;v&gt;<span class="highlight">^</span>v&lt;^&gt;&gt;^v&lt;&gt;&gt;.#
+#&gt;&gt;v^^v^&gt;&lt;.&lt;&lt;.^v&lt;v&gt;.&gt;&lt;&gt;^<span class="highlight">&lt;</span>&lt;<span class="highlight">&gt;</span>^v^&lt;vvv&gt;&lt;v#
+#&gt;&gt;^&lt;^&gt;^^&lt;&lt;&gt;^&lt;&lt;^v^^v^&lt;&lt;<span class="highlight">&lt;</span>^<span class="glow">E</span>&lt;<span class="highlight">&lt;</span>^v&gt;&lt;&gt;.vvv#
+#&gt;v&lt;v^v&lt;.&gt;^.&gt;&lt;&lt;&lt;&lt;v&gt;vv^^&lt;<span class="highlight">^</span>&gt;<span class="highlight">v</span>&lt;^^^&lt;&lt;v&lt;&lt;v#
+#&gt;&gt;^&lt;v&gt;.&lt;^&lt;v&gt;^&lt;v.^^.v&lt;v&gt;&gt;<span class="highlight">v</span>&gt;.&gt;&gt;.&gt;v^&lt;&lt;&lt;#
+#&lt;^^^v&lt;&lt;v&lt;.&lt;^.^&lt;&lt;^&gt;^&gt;&gt;&gt;&lt;v^^.^v&lt;v^^.vv#
+#&lt;&lt;v&lt;^^v&gt;^&gt;v&gt;&lt;v&gt;v^&lt;&lt;.^vv&gt;&lt;&gt;v^v&lt;vv&lt;vvv#
+#&lt;&lt;&lt;v&gt;^^&lt;^&lt;^v.&gt;&lt;&gt;^vv&gt;&lt;^&gt;v.v&lt;&gt;.&lt;vv.&gt;&gt;&lt;#
 ####################################.#
 </pre>
         <p>
@@ -137,18 +137,21 @@
             During parsing of the input, I add blizzards to <span class="inline">HashSet&lt;T&gt;</span>s of their initial position. One hashset for each blizzard direction.
         </p>
         <p>
-            This makes it very easy to just pull out, say, left blizzards on row 2 or down blizzards on column 24.
+            This makes it very easy to just pull out, say, left blizzards on row &#119910; or down blizzards on column &#119909;.
+        </p>
+        <p>
+            Removing blizzards we don't care about from the board, it looks like this...
         </p>
         <pre>
 # ####################################
-#                       &gt; v          #
-#&gt;&gt;v^^v^&gt;&lt; &lt;&lt; ^v&lt;v&gt; &gt;&lt;&gt;^&lt;&lt;&gt;^v^&lt;vvv&gt;&lt;v#
-#                       ^<span class="glow">E</span>&lt;          #
-#&gt;v&lt;v^v&lt; &gt;^ &gt;&lt;&lt;&lt;&lt;v&gt;vv^^&lt;^&gt;v&lt;^^^&lt;&lt;v&lt;&lt;v#
-#                       &gt; &gt;          #
-#                       v ^          #
-#                       &gt; &gt;          #
-#                       v v          #
+#                        ^           #
+#                       &lt; &gt;          #
+#                      &lt; <span class="glow">E</span> &lt;         #
+#                       ^ v          #
+#                        v           #
+#                                    #
+#                                    #
+#                                    #
 #################################### #
 </pre>
         <p>

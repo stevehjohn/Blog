@@ -56,7 +56,7 @@
             The illustration in the <a href="https://adventofcode.com/2022/day/24">puzzle</a> shows the interactions.
         </p>
         <p>
-            So, essentially I used A* while updating the position of each storm with every step the pathfinder takes.
+            So, essentially I used <a href="https://en.wikipedia.org/wiki/A*_search_algorithm">A*</a> while updating the position of each storm with every step the pathfinder takes.
         </p>
         <p>
             If you know how path-finding algorithms are generally implemented, you'll know that the state of the storm has to be copied and held many times to be processed in the queue that the algorithm is working through.
@@ -161,8 +161,8 @@
         <pre>
 # ####################################
 #   ^^ ^      ^        ^v&gt;v^ ^       #
-# &gt;&gt;    &lt;&gt;&lt;&lt;   &lt;   &gt;&lt;&gt; 22 v&gt; &lt;    &lt;&gt; #
-#  v ^v   ^    v v   ^^ ^<span class="glow">&lt;</span>  2^^vvv  v#
+# &gt;&gt;    &lt;&gt;&lt;&lt;   &lt;   &gt;&lt;&gt; 22<span class="highlight"> </span>v&gt; &lt;    &lt;&gt; #
+#  v ^v   ^    v v   ^^ ^<span class="glow">&lt;</span><span class="highlight"> </span> 2^^vvv  v#
 # 2   &lt;   &gt; &lt;2&lt;&lt;   &gt;  &lt;  &gt;2   &lt;&lt; &lt;&lt;  #
 # v v v          v vv    &gt;^&gt;     v  v#
 #                                    #
@@ -175,6 +175,11 @@
         </p>
         <p>
             Pass the <span class="inline">IsOccupied</span> method any cycle number and it will be able to tell you whether a cell is occupied by a blizzard during that cycle.
+        </p>
+        <p>
+            A further final note, in performing this check, I actually move the position of the <strong>expedition in relation to the blizzards</strong> by the number of cycles. 
+            This means only performing the maths on the expedition's position and simply checking it against the blizzards' original coordinates,
+            rather than vice-versa which would be more expensive.
         </p>
     </div>
 </div>

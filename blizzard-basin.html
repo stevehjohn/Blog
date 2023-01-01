@@ -8,7 +8,7 @@
     <meta propery="og:title" content="outside context problem" />
     <meta propery="og:description" content="Stevo's rambings" />
     <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
-    <title>Stevo's Blog - TITLE</title>
+    <title>Stevo's Blog - Blizzard Basin</title>
     <link rel="stylesheet" type="text/css" href="default.css" />
     <link rel="icon" type="image/x-icon" href="logo.png">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
@@ -29,11 +29,147 @@
 </div>
 <div class="post">
     <div class="title">
-
+        Blizzard Basin
     </div>
     <hr />
     <div class="content">
-
+        <p>
+            Now, this puzzle had an interesting optimisation.
+        </p>
+        <p>
+            You are given a representation of an arena full of blizzards with the arrows indicating the direction of each blizzard:
+        </p>
+        <pre>
+#.####################################
+#&gt;&lt;^.^&gt;v^&lt;&gt;&lt;^&lt;&gt;&gt;&gt;^&lt;&gt;&gt;&lt;&gt;v&gt;^v&lt;^&gt;&gt;^v&lt;&gt;&gt;.#
+#&gt;&gt;v^^v^&gt;&lt;.&lt;&lt;.^v&lt;v&gt;.&gt;&lt;&gt;^&lt;&lt;&gt;^v^&lt;vvv&gt;&lt;v#
+#&gt;&gt;^&lt;^&gt;^^&lt;&lt;&gt;^&lt;&lt;^v^^v^&lt;&lt;&lt;^.&lt;&lt;^v&gt;&lt;&gt;.vvv#
+#&gt;v&lt;v^v&lt;.&gt;^.&gt;&lt;&lt;&lt;&lt;v&gt;vv^^&lt;^&gt;v&lt;^^^&lt;&lt;v&lt;&lt;v#
+#&gt;&gt;^&lt;v&gt;.&lt;^&lt;v&gt;^&lt;v.^^.v&lt;v&gt;&gt;v&gt;.&gt;&gt;.&gt;v^&lt;&lt;&lt;#
+#&lt;^^^v&lt;&lt;v&lt;.&lt;^.^&lt;&lt;^&gt;^&gt;&gt;&gt;&lt;v^^.^v&lt;v^^.vv#
+#&lt;&lt;v&lt;^^v&gt;^&gt;v&gt;&lt;v&gt;v^&lt;&lt;.^vv&gt;&lt;&gt;v^v&lt;vv&lt;vvv#
+#&lt;&lt;&lt;v&gt;^^&lt;^&lt;^v.&gt;&lt;&gt;^vv&gt;&lt;^&gt;v.v&lt;&gt;.&lt;vv.&gt;&gt;&lt;#
+####################################.#
+</pre>
+        <p>
+            You must navigate though the storm from the origin (top left) to the exit (bottom right). Each turn, the blizzards move and you may move. So you essentially want a path-finding algorithm but have to deal with moving obstacles.
+            The illustration in the <a href="https://adventofcode.com/2022/day/24">puzzle</a> shows the interactions.
+        </p>
+        <p>
+            So, essentially I used A* while updating the position of each storm with every step the pathfinder takes.
+        </p>
+        <p>
+            If you know how path-finding algorithms are generally implemented, you'll know that the state of the storm has to be copied and held many times to be processed in the queue that the algorithm is working through.
+        </p>
+        <p>
+            This involves a lot of memory allocation, copying, <a href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals">GC</a> intervention and, updating the position of each storm on every cycle also. So, my initial implementation worked fine and gave the correct answers,
+            but took ~10s for part 1 and ~30s for part 2.
+        </p>
+        <p>
+            This not only well exceeded the <a href="https://adventofcode.com/2022/about#:~:text=every%20problem%20has%20a%20solution%20that%20completes%20in%20at%20most%2015%20seconds%20on%20ten%2Dyear%2Dold%20hardware.">15 seconds on ten-year-old hardware claim</a>,
+            but also put a big thorn in my &Sigma; < 1s personal challenge.
+        </p>
+        <h2>
+            The Optimisation
+        </h2>
+        <p>
+            The win here is to not have to copy all that state around, and also not to have to move every storm for each step the path-finding algorithm takes.
+        </p>
+        <p>
+            Fortunately with this puzzle, this is entirely possible.
+        </p>
+        <p>
+            Since the blizzard's movements are entirely predictable, we can calculate where a particular one will be after &#119909; cycles of the simulation.
+        </p>
+        <p>
+            Also, we only need to know at any point whether the expedition can move up, down, left or right.
+        </p>
+        <p>
+            Consider the following state of the simulation...
+        </p>
+        <pre>
+#.####################################
+#&gt;&lt;^.^&gt;v^&lt;&gt;&lt;^&lt;&gt;&gt;&gt;^&lt;&gt;&gt;&lt;&gt;v&gt;^v&lt;^&gt;&gt;^v&lt;&gt;&gt;.#
+#&gt;&gt;v^^v^&gt;&lt;.&lt;&lt;.^v&lt;v&gt;.&gt;&lt;&gt;^&lt;&lt;&gt;^v^&lt;vvv&gt;&lt;v#
+#&gt;&gt;^&lt;^&gt;^^&lt;&lt;&gt;^&lt;&lt;^v^^v^&lt;&lt;&lt;^<span class="glow">E</span>&lt;&lt;^v&gt;&lt;&gt;.vvv#
+#&gt;v&lt;v^v&lt;.&gt;^.&gt;&lt;&lt;&lt;&lt;v&gt;vv^^&lt;^&gt;v&lt;^^^&lt;&lt;v&lt;&lt;v#
+#&gt;&gt;^&lt;v&gt;.&lt;^&lt;v&gt;^&lt;v.^^.v&lt;v&gt;&gt;v&gt;.&gt;&gt;.&gt;v^&lt;&lt;&lt;#
+#&lt;^^^v&lt;&lt;v&lt;.&lt;^.^&lt;&lt;^&gt;^&gt;&gt;&gt;&lt;v^^.^v&lt;v^^.vv#
+#&lt;&lt;v&lt;^^v&gt;^&gt;v&gt;&lt;v&gt;v^&lt;&lt;.^vv&gt;&lt;&gt;v^v&lt;vv&lt;vvv#
+#&lt;&lt;&lt;v&gt;^^&lt;^&lt;^v.&gt;&lt;&gt;^vv&gt;&lt;^&gt;v.v&lt;&gt;.&lt;vv.&gt;&gt;&lt;#
+####################################.#
+</pre>
+        <p>
+            To consider the next move, we need to know whether the expedition can move up, down, left or right after the storms have moved one step.
+            So, we care about whether the following locations will be empty after the storms have moved:
+        </p>
+        <pre>
+#.####################################
+#&gt;&lt;^.^&gt;v^&lt;&gt;&lt;^&lt;&gt;&gt;&gt;^&lt;&gt;&gt;&lt;&gt;v&gt;^v&lt;^&gt;&gt;^v&lt;&gt;&gt;.#
+#&gt;&gt;v^^v^&gt;&lt;.&lt;&lt;.^v&lt;v&gt;.&gt;&lt;&gt;^&lt;<span class="highlight">&lt;</span>&gt;^v^&lt;vvv&gt;&lt;v#
+#&gt;&gt;^&lt;^&gt;^^&lt;&lt;&gt;^&lt;&lt;^v^^v^&lt;&lt;&lt;<span class="highlight">^</span><span class="glow">E</span><span class="highlight">&lt;</span>&lt;^v&gt;&lt;&gt;.vvv#
+#&gt;v&lt;v^v&lt;.&gt;^.&gt;&lt;&lt;&lt;&lt;v&gt;vv^^&lt;^<span class="highlight">&gt;</span>v&lt;^^^&lt;&lt;v&lt;&lt;v#
+#&gt;&gt;^&lt;v&gt;.&lt;^&lt;v&gt;^&lt;v.^^.v&lt;v&gt;&gt;v&gt;.&gt;&gt;.&gt;v^&lt;&lt;&lt;#
+#&lt;^^^v&lt;&lt;v&lt;.&lt;^.^&lt;&lt;^&gt;^&gt;&gt;&gt;&lt;v^^.^v&lt;v^^.vv#
+#&lt;&lt;v&lt;^^v&gt;^&gt;v&gt;&lt;v&gt;v^&lt;&lt;.^vv&gt;&lt;&gt;v^v&lt;vv&lt;vvv#
+#&lt;&lt;&lt;v&gt;^^&lt;^&lt;^v.&gt;&lt;&gt;^vv&gt;&lt;^&gt;v.v&lt;&gt;.&lt;vv.&gt;&gt;&lt;#
+####################################.#
+</pre>
+        <p>
+            Therefore, we only need to worry about the position of these blizzards during the next execution cycle...
+        </p>
+        <pre>
+#.####################################
+#&gt;&lt;^.^&gt;v^&lt;&gt;&lt;^&lt;&gt;&gt;&gt;^&lt;&gt;&gt;&lt;&gt;v<span class="highlight">&gt;</span>^<span class="highlight">v</span>&lt;^&gt;&gt;^v&lt;&gt;&gt;.#
+#<span class="highlight">&gt;&gt;v^^v^&gt;&lt;.&lt;&lt;.^v&lt;v&gt;.&gt;&lt;&gt;^&lt;&lt;&gt;^v^&lt;vvv&gt;&lt;v</span>#
+#&gt;&gt;^&lt;^&gt;^^&lt;&lt;&gt;^&lt;&lt;^v^^v^&lt;&lt;&lt;<span class="highlight">^</span><span class="glow">E</span><span class="highlight">&lt;</span>&lt;^v&gt;&lt;&gt;.vvv#
+#<span class="highlight">&gt;v&lt;v^v&lt;.&gt;^.&gt;&lt;&lt;&lt;&lt;v&gt;vv^^&lt;^&gt;v&lt;^^^&lt;&lt;v&lt;&lt;v</span>#
+#&gt;&gt;^&lt;v&gt;.&lt;^&lt;v&gt;^&lt;v.^^.v&lt;v&gt;<span class="highlight">&gt;</span>v<span class="highlight">&gt;</span>.&gt;&gt;.&gt;v^&lt;&lt;&lt;#
+#&lt;^^^v&lt;&lt;v&lt;.&lt;^.^&lt;&lt;^&gt;^&gt;&gt;&gt;&lt;<span class="highlight">v</span>^<span class="highlight">^</span>.^v&lt;v^^.vv#
+#&lt;&lt;v&lt;^^v&gt;^&gt;v&gt;&lt;v&gt;v^&lt;&lt;.^vv<span class="highlight">&gt;</span>&lt;<span class="highlight">&gt;</span>v^v&lt;vv&lt;vvv#
+#&lt;&lt;&lt;v&gt;^^&lt;^&lt;^v.&gt;&lt;&gt;^vv&gt;&lt;^&gt;<span class="highlight">v</span>.<span class="highlight">v</span>&lt;&gt;.&lt;vv.&gt;&gt;&lt;#
+####################################.#
+</pre>
+        <p>
+            Not only have we removed the need to update <strong>all</strong> the blizzards <strong>every</strong> cycle, we have also reduced how many blizzards we need to compute the current position of.
+        </p>
+        <p>
+            During parsing of the input, I add blizzards to <span class="inline">HashSet&lt;T&gt;</span>s of their initial position. One hashset for each blizzard direction.
+        </p>
+        <p>
+            This makes it very easy to just pull out, say, left blizzards on row 2 or down blizzards on column 24.
+        </p>
+        <pre>
+#.####################################
+#                       &gt; v          #
+#&gt;&gt;v^^v^&gt;&lt; &lt;&lt; ^v&lt;v&gt; &gt;&lt;&gt;^&lt;&lt;&gt;^v^&lt;vvv&gt;&lt;v#
+#                       ^<span class="glow">E</span>&lt;          #
+#&gt;v&lt;v^v&lt; &gt;^ &gt;&lt;&lt;&lt;&lt;v&gt;vv^^&lt;^&gt;v&lt;^^^&lt;&lt;v&lt;&lt;v#
+#                       &gt; &gt;          #
+#                       v ^          #
+#                       &gt; &gt;          #
+#                       v v          #
+####################################.#
+</pre>
+        <p>
+            For the sake of making my next illustration easier to draw, let's say we are on the first cycle. We can pass <span class="inline">cycle + 1</span> to <a href="https://github.com/stevehjohn/AoC/blob/f99525839478a4af187d195b74b4e2ec23c4d5f2/AoC.Solutions/Solutions/2022/24/Base.cs#L233">IsOccupied</a> and it will determine the positions
+            of the blizzards after one cycle and return <span class="inline">true</span> or <span class="inline">false</span> depending on whether a point on the board contains a blizzard.
+        </p>
+        <p>
+            After one cycle, the state will look like this:
+        </p>
+        <pre>
+#.####################################
+#                       &gt; v          #
+#&gt;&gt;v^^v^&gt;&lt; &lt;&lt; ^v&lt;v&gt;.&gt;&lt;&gt;^&lt;&lt;&gt;^v^&lt;vvv&gt;&lt;v#
+#                       ^<span class="glow">E</span>&lt;          #
+#&gt; &lt; ^ &lt; &gt;^ &gt;&lt;&lt;&lt;&lt; &gt;  ^^&lt;^&gt;v&lt;^^^&lt;&lt; &lt;&lt; #
+# v v v          v vv   &gt; &gt;      v  v#
+#                       v ^          #
+#                       &gt; &gt;          #
+#                       v v          #
+####################################.#
+</pre>
     </div>
 </div>
 <div>

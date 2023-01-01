@@ -74,6 +74,17 @@ pre {
     white-space: pre-wrap;
 }
 
+pre .glow {
+    color: #ffffff;
+    text-shadow: 0 0 1vw #ffffff;
+}
+
+pre .highlight {
+    color: #ffffff;
+    text-shadow: 0 0 1vw #ffffff;
+    background-color: #669966;
+}
+
 .comment {
     color: #aaddaa;
 }

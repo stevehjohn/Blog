@@ -160,6 +160,15 @@ private const long MassiveNumber = 1_000_000_000_000;
         <p>
             First, add that constant to the class so I don't have to type that number again.
         </p>
+        <p>
+            I presumed that there must be a repeating pattern so that one doesn't have to cycle through all the iterations, otherwise, this problem is a no-go. How to detect the pattern and calculate the final result though?
+        </p>
+        <p>
+            There will be people better trained or more well educated in computer science than me who might have a better solution, but <a href="https://github.com/stevehjohn/AoC/blob/ddf2249500c9fad17460c07631bf5ff8b94727f7/AoC.Solutions/Solutions/2022/17/Base.cs#L213">this</a> is what I came up with.
+        </p>
+        <p>
+            It is essentially a scrolling window, looking back over the data to see when the pattern of falling pyronimoes creates the same layout within the playing field.
+        </p>
     </div>
 </div>
 <div>

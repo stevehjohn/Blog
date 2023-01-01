@@ -79,7 +79,7 @@
             Fortunately with this puzzle, this is entirely possible.
         </p>
         <p>
-            Since the blizzard's movements are entirely predictable, we can calculate where a particular one will be after &#119909; cycles of the simulation.
+            Since the blizzards' movements are entirely predictable, we can calculate where a particular one will be after &#119909; cycles of the simulation.
         </p>
         <p>
             Also, we only need to know at any point whether the expedition can move up, down, left or right.
@@ -100,7 +100,7 @@
 ####################################.#
 </pre>
         <p>
-            To consider the next move, we need to know whether the expedition can move up, down, left or right after the storms have moved one step.
+            To evaluate the next move, we need to know whether the expedition can move up, down, left or right after the storms have moved one step.
             So, we care about whether the following locations will be empty after the storms have moved:
         </p>
         <pre>
@@ -116,7 +116,7 @@
 ####################################.#
 </pre>
         <p>
-            Therefore, we only need to worry about the position of these blizzards during the next execution cycle, since they are the only ones that can move into blocking positions...
+            Therefore we only need to worry about the position of these blizzards during the next execution cycle, since they are the only ones that can move into blocking positions...
         </p>
         <pre>
 #.####################################

@@ -134,7 +134,7 @@
             Not only have we removed the need to update <strong>all</strong> the blizzards <strong>every</strong> cycle, we have also reduced how many blizzards we need to compute the current position of.
         </p>
         <p>
-            During parsing of the input, I add blizzards to <span class="inline">HashSet&lt;T&gt;</span>s of their initial position. One hashset for each blizzard direction.
+            During parsing of the input, I add blizzards to <span class="inline">HashSet&lt;T&gt;</span>s containing their initial position. One hashset for each blizzard direction.
         </p>
         <p>
             This makes it very easy to just pull out, say, left blizzards on row &#119910; or down blizzards on column &#119909;.
@@ -159,7 +159,7 @@
             of the blizzards after that cycle and return <span class="inline">true</span> or <span class="inline">false</span> depending on whether a point on the board contains a blizzard.
         </p>
         <p>
-            After one cycle, the state will look like this:
+            After a cycle, the state will look like this:
         </p>
         <pre>
 # ####################################
@@ -174,10 +174,11 @@
 #################################### #
 </pre>
         <p>
-            We can see blizzards have moved to block our left and right moves, but up and down are available.
+            We can see blizzards have moved to block our left and right moves, but up and down are available to be passed as options to the path-finding algorithm.
         </p>
         <p>
-            Pass the <span class="inline">IsOccupied</span> method any cycle number and it will be able to tell you whether a cell is occupied by a blizzard during that cycle.
+            Pass the <span class="inline">IsOccupied</span> method any cycle number and coordinate and it will be able to tell you whether a cell is occupied by a blizzard during that cycle.
+            The computation does not get more expensive as the cycle number grows.
         </p>
         <p>
             A further final note, in performing this check, I actually move the position of the <strong>expedition in relation to the blizzards</strong> by the number of cycles. 

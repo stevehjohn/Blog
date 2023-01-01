@@ -140,7 +140,7 @@
             This makes it very easy to just pull out, say, left blizzards on row 2 or down blizzards on column 24.
         </p>
         <pre>
-#.####################################
+# ####################################
 #                       &gt; v          #
 #&gt;&gt;v^^v^&gt;&lt; &lt;&lt; ^v&lt;v&gt; &gt;&lt;&gt;^&lt;&lt;&gt;^v^&lt;vvv&gt;&lt;v#
 #                       ^<span class="glow">E</span>&lt;          #
@@ -149,7 +149,7 @@
 #                       v ^          #
 #                       &gt; &gt;          #
 #                       v v          #
-####################################.#
+#################################### #
 </pre>
         <p>
             For the sake of making my next illustration easier to draw, let's say we are on the first cycle. We can pass <span class="inline">cycle + 1</span> to <a href="https://github.com/stevehjohn/AoC/blob/f99525839478a4af187d195b74b4e2ec23c4d5f2/AoC.Solutions/Solutions/2022/24/Base.cs#L233">IsOccupied</a> and it will determine the positions
@@ -159,16 +159,16 @@
             After one cycle, the state will look like this (using numbers to represent where more than one blizzard exists):
         </p>
         <pre>
-#.####################################
-#   ^^ ^      ^        ^&gt; v^ ^       #
-# &gt;&gt;    &lt;&gt;&lt;&lt;   &lt;   &gt;&lt;&gt; &gt;&lt;&lt;&gt;  &lt;    &lt;&gt; #
-#  v ^v   ^    v v   ^^ ^<span class="glow">E</span>&lt; 2^^vvv  v#
-# 2   &lt;   &gt; &lt;2&lt;&lt;   &gt;  &lt; ^&gt;2   &lt;&lt; &lt;&lt;  #
-# v v v          v vv   &gt; &gt;      v  v#
-#                       v ^          #
-#                       &gt; &gt;          #
-#                       v v          #
-####################################.#
+# ####################################
+#   ^^ ^      ^        ^v&gt;v^ ^       #
+# &gt;&gt;    &lt;&gt;&lt;&lt;   &lt;   &gt;&lt;&gt; 22 v&gt; &lt;    &lt;&gt; #
+#  v ^v   ^    v v   ^^ ^<span class="glow">&lt;</span>  2^^vvv  v#
+# 2   &lt;   &gt; &lt;2&lt;&lt;   &gt;  &lt;  &gt;2   &lt;&lt; &lt;&lt;  #
+# v v v          v vv    &gt;^&gt;     v  v#
+#                                    #
+#                       v&gt; &gt;         #
+#                                    #
+#################################### #
 </pre>
     </div>
 </div>

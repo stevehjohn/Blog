@@ -118,6 +118,24 @@ private readonly int[][] _rocks =
     }
 };
 </pre>
+        <p>
+            The arena can simply be stored in an <span class="inline">int[]</span>, where each entry is a row in the playing field.
+        </p>
+        <p>
+            Storing the pyronimoes in this fashion also means that moving them left or right is simply a case of bit rotation. Moving a row of a pyronimo right is simply:
+            <pre>
+rock[y] >> 1
+</pre>
+        </p>
+        <p>
+            Detecting a collision when a pyronimo falls, one simply compares the rows of the pyronimo with the relevant row in the playing field.
+        </p>
+        <pre>
+if ((rock[rY] & _map[y]) != 0)
+{<span class="comment">
+    // Collision</span>
+}
+</pre>
     </div>
 </div>
 <div>

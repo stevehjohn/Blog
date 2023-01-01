@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com"/>
+    <meta propery="og:type" content="website"/>
+    <meta propery="og:title" content="outside context problem"/>
+    <meta propery="og:description" content="Stevo's rambings"/>
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png"/>
+    <title>Stevo's Blog - Pyroclastic Flow</title>
+    <link rel="stylesheet" type="text/css" href="default.css"/>
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        Pyroclastic Flow
+    </div>
+    <hr/>
+    <div class="content">
+        <p>
+            Now, this puzzle has a couple of interesting optimisations.
+        </p>
+        <p>
+            It is essentially <a href="https://www.youtube.com/watch?v=_fQtxKmgJC8">Tetris</a> without the rotation element. And slightly different "ominoes".
+        </p>
+        <p>
+            I started by trying to model the playing field and the "pyronimoes" in a 2D array. This should have been fine, but I found it a bit clumsy for some reason.
+            No performance concerns at this point, just trying to make my life easier.
+        </p>
+        <p>
+            So, <a href="https://en.wikipedia.org/wiki/Bitwise_operation">bit twiddling</a> it is.
+        </p>
+        <p>
+            The playing field is small, so each row can easily be stored in a byte. I use integers just as I'm not sure there's an advantage to using bytes on a 64-bit computer.
+        </p>
+        <p>
+            Each "filled" cell can now be represented by a <span class="inline">1</span>.
+        </p>
+        <p>
+            Representing the pyronimoes can now be done as follows in memory...
+        </p>
+        <pre>
+private readonly int[][] _rocks =
+{<span class="comment">
+    /*
+     ....
+     ....
+     ....
+     ####
+     */</span>
+    new[]
+    {
+        0b0011110
+    },<span class="comment">
+    /*
+     ....
+     .#..
+     ###.
+     .#..
+     */</span>
+    new[]
+    {
+        0b0001000,
+        0b0011100,
+        0b0001000
+    },<span class="comment">
+    /*
+     ....
+     ..#.
+     ..#.
+     ###.
+     */</span>
+    new[]
+    {
+        0b0000100,
+        0b0000100,
+        0b0011100
+    },<span class="comment">
+    /*
+     #...
+     #...
+     #...
+     #...
+     */</span>
+    new[]
+    {
+        0b0010000,
+        0b0010000,
+        0b0010000,
+        0b0010000
+    },<span class="comment">
+    /*
+     ....
+     ....
+     ##..
+     ##..
+     */</span>
+    new[]
+    {
+        0b0011000,
+        0b0011000
+    }
+};
+</pre>
+    </div>
+</div>
+<div>
+    <a href="blizzard-basin.html" class="previous">Previous</a>
+</div>
+</body>
+</html>

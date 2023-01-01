@@ -50,7 +50,7 @@
             The playing field is small, so each row can easily be stored in a byte. I use integers just as I'm not sure there's an advantage to using bytes on a 64-bit computer.
         </p>
         <p>
-            Each "filled" cell can now be represented by a <span class="inline">1</span>.
+            Each filled cell can now be represented by a <span class="inline">1</span>.
         </p>
         <p>
             Representing the pyronimoes can now be done as follows in memory...
@@ -136,6 +136,30 @@ if ((rock[rY] & _map[y]) != 0)
     // Collision</span>
 }
 </pre>
+        <p>
+            Pretty simple and neat I thought, worked quickly and produced the correct answer. Awesome!
+        </p>
+        <p>
+            Then part 2 hit...
+        </p>
+        <div class="quote">
+            The elephants are not impressed by your simulation. They demand to know how tall the tower will be after 1000000000000 rocks have stopped! Only then will they feel confident enough to proceed through the cave.
+        </div>
+        <p>
+            Arse.
+        </p>
+        <p>
+            Given the enormity of that number, I knew that brute-forcing the problem was not an option.
+        </p>
+        <h1>
+            The Optimisation
+        </h1>
+        <pre>
+private const long MassiveNumber = 1_000_000_000_000;
+</pre>
+        <p>
+            First, add that constant to the class so I don't have to type that number again.
+        </p>
     </div>
 </div>
 <div>

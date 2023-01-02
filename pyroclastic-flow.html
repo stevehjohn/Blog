@@ -164,11 +164,81 @@ private const long MassiveNumber = 1_000_000_000_000;
             I presumed that there must be a repeating pattern so that one doesn't have to cycle through all the iterations, otherwise, this problem is a no-go. How to detect the pattern and calculate the final result though?
         </p>
         <p>
-            There will be people better trained or more well educated in computer science than me who might have a better solution, but <a href="https://github.com/stevehjohn/AoC/blob/ddf2249500c9fad17460c07631bf5ff8b94727f7/AoC.Solutions/Solutions/2022/17/Base.cs#L213">this</a> is what I came up with.
+            There will be people better trained or more well educated in computer science than me who probably have a better solution,
+            but <a href="https://github.com/stevehjohn/AoC/blob/ddf2249500c9fad17460c07631bf5ff8b94727f7/AoC.Solutions/Solutions/2022/17/Base.cs#L213">this</a> is what I came up with.
         </p>
         <p>
-            It is essentially a scrolling window, looking back over the data to see when the pattern of falling pyronimoes creates the same layout within the playing field.
+            Whenever a new block lands, I take a "snapshot" of the top 50 rows of the playing field and store it along with the &#119910; coordinate of the current top of the map and the current cycle number.
+            These are stored as a hash of each of the 50 rows combined. This keeps the data small, and allows fast lookups. 50 rows is just arbitrary, but it seems to work.
         </p>
+        <pre>
+private readonly Dictionary&lt;int, (int Y, int Cycle)&gt; _hashes = new();
+</pre>
+        <p>
+            To illustrate, I'll use a smaller window of 5 lines.
+        </p>
+        <pre>
+y = 9,987  <span class="highlight">|..#....|</span>  16
+           <span class="highlight">|.###...|</span>  56
+           <span class="highlight">|..#....|</span>  16
+           <span class="highlight">|.####..|</span>  60
+           <span class="highlight">|....##.|</span>  6
+           |....##.|
+           |....#..|
+           |..#.#..|
+           |..#.#..|
+           |#####..|
+           |..###..|
+           |...#...|
+           |..####.|
+           +-------+
+</pre>
+        <p>
+            The reason &#119910; is 9,987 is because I chose a map size of 10,000 rows arbitrarily to store in memory and treat <span class="inline">_map[9_999]</span> as the bottom row of the field.
+        </p>
+        <p>
+            Since each row is stored with bits representing the occupied cells, it is just an integer which is incredibly easy to hash.
+        </p>
+        <p>
+            Now, to see whether the pattern in the playing field is repeating, on each turn we:
+            <ul>
+                <li>
+                    Create a hash of the top 50 rows of the field.
+                </li>
+                <li>
+                    Compare it with our list of historical hashes.
+                </li>
+                <li>
+                    If found, we have discovered a pattern.
+                </li>
+                <li>
+                    If not found, add the hash to the historical list.
+                </li>
+            </ul>
+        </p>
+        <p>
+            For the above example we would add the hash as follows with <span class="inline">_highPoint = 9_987</span>, <span class="inline">WindowSize = 5</span> and <span class="inline">cycle = 7</span> as 7 blocks have fallen.
+        </p>
+        <pre>
+var hash = new HashCode();
+
+for (var y = _highPoint; y < _highPoint + WindowSize; y++)
+{
+    hash.Add(_map[y]);
+}
+
+var hashCode = hash.ToHashCode();
+
+if (_hashes.ContainsKey(hashCode))
+{
+        <span class="comment">// Pattern found!</span>
+}
+else
+{
+        <span class="comment">// Pattern not found, add to history.</span>
+    _hashes.Add(hash.ToHashCode(), (_highPoint, cycle));
+}
+</pre>
     </div>
 </div>
 <div>

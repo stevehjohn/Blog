@@ -219,7 +219,7 @@ y = 9,987  <span class="highlight">|..#....|</span>  16
         <p>
             For the above example we would add the hash as follows with <span class="inline">_highPoint = 9_987</span>, <span class="inline">WindowSize = 5</span> and <span class="inline">cycle = 7</span> as 7 blocks have fallen.
         </p>
-        <pre>
+    <pre>
 var hash = new HashCode();
 
 for (var y = _highPoint; y < _highPoint + WindowSize; y++)
@@ -231,14 +231,34 @@ var hashCode = hash.ToHashCode();
 
 if (_hashes.ContainsKey(hashCode))
 {
-        <span class="comment">// Pattern found!</span>
+    <span class="comment">// Pattern found!</span>
 }
 else
 {
-        <span class="comment">// Pattern not found, add to history.</span>
+    <span class="comment">// Pattern not found, add to history.</span>
     _hashes.Add(hash.ToHashCode(), (_highPoint, cycle));
 }
 </pre>
+    <p>
+        Once a pattern has been found, we can calculate what we need for the final answer.
+    </p>
+    <pre>
+var cycleLength = cycle - _previousCycle;
+
+var heightBoost = (MassiveNumber / cycleLength - 2) * _previousPeriod;
+
+var remainingCycles = (int) ((MassiveNumber - cycle) % cycleLength));
+</pre>
+    <p>
+        With <span class="inline">cycleLength</span> being how many cycles have passed since the pattern we have matched with, <span class="inline">heightBoost</span> how much the top of the playing field has moved in that time
+        and <span class="inline">remainingCycles</span> how many cycles are required to finish the game after the height boost has been added.
+    </p>
+    <p>
+        At this point, we can add the height boost to the current height and run the game for the remaining cycles.
+    </p>
+    <p>
+        Voil&agrave;, a run-time that would probably go past the heat death of the universe is reduced to 2 milliseconds.
+    </p>
     </div>
 </div>
 <div>

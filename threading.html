@@ -23,62 +23,71 @@
     </script>
 </head>
 <body>
-<div class="header">
-    <span>Outside</span> <span>Context</span> <span>Problem</span>
-    <a href="contents.html">&#x2630;</a>
-</div>
-<div class="post">
-    <div class="title">
-        Threading
+    <div class="header">
+        <span>Outside</span> <span>Context</span> <span>Problem</span>
+        <a href="contents.html">&#x2630;</a>
     </div>
-    <hr />
-    <div class="content">
-        <p>
-            When revisiting some of my visualisations to ensure they worked using <a href="https://github.com/baSSiLL/SharpAvi">SharpAvi</a>, I regenerated the one for <a href="https://adventofcode.com/2020/day/20">2020.20.1</a>.
-            It got me thinking of how I approached the visualisations and how the parameters could be tweaked such as the "threads" of this visualisation.
-        </p>
-        <p>
-            As a side note here, I have to say that the maintainer of SharpAvi responded very rapidly to a query I had. It's a free, open source project and he really didn't need to respond as quickly as he did.
-            I'd say, better support than a lot of commercial software.
-        </p>
-        <p>
-            <h1>
-                TL;DR
-            </h1>
-        <p>
-            <ul>
-                <li>
-                    Visualisation is <a href="https://youtu.be/XvJ0MobHnk8">here</a>.
-                </li>
-                <li>
-                    <a href="https://github.com/baSSiLL/SharpAvi">SharpAvi</a> is a good, maintained project.
-                </li>
-            </ul>
-        </p>
-        <p>
-            So, I had a visualisation of this puzzle working in the console, which you can see <a href="https://www.youtube.com/watch?v=6xswdv76gos">here</a>.
-            This is maybe a better one than my MonoGame one as while not as visually interesting, it illustrates the matching process in a better fashion.
-            It highlights the edges that were matched before moving them to the puzzle "mat".
-        </p>
-        <p>
-            While I think this is a good illustration of the logic going into solving this puzzle, when I went to do it in MonoGame I wanted something more visually appealing.
-        </p>
-        <p>
-            The most obvious thing that came to mind was to make it like a jigsaw. Use an image that would ultimately be reassembled from the input data.
-        </p>
-        <p>
-            That is where things got quite interesting...
-        </p>
-        <p>
-            As a big Star Trek fan, I chose an image of the <a href="https://www.youtube.com/watch?v=hpAalCbs2bk">Enterprise-E</a> which is my favourite ship design. Well, maybe apart from the
-            <a href="https://www.youtube.com/watch?v=gFI3vPa5Tvg">Executor Class Super Star Destroyer</a>. It did come across a bit bland though as most of the background was black,
-            so instead I used an image of <a href="https://en.wikipedia.org/wiki/USS_Voyager_(Star_Trek)">Voyager</a> (which I've always loved the design of.)
-        </p>
+    <div class="post">
+        <div class="title">
+            Threading
+        </div>
+        <hr />
+        <div class="content">
+            <p>
+                When revisiting some of my visualisations to ensure they worked using <a href="https://github.com/baSSiLL/SharpAvi">SharpAvi</a>, I regenerated the one for <a href="https://adventofcode.com/2020/day/20">2020.20.1</a>.
+                It got me thinking of how I approached the visualisations and how the parameters could be tweaked such as the "threads" of this visualisation.
+            </p>
+            <p>
+                As a side note here, I have to say that the maintainer of SharpAvi responded very rapidly to a query I had. It's a free, open source project and he really didn't need to respond as quickly as he did.
+                I'd say, better support than a lot of commercial software.
+            </p>
+            <p>
+                <h1>
+                    TL;DR
+                </h1>
+            <p>
+                <ul>
+                    <li>
+                        Visualisation is <a href="https://youtu.be/XvJ0MobHnk8">here</a>.
+                    </li>
+                    <li>
+                        <a href="https://github.com/baSSiLL/SharpAvi">SharpAvi</a> is a good, maintained project.
+                    </li>
+                </ul>
+            </p>
+            <p>
+                So, I had a visualisation of this puzzle working in the console, which you can see <a href="https://www.youtube.com/watch?v=6xswdv76gos">here</a>.
+                This is maybe a better one than my MonoGame one as while not as visually interesting, it illustrates the matching process in a better fashion.
+                It highlights the edges that were matched before moving them to the puzzle "mat".
+            </p>
+            <p>
+                While I think this is a good illustration of the logic going into solving this puzzle, when I went to do it in MonoGame I wanted something more visually appealing.
+            </p>
+            <p>
+                The most obvious thing that came to mind was to make it like a jigsaw. Use an image that would ultimately be reassembled from the input data.
+            </p>
+            <p>
+                That is where things got quite interesting...
+            </p>
+            <p>
+                As a big Star Trek fan, I chose an image of the <a href="https://www.youtube.com/watch?v=hpAalCbs2bk">Enterprise-E</a> which is my favourite ship design. Well, maybe apart from the
+                <a href="https://www.youtube.com/watch?v=gFI3vPa5Tvg">Executor Class Super Star Destroyer</a>. It did come across a bit bland though as most of the background was black,
+                so instead I used an image of <a href="https://en.wikipedia.org/wiki/USS_Voyager_(Star_Trek)">Voyager</a> (which I've always loved the design of.)
+            </p>
+        </div>
     </div>
-</div>
 <div>
     <a href="custom-visualisations.html" class="previous">Previous</a>
     <a href="twenty-twenty-two.html" class="next">Next</a>
+</div>
+<div class="comments">
+    <script src="https://utteranc.es/client.js"
+            repo="stevehjohn/AoC"
+            issue-term="10"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+        </script>
 </div>
 </body>
 </html>

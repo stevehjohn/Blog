@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com" />
+    <meta propery="og:type" content="website" />
+    <meta propery="og:title" content="outside context problem" />
+    <meta propery="og:description" content="Stevo's rambings" />
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
+    <title>Stevo's Blog - Monkey Map</title>
+    <link rel="stylesheet" type="text/css" href="default.css" />
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        Monkey Map
+    </div>
+    <hr />
+    <div class="content">
+        <p>
+            Another one where part 1 one was simple enough and then part 2 turns it into a doozy.
+        </p>
+        <p>
+            I faffed around a lot in this one going between using a 2D <span class="inline">char[,]</span> or 3D <span class="inline">char[,,]</span> representation.
+        </p>
+        <p>
+            One of the issues with a 3D representation is having to have "blank" edges because a cell on the top may contain a different entity to one on say, the left face. For example...
+        </p>
+        <p>
+            I settled on using the 2D representation in the end.
+        </p>
+        <p>
+            The next bit, and this is where I disappointed myself, was not coming up with a generic solution to the edge translations. I'm sure I could with time, but speed was of the essence.
+        </p>
+        <p>
+            So, I created a smaller net with the same layout as my puzzle input...
+        </p>
+        <pre>
+     ..........
+     ..........
+     ..........
+     ..........
+     ..........
+     .....
+     .....
+     .....
+     .....
+     .....
+..........
+..........
+..........
+..........
+..........
+.....
+.....
+.....
+.....
+.....
+</pre>
+        <p>
+            Then I created a path that would ensure the player would exit each edge and enter every other possible edge.
+        </p>
+        <p>
+            I did this as I knew that debugging the real map would just be nigh on impossible.
+        </p>
+        <p>
+            Anyway, with some patience, I came up with a way to map the edge translations.
+        </p>
+        <pre>
+private (Point Position, char NewDirection) Wrap3D(Point newSegment, Point segmentPosition)
+{
+    return (newSegment.X, newSegment.Y, _direction) switch
+    {
+        (0, 0, 'L') => (GetPositionInNewSegment(0, 2, 'L', segmentPosition.Y), 'R'), <span class="comment">// ✓</span>
+        (1, -1, 'U') => (GetPositionInNewSegment(0, 3, 'L', segmentPosition.X, false), 'R'), <span class="comment">// ✓</span>
+        (2, -1, 'U') => (GetPositionInNewSegment(0, 3, 'D', segmentPosition.X, false), 'U'), <span class="comment">// ✓</span>
+        (3, 0, 'R') => (GetPositionInNewSegment(1, 2, 'R', segmentPosition.Y), 'L'), <span class="comment">// ✓</span>
+        (2, 1, 'D') => (GetPositionInNewSegment(1, 1, 'R', segmentPosition.X, false), 'L'), <span class="comment">// ✓</span>
+        (2, 1, 'R') => (GetPositionInNewSegment(2, 0, 'D', segmentPosition.Y, false), 'U'), <span class="comment">// ✓</span>
+        (2, 2, 'R') => (GetPositionInNewSegment(2, 0, 'R', segmentPosition.Y), 'L'), <span class="comment">// ✓</span>
+        (1, 3, 'D') => (GetPositionInNewSegment(0, 3, 'R', segmentPosition.X, false), 'L'), <span class="comment">// ✓</span>
+        (1, 3, 'R') => (GetPositionInNewSegment(1, 2, 'D', segmentPosition.Y, false), 'U'), <span class="comment">// ✓</span>
+        (0, 4, 'D') => (GetPositionInNewSegment(2, 0, 'U', segmentPosition.X, false), 'D'), <span class="comment">// ✓</span>
+        (-1, 3, 'L') => (GetPositionInNewSegment(1, 0, 'U', segmentPosition.Y, false), 'D'), <span class="comment">// ✓</span>
+        (-1, 2, 'L') => (GetPositionInNewSegment(1, 0, 'L', segmentPosition.Y), 'R'), <span class="comment">// ✓</span>
+        (0, 1, 'U') => (GetPositionInNewSegment(1, 1, 'L', segmentPosition.X, false), 'R'), <span class="comment">// ✓</span>
+        (0, 1, 'L') => (GetPositionInNewSegment(0, 2, 'U', segmentPosition.Y, false), 'D'), <span class="comment">// ✓</span>
+        _ => throw new PuzzleException("Cannot 3D teleport.")
+    };
+}
+</pre>
+        <p>
+            As you can see, I added comments after verifying each one with my small map.
+        </p>
+        <p>
+            Picking a convenient line, the switch statement works as follows...
+        </p>
+        <pre>
+<span class="highlight">(0, 1, 'L')</span> => (GetPositionInNewSegment(0, 2, 'U', segmentPosition.Y, false), 'D'), <span class="comment">// ✓</span>
+</pre>
+        <p>
+            The first two numbers are the coordinates of the segment being entered. The character is the direction of entry. So, for the net above we are entering segment <span class="inline">0, 1</span> heading left (i.e. coming from <span class="inline">1, 1</span>).
+        </p>
+        <pre>
+     ..........
+     ..........
+ 0,0 .1,0..2,0.
+     ..........
+     ..........
+     .....
+     .....
+ 0,1 .1,1. 2,1
+     .....
+     .....
+..........
+..........
+.0,2..1,2. 2,2
+..........
+..........
+.....
+.....
+.0,3. 1,3  2,3
+.....
+.....
+</pre>
+        <p>
+            The next part gets the entry position into what will be the destination segment. In this case <span class="inline">0, 2</span>, on its upper edge.
+        </p>
+        <pre>
+(0, 1, 'L') => (<span class="highlight">GetPositionInNewSegment(0, 2, 'U'</span>, segmentPosition.Y), 'D'), <span class="comment">// ✓</span>
+</pre>
+        <p>
+            With the following determining which coordinate will determine the offset for entry into the new edge.
+        </p>
+        <pre>
+(0, 1, 'L') => (GetPositionInNewSegment(0, 2, 'U', <span class="highlight">segmentPosition.Y</span>), 'D'), <span class="comment">// ✓</span>
+</pre>
+        <p>
+            We use &#119910; in this instance because as &#119910; increases in the original segment, it maps to an increasing &#119909; in the new segment.
+        </p>
+        <pre>
+    |.....
+    y.....
+    |.....
+    v.....
+-x-> .....
+..........
+..........
+..........
+..........
+..........</pre>
+        <p>
+            Finally, the last part of the statement indicates the new direction upon entry into the new segment. Which, as we can see, will be down.
+        </p>
+        <pre>
+(0, 1, 'L') => (GetPositionInNewSegment(0, 2, 'U', segmentPosition.Y), <span class="highlight">'D'</span>), <span class="comment">// ✓</span>
+</pre>
+        <p>
+            This approach worked in the end, but I really would have liked to have automated the edge mappings.
+        </p>
+    </div>
+</div>
+<div>
+    <a href="pyroclastic-flow.html" class="previous">Previous</a>
+</div>
+</body>
+</html>

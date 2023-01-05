@@ -143,13 +143,13 @@ private (Point Position, char NewDirection) Wrap3D(Point newSegment, Point segme
             The next part gets the entry position into what will be the destination segment. In this case <span class="inline">0, 2</span>, on its upper edge.
         </p>
         <pre>
-(0, 1, 'L') => (<span class="highlight">GetPositionInNewSegment(0, 2, 'U'</span>, segmentPosition.Y), 'D'), <span class="comment">// ✓</span>
+(0, 1, 'L') => (<span class="highlight">GetPositionInNewSegment(0, 2, 'U'</span>, segmentPosition.Y, false), 'D'), <span class="comment">// ✓</span>
 </pre>
         <p>
             With the following determining which coordinate will determine the offset for entry into the new edge.
         </p>
         <pre>
-(0, 1, 'L') => (GetPositionInNewSegment(0, 2, 'U', <span class="highlight">segmentPosition.Y</span>), 'D'), <span class="comment">// ✓</span>
+(0, 1, 'L') => (GetPositionInNewSegment(0, 2, 'U', <span class="highlight">segmentPosition.Y</span>, false), 'D'), <span class="comment">// ✓</span>
 </pre>
         <p>
             We use &#119910; in this instance because as &#119910; increases in the original segment, it maps to an increasing &#119909; in the new segment.
@@ -164,20 +164,56 @@ private (Point Position, char NewDirection) Wrap3D(Point newSegment, Point segme
 ..........
 ..........
 ..........
-..........</pre>
+..........
+</pre>
         <p>
             Finally, the last part of the statement indicates the new direction upon entry into the new segment. Which, as we can see, will be down.
         </p>
         <pre>
-(0, 1, 'L') => (GetPositionInNewSegment(0, 2, 'U', segmentPosition.Y), <span class="highlight">'D'</span>), <span class="comment">// ✓</span>
+(0, 1, 'L') => (GetPositionInNewSegment(0, 2, 'U', segmentPosition.Y), <span class="highlight">'D'</span>, false), <span class="comment">// ✓</span>
+</pre>
+        <p>
+            <span class="inline">GetPositionInNewSegment</span> also takes an optional boolean parameter which defaults to <span class="inline">true</span>.
+        </p>
+        <pre>
+(0, 1, 'L') => (GetPositionInNewSegment(0, 2, 'U', segmentPosition.Y), 'D', <span class="highlight">false</span>), <span class="comment">// ✓</span>
+</pre>
+        <p>
+            If this were omitted or set to <span class="inline">true</span> in the above example, it would reverse the entry offset coordinate. If we consider moving from <span class="inline">1, 3</span> to <span class="inline">0, 3</span>
+            where the right edge maps to the bottom edge, we need to reverse the direction of the initial location.
+        </p>
+        <pre>
+..........|
+..........y
+......1,2.|
+..........v
+..........
+.....
+.....
+.0,3.
+.....
+.....
+ &lt;-x-
 </pre>
         <p>
             This approach worked in the end, but I really would have liked to have automated the edge mappings.
+        </p>
+        <p>
+            Hopefully, I'll find the time to get back to it.
         </p>
     </div>
 </div>
 <div>
     <a href="pyroclastic-flow.html" class="previous">Previous</a>
+</div>
+<div class="comments">
+    <script src="https://utteranc.es/client.js"
+            repo="stevehjohn/AoC"
+            issue-term="36"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+    </script>
 </div>
 </body>
 </html>

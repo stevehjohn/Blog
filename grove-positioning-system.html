@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com" />
+    <meta propery="og:type" content="website" />
+    <meta propery="og:title" content="outside context problem" />
+    <meta propery="og:description" content="Stevo's rambings" />
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
+    <title>Stevo's Blog - Grove Positioning System</title>
+    <link rel="stylesheet" type="text/css" href="default.css" />
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        Grove Positioning System
+    </div>
+    <hr />
+    <div class="content">
+        <p>
+            Now, this one has been the bane of my life from an optimisation standpoint.
+        </p>
+        <p>
+            It's not a difficult one to comprehend or implement, but everything I did seemed slow in comparison to other puzzle run-times.
+        </p>
+        <p>
+            I tried a self-implemented circular linked list, a circular list based upon <span class="inline">List&lt;T&gt;</span>, then simply a <span class="inline">List&lt;T&gt;</span> which I thought got me as far is I could go.
+        </p>
+        <p>
+            I think I was at around the ~250ms execution time when I just couldn't see how to make it faster. This was annoying, because it isn't actually doing much... just many repetitions.
+        </p>
+        <h2>
+            The Optimisation
+        </h2>
+        <p>
+            Unfortunately, this one doesn't really have a clever optimisation from spotting something in the puzzle that <a href="blizzard-basin.html">didn't need to be done</a> or <a href="pyroclastic-flow.html">finding patterns</a>.
+        </p>
+        <p>
+            Instead, I went down to the metal and looked at <span class="inline">List&lt;T&gt;</span> to see what it was doing.
+        </p>
+        <p>
+            <span class="inline">List&lt;T&gt;</span> is basically backed by an array. However, because it is generic, it has to perform many checks on how to determine equivalence, boundary checks, etc...
+        </p>
+        <p>
+            As I knew the size of my array and the type stored, there was no need for these to consume precious processor cycles.
+        </p>
+        <p>
+            So, long story, short, I ditched the <span class="inline">List&lt;T&gt;</span> for an array.
+        </p>
+        <p>
+            Here's the meat of the change.
+        </p>
+        <pre>
+<span class="deleted"><span class="diffSymbol">-</span> private readonly List&lt;Number&gt; _numbers = new();</span>
+<span class="added"><span class="diffSymbol">+</span> private Number[] _numbers;</span>
+
+...
+
+<span class="deleted"><span class="diffSymbol">-</span> var number = _initialNumbers[index];</span>
+<span class="deleted"><span class="diffSymbol">-</span></span>
+<span class="deleted"><span class="diffSymbol">-</span> var oldIndex = _numbers.IndexOf(number);</span>
+<span class="added"><span class="diffSymbol">+</span> var oldIndex = 0;</span>
+<span class="added"><span class="diffSymbol">+</span></span>
+<span class="added"><span class="diffSymbol">+</span> for (var i = 0; i < _length; i++)</span>
+<span class="added"><span class="diffSymbol">+</span> {</span>
+<span class="added"><span class="diffSymbol">+</span>     if (_numbers[i] == number)</span>
+<span class="added"><span class="diffSymbol">+</span>     {</span>
+<span class="added"><span class="diffSymbol">+</span>         oldIndex = i;</span>
+<span class="added"><span class="diffSymbol">+</span></span>
+<span class="added"><span class="diffSymbol">+</span>         break;</span>
+<span class="added"><span class="diffSymbol">+</span>     }</span>
+<span class="added"><span class="diffSymbol">+</span> }</span>
+
+...
+
+<span class="deleted"><span class="diffSymbol">-</span> _numbers.RemoveAt(oldIndex);</span>
+<span class="deleted"><span class="diffSymbol">-</span></span>
+<span class="deleted"><span class="diffSymbol">-</span> _numbers.Insert(newIndex, number);</span>
+<span class="added"><span class="diffSymbol">+</span> Array.Copy(_numbers, oldIndex + 1, _numbers, oldIndex, _length - oldIndex - 1);</span>
+<span class="added"><span class="diffSymbol">+</span></span>
+<span class="added"><span class="diffSymbol">+</span> Array.Copy(_numbers, newIndex, _numbers, newIndex + 1, _length - newIndex - 1);</span>
+<span class="added"><span class="diffSymbol">+</span></span>
+<span class="added"><span class="diffSymbol">+</span> _numbers[newIndex] = number;</span>
+</pre>
+        <p>
+            It's difficult to say exactly as the run-times do differ from execution to execution (I thought computers were deterministic...), but I think this shaved ~100ms off the run-time on average.
+        </p>
+        <p>
+            A win, but it's my last remaining puzzle that exceeds 100ms... can I let this go?
+        </p>
+    </div>
+</div>
+<div>
+    <a href="timings-update-2.html" class="previous">Previous</a>
+</div>
+<div class="comments">
+    <script src="https://utteranc.es/client.js"
+            repo="stevehjohn/AoC"
+            issue-term="38"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+        </script>
+</div>
+</body>
+</html>

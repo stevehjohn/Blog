@@ -92,9 +92,14 @@
 <span class="deleted"><span class="diffSymbol">-</span> _numbers.RemoveAt(oldIndex);</span>
 <span class="deleted"><span class="diffSymbol">-</span></span>
 <span class="deleted"><span class="diffSymbol">-</span> _numbers.Insert(newIndex, number);</span>
-<span class="added"><span class="diffSymbol">+</span> Array.Copy(_numbers, oldIndex + 1, _numbers, oldIndex, _length - oldIndex - 1);</span>
-<span class="added"><span class="diffSymbol">+</span></span>
-<span class="added"><span class="diffSymbol">+</span> Array.Copy(_numbers, newIndex, _numbers, newIndex + 1, _length - newIndex - 1);</span>
+<span class="added"><span class="diffSymbol">+</span> if (oldIndex < newIndex)</span>
+<span class="added"><span class="diffSymbol">+</span> {</span>
+<span class="added"><span class="diffSymbol">+</span>     Array.Copy(_numbers, oldIndex + 1, _numbers, oldIndex, newIndex - oldIndex);</span>
+<span class="added"><span class="diffSymbol">+</span> }</span>
+<span class="added"><span class="diffSymbol">+</span> else</span>
+<span class="added"><span class="diffSymbol">+</span> {</span>
+<span class="added"><span class="diffSymbol">+</span>     Array.Copy(_numbers, newIndex, _numbers, newIndex + 1, oldIndex - newIndex);</span>
+<span class="added"><span class="diffSymbol">+</span> }</span>
 <span class="added"><span class="diffSymbol">+</span></span>
 <span class="added"><span class="diffSymbol">+</span> _numbers[newIndex] = number;</span>
 </pre>

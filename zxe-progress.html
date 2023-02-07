@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com" />
+    <meta propery="og:type" content="website" />
+    <meta propery="og:title" content="outside context problem" />
+    <meta propery="og:description" content="Stevo's rambings" />
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
+    <title>Stevo's Blog - ZXE Progress</title>
+    <link rel="stylesheet" type="text/css" href="default.css" />
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        ZXE Progress
+    </div>
+    <hr />
+    <div class="content">
+        <p>
+            Well, I've been quite enjoying working on this emulator.
+        </p>
+        <p>
+            One thing nagging at me while doing so was, "how do I test this thing?" Doing a complete implementation and then loading a game into it hoping it would work would just be ridiculous.
+        </p>
+        <p>
+            It took a fair bit of Googling, braving asking a question on the now toxic Stack Overflow (no joy) and some more Googling to find something useful.
+        </p>
+        <p>
+            I came across <a href="https://github.com/raddad772/jsmoo">JSMoo</a> on GitHub. A JavaScript/AssemblyScript multiple machine emulator. 
+            Specifically, <a href="https://github.com/raddad772/jsmoo/tree/main/misc/tests/GeneratedTests/z80">this part</a> of the project was going to prove extremely useful to me.
+            It is a lot of JSON files (~1,600) each containing multiple tests. Each file targets a specific instruction. 
+            The test provides a starting machine state and an expected machine state once the instruction(s) have been executed.
+        </p>
+        <p>
+            Perfect.
+        </p>
+        <p>
+            So, at this point I have implemented 175 instructions in my Z80 processor class. When I first found this test suite, about 20% of them failed the given tests.
+            Imagine not having these tests and trying to track down what is wrong when attempting to run something on the emulator! Virtually impossible I reckon.
+        </p>
+        <p>
+            Anyway, at the time of writing this, all instructions pass all the tests thrown at them. I'm looking forward to getting everything implemented and see if I can get a booting 48K Speccy running.
+        </p>
+        <p>
+            I've also implemented a test runner that will output debug information for failing tests.
+        </p>
+        <p>
+        <div style="text-align: center">
+            <img src="Images/Debugging-Test-Suite.PNG" />
+        </div>
+        </p>
+        <p>
+            Which is pretty handy.
+        </p>
+        <img src="logo.png" class="fox" />
+    </div>
+</div>
+<div>
+    <a href="zxe.html" class="previous">Previous</a>
+</div>
+<div class="comments">
+    <script src="https://utteranc.es/client.js"
+            repo="stevehjohn/AoC"
+            issue-term="40"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+    </script>
+</div>
+</body>
+</html>

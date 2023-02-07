@@ -168,6 +168,11 @@ h1 {
     color: #aaaadd;
 }
 
+img { 
+    border-radius: 1vw;
+    text-align: center;
+}
+
 @media only screen and (hover: none) and (pointer: coarse) {
     .header { font-size: 3vh; }
 

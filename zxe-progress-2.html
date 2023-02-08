@@ -64,6 +64,55 @@
         <p>
             Churning through a massive list of instructions to emulate, each with details such as setting flags after the operation etc... has become a bit of a grind.
         </p>
+        <p>
+            Anyway, due to a bout of insomnia caused by a couple of factors I won't go into, I have indeed been grinding away at this task.
+        </p>
+        <p>
+            This is the current result of running the test suite I mentioned.
+        </p>
+        <div class="image-container">
+            <img src="Images/Test-Suite-Results-3.PNG" />
+        </div>
+        <p>
+            Basically, I have implemented all of the one-byte opcodes. By this I mean excluding operands. So, <span class="inline">LD HL, nn</span> is a one-byte opcode in my mind, 
+            though the entire instruction would be three bytes.
+        </p>
+        <p>
+            This is because the processor will interpret <span class="inline">0x21</span> as <span class="inline">LD HL, nn</span>. 
+            Then it will need to get the data for <span class="inline">nn</span>, which will be the next two bytes.
+        </p>
+        <p>
+            So this is a three byte instruction, but a one byte opcode.
+        </p>
+        <p>
+            One byte... 0 to 255. In the Z80 instruction set, most of these values are used as opcodes, but there's a few gaps. These are used to indicate that there's another byte to read before deciding upon the operation.
+        </p>
+        <p>
+            As mentioned, if the processor encounters <span class="inline">0x21</span>, it knows this is <span class="inline">LD HL, nn</span> and it needs to read the next two bytes to put into the <span class="inline">HL</span> register pair.
+        </p>
+        <p>
+            To expand the instruction set capability without having to use more than one byte to represent every instruction, the chip designers decided to use what I'll call an "indicator" byte
+            to signify that it isn't an instruction, but the next byte will effectively be an instruction from a different list.
+        </p>
+        <p>
+            In the Z80, I think there's about 3 or 4 of these (sounds vague, but I'll know for sure once fully implemented).
+        </p>
+        <p>
+            One example is <span class="inline">0xDD</span>. <span class="inline">0x21</span> is <span class="inline">LD HL, nn</span> to the processor.
+            If prefixed with <span class="inline">0xDD</span> though, this is now interpreted as <span class="inline">LD IX, nn</span>.
+        </p>
+        <p>
+            Anyway, long story, short... There's more than the ~250 operations I expected to need to emulate, many of which have documented and undocumented nuances.
+        </p>
+        <p>
+            What's keeping me grinding? Well, the hope in a few weeks (probably months TBH), I can wire everything together and see this, knowing I wrote the code to make it happen...
+        </p>
+        <div class="image-container">
+            <img src="Images/128-boot-sxcreen.PNG" />
+        </div>
+        <p>
+            Watch this space I guess...
+        </p>
         <img src="logo.png" class="fox" />
     </div>
 </div>

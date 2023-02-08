@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com" />
+    <meta propery="og:type" content="website" />
+    <meta propery="og:title" content="outside context problem" />
+    <meta propery="og:description" content="Stevo's rambings" />
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
+    <title>Stevo's Blog - ZXE Progress Continued...</title>
+    <link rel="stylesheet" type="text/css" href="default.css" />
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        ZXE Progress Continued...
+    </div>
+    <hr />
+    <div class="content">
+        <p>
+            So, this could turn out to be quite the series of blog posts.
+        </p>
+        <p>
+            Having done a bunch of <a href="https://adventofcode.com/">Advent of Code</a> puzzles and a friend's computer science homework that involved "emulating" a machine, I had the crazy idea the other day to write a proper emulator myself.
+        </p>
+        <p>
+            Easy-peasy, right? If you really boil it down to the basics (ignoring many great features of modern languages) an emulator is essentially, at it's core a big <span class="inline">switch</span> statement...
+            right?
+        </p>
+        <p>
+            Short answer: No.
+        </p>
+        <p>
+            Basically, there is a massive difference between implementing a well thought-out theoretical virtual machine and emulating a processor designed in the 1970s.
+        </p>
+        <p>
+            Anyway, because I'm a glutton for punishment, I cracked on.
+        </p>
+        <p>
+            I discussed testing in my <a href="zxe-progress.html">previous post</a>, so I won't go there again. For now, anyway. I guess I just want to post about some other details related to implementing something like this.
+        </p>
+        <h2>
+            Tedium... 
+        </h2>
+        <p>
+            I have always been passionate about coding, and probably always will be. When I'm creating something with code and in the flow, time seems to slip away. However...
+        </p>
+        <p>
+            Churning through a massive list of instructions to emulate, each with details such as setting flags after the operation etc... has become a bit of a grind.
+        </p>
+        <img src="logo.png" class="fox" />
+    </div>
+</div>
+<div>
+    <a href="zxe-progress.html" class="previous">Previous</a>
+</div>
+<div class="comments">
+    <script src="https://utteranc.es/client.js"
+            repo="stevehjohn/AoC"
+            issue-term="41"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+    </script>
+</div>
+</body>
+</html>

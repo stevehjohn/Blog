@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com" />
+    <meta propery="og:type" content="website" />
+    <meta propery="og:title" content="outside context problem" />
+    <meta propery="og:description" content="Stevo's rambings" />
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
+    <title>Stevo's Blog - ZXE Milestone 1</title>
+    <link rel="stylesheet" type="text/css" href="default.css" />
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        ZXE Milestone 1
+    </div>
+    <hr />
+    <div class="content">
+        <p>
+            Well, a milestone of sorts...
+        </p>
+        <p>
+            Grinding through the instruction set, I have implemented the "Main Instructions", "IX Instructions (DD)" and "IY Instructions (FD)" listed <a href="https://clrhome.org/table/">here</a>.
+        </p>
+        <p>
+            I use quotes since not all double-byte opcodes starting with <span class="inline">0xDD</span> relate to the <span class="inline">IX</span> register, and not all opcodes starting with <span class="inline">0xFD</span> relate to the <span class="inline">IY</span> register.
+        </p>
+        <p>
+            The results of my test suite are currently:
+        </p>
+        <div class="image-container">
+            <img src="Images/Test-Suite-Results-FD-Done.PNG" />
+        </div>
+        <p>
+            So, approximately 1,188 more instructions to implement... Though there are genuinely gaps in the set, so it won't be this many.
+        </p>
+        <p>
+            Also, I'm going to take this opportunity to share some screenshots of the output for failed tests. This has proved extremely useful in troubleshooting.
+        </p>
+        <div class="image-container">
+            <img src="Images/Debugging-Test-Suite-3.PNG" />
+        </div>
+        <br />
+        <div class="image-container">
+            <img src="Images/Debugging-Test-Suite-4.PNG" />
+        </div>
+        <br />
+        <div class="image-container">
+            <img src="Images/Debugging-Test-Suite-5.PNG" />
+        </div>
+        <p>
+            Source code <a href="https://github.com/stevehjohn/ZXE">here</a> if anyone wants to play with it.
+        </p>
+        <img src="logo.png" class="fox" />
+    </div>
+</div>
+<div>
+    <a href="zxe-progress-2.html" class="previous">Previous</a>
+</div>
+<div class="comments">
+    <script src="https://utteranc.es/client.js"
+            repo="stevehjohn/AoC"
+            issue-term="42"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+    </script>
+</div>
+</body>
+</html>

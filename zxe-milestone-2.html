@@ -8,7 +8,7 @@
     <meta propery="og:title" content="outside context problem" />
     <meta propery="og:description" content="Stevo's rambings" />
     <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
-    <title>Stevo's Blog - ZXE Milestone 1</title>
+    <title>Stevo's Blog - ZXE Milestone 2</title>
     <link rel="stylesheet" type="text/css" href="default.css" />
     <link rel="icon" type="image/x-icon" href="logo.png">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
@@ -29,53 +29,47 @@
 </div>
 <div class="post">
     <div class="title">
-        ZXE Milestone 1
+        ZXE Milestone 2
     </div>
     <hr />
     <div class="content">
         <p>
-            Well, a milestone of sorts...
+            So, I think I've implemented all the Z80 instructions. I say "I think" because there are definite conflicting sources of information. I've tried to make a best guess where I can.
         </p>
         <p>
-            Grinding through the instruction set, I have implemented the "Main Instructions", "IX Instructions (DD)" and "IY Instructions (FD)" listed <a href="https://clrhome.org/table/">here</a>.
-        </p>
-        <p>
-            The results of my test suite are currently:
+            Here are the results of running the third party tests against the emulator.
         </p>
         <div class="image-container">
-            <img src="Images/Test-Suite-Results-FD-Done.PNG" />
+            <img src="Images/Test-Suite-Results-13-02-23.2.PNG" />
         </div>
         <p>
-            So, approximately 1,188 more instructions to implement... Though there are genuinely gaps in the set, so it won't be this many.
+            12 failing tests out of 1,250,324 I can live with for now.
         </p>
         <p>
-            Also, I'm going to take this opportunity to share some screenshots of the output for failed tests. This has proved extremely useful in troubleshooting.
+            What is more interesting is the 361 not implemented tests. So, the provider of the tests expects an instruction with a certain opcode... but I think I've implemented most instructions I can find documentation for.
+        </p>
+        <p>
+            More research required.
+        </p>
+        <p>
+            I also have a booting host of sorts. It starts with something that looks familiar, so might be on the correct track, but never gets to displaying the copyright message.
         </p>
         <div class="image-container">
-            <img src="Images/Debugging-Test-Suite-3.PNG" />
-        </div>
-        <br />
-        <div class="image-container">
-            <img src="Images/Debugging-Test-Suite-4.PNG" />
-        </div>
-        <br />
-        <div class="image-container">
-            <img src="Images/Debugging-Test-Suite-5.PNG" />
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/qbrIxWOAl1E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
         <p>
-            Source code <a href="https://github.com/stevehjohn/ZXE">here</a> if anyone wants to play with it.
+            Will keep chipping away at it...
         </p>
         <img src="logo.png" class="fox" />
     </div>
 </div>
 <div>
-    <a href="zxe-progress-2.html" class="previous">Previous</a>
-    <a href="zxe-milestone-2.html" class="next">Next</a>
+    <a href="zxe-milestone-1.html" class="previous">Previous</a>
 </div>
 <div class="comments">
     <script src="https://utteranc.es/client.js"
             repo="stevehjohn/AoC"
-            issue-term="42"
+            issue-term="43"
             theme="github-dark"
             crossorigin="anonymous"
             async>

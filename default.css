@@ -176,6 +176,10 @@ img {
     text-align: center;
 }
 
+iframe {
+    border-radius: 1vw;
+}
+
 @media only screen and (hover: none) and (pointer: coarse) {
     .header { font-size: 3vh; }
 

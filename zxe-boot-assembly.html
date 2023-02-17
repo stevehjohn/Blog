@@ -8,7 +8,7 @@
     <meta propery="og:title" content="outside context problem" />
     <meta propery="og:description" content="Stevo's rambings" />
     <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
-    <title>Stevo's Blog - It Lives!</title>
+    <title>Stevo's Blog - ZXE Boot Assembly</title>
     <link rel="stylesheet" type="text/css" href="default.css" />
     <link rel="icon" type="image/x-icon" href="logo.png">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
@@ -29,30 +29,44 @@
 </div>
 <div class="post">
     <div class="title">
-        It Lives!
+        ZXE Boot Assembly
     </div>
     <hr />
     <div class="content">
         <p>
-            The emulator is in a state where it fully boots! Very pleased with this.
+            So, this one is likely to be of niche interest.
+        </p>
+        <p>
+            I added an optional console logger to my emulator. One can set a variable and a console will open along with the emulator showing all the assembly language instructions being executed in real time.
+        </p>
+        <p>
+            This obviously slows down the emulator. A lot.
+        </p>
+        <p>
+            With logging disabled, this hour-long sequence takes less than a second.
+        </p>
+        <p>
+            It is kind of interesting though... how many instructions a processor chugs through before even just getting to a basic copyright screen.
         </p>
         <div class="image-container">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/wyCHmGKJ4l8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/XAHmSJM8GCc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
         <p>
-            Code <a href="https://github.com/stevehjohn/ZXE">here</a>.
+            Anyhoo... bugs are getting reduced rapidly. I think I just need to properly finish off the interrupt and port I/O implementations, then it might be there.
         </p>
-        <img src="logo.png" class="fox" />
+        <p>
+            We'll see...
+        </p>
+        <img src="logo.png" class="fox"/>
     </div>
 </div>
 <div>
-    <a href="zxe-milestone-2.html" class="previous">Previous</a>
-    <a href="zxe-boot-assembly.html" class="next">Next</a>
+    <a href="it-lives.html" class="previous">Previous</a>
 </div>
 <div class="comments">
     <script src="https://utteranc.es/client.js"
             repo="stevehjohn/AoC"
-            issue-term="44"
+            issue-term="n"
             theme="github-dark"
             crossorigin="anonymous"
             async>

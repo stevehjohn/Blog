@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com" />
+    <meta propery="og:type" content="website" />
+    <meta propery="og:title" content="outside context problem" />
+    <meta propery="og:description" content="Stevo's rambings" />
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
+    <title>Stevo's Blog - ZXE - Treasure Island Dizzy</title>
+    <link rel="stylesheet" type="text/css" href="default.css" />
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        ZXE - Treasure Island Dizzy
+    </div>
+    <hr />
+    <div class="content">
+        <p>
+            A bit more progress to report. Been unwell, so not done a huge amount this week.
+        </p>
+        <p>
+            The emulator boots, and once at the copyright screen, I can press <span class="key">F10</span> and it will load a <a href="https://worldofspectrum.org/faq/reference/z80format.htm">Z80</a> image 
+            which I have hard-coded for now to be Treasure Island Dizzy.
+        </p>
+        <p>
+            Because childhood memories I guess.
+        </p>
+        <div class="image-container">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/2UjjE5wN5-M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <p>
+            Actually, definitely childhood memories... I used to play this game all the time.
+        </p>
+        <p>
+            Anyway... 
+        </p>
+        <p>
+            The emulator is obviously doing a lot of things correctly to get to this stage after loading the memory snapshot.
+        </p>
+        <p>
+            But...
+        </p>
+        <p>
+            Dizzy's hands aren't wobbling which they should (which I interpret as something having stalled). Also I have not implemented keyboard input for the emulator yet, so sadly no movement for the pre-omelette.
+        </p>
+        <p>
+            This is how it should be in all its glory... (beware, the sound is much more annoying than I recall).
+        </p>
+        <div class="image-container">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/OwNgWFbPuWo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <p>
+            All in all, this has been quite a fun personal challenge.
+        </p>
+        <p>
+            I fully admit to starting it thinking it would be a piece of the proverbial. With hindsight though, emulating an entire computer system is not trivial at all.
+            It is not just a case of replicating all the processor instructions to manipulate RAM.
+        </p>
+        <p>
+            Anyway, all in all, this has been an interesting passion project. If anyone wants to chip in, especially with regards to interrupts, <a href="https://github.com/stevehjohn/ZXE">please do</a>.
+        </p>
+        <img src="logo.png" class="fox"/>
+    </div>
+</div>
+<div>
+    <a href="zxe-vram-adapter.html" class="previous">Previous</a>
+</div>
+<div class="comments">
+    <script src="https://utteranc.es/client.js"
+            repo="stevehjohn/AoC"
+            issue-term="n"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+    </script>
+</div>
+</body>
+</html>

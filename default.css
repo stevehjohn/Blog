@@ -176,6 +176,12 @@ img {
     text-align: center;
 }
 
+.key {
+    background-color: #303030;
+    padding: 0.25vw 0.5vw;
+    border-radius: 1vw;
+}
+
 iframe {
     border-radius: 1vw;
 }

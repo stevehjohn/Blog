@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com" />
+    <meta propery="og:type" content="website" />
+    <meta propery="og:title" content="outside context problem" />
+    <meta propery="og:description" content="Stevo's rambings" />
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
+    <title>Stevo's Blog - ZXE - Breakthrough</title>
+    <link rel="stylesheet" type="text/css" href="default.css" />
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        ZXE - Breakthrough
+    </div>
+    <hr />
+    <div class="content">
+        <p>
+            For a few weeks, a bug with my emulator has been driving me nuts... I'd press a key and then it would just randomly repeat. See <a href="https://youtu.be/Qps1_Ub2_Uc">this video</a> for an illustration.
+        </p>
+        <p>
+            I've been chipping away at getting emulated instructions to pass a <a href="https://github.com/raddad772/jsmoo/tree/main/misc/tests/GeneratedTests/z80/v1">suite of tests</a>, but sadly no joy at solving the issue.
+        </p>
+        <p>
+            Anyway, today I noticed a bug with my implementation of POP. Specifically, POP AF. I have a class that holds the flags for convenient access rather than just using the F register.
+            This is a design decision I regret, but I'm stuck with it now.
+        </p>
+        <p>
+            So the fix was basically to add this after the POP:
+        </p>
+        <pre>
+input.State.Flags = Flags.FromByte(input.State.Registers[Register.F]);
+</pre>
+        <p>
+            This has fixed the repeating key problem, so I'm inching closer to a working emulator.
+        </p>
+        <div class="image-container">
+            <iframe width="560" height="315" src="https://www.youtube.com/watch?v=bqtUpYs7N5k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <img src="logo.png" class="fox" />
+    </div>
+</div>
+<div>
+    <a href="" class="previous">Previous</a>
+</div>
+<div class="comments">
+    <script src="https://utteranc.es/client.js"
+            repo="stevehjohn/AoC"
+            issue-term="n"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+        </script>
+</div>
+</body>
+</html>

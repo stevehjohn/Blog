@@ -44,8 +44,8 @@
             It was a bug with my implementation of <span class="inline">IN A, (n)</span>. I wasn't using the register along with the parameter to form the port address.
         </p>
         <pre>
-<span class="deleted"><span class="diffSymbol">-</span>var value = input.Ports.ReadByte(<span class="deletedWord">input.Data[1]</span>);</span>
-<span class="added"><span class="diffSymbol">+</span>var value = input.Ports.ReadByte(<span class="addedWord">(ushort) (input.State.Registers[register] << 8 | input.Data[1])</span>);</span>
+<span class="deleted"><span class="diffSymbol">-</span> var value = input.Ports.ReadByte(<span class="deletedWord">input.Data[1]</span>);</span>
+<span class="added"><span class="diffSymbol">+</span> var value = input.Ports.ReadByte(<span class="addedWord">(ushort) (input.State.Registers[register] << 8 | input.Data[1])</span>);</span>
 </pre>
         <p>
             Here's the result:

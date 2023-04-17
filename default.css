@@ -176,6 +176,10 @@ img {
     text-align: center;
 }
 
+.image-container img {
+    max-width: 100%;
+}
+
 .key {
     background-color: #404040;
     padding: 0.1vw 0.35vw;

@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta propery="og:url" content="https://outsidecontextproblem.com" />
+    <meta propery="og:type" content="website" />
+    <meta propery="og:title" content="outside context problem" />
+    <meta propery="og:description" content="Stevo's rambings" />
+    <meta propery="og:image" content="https://www.outsidecontextproblem.com/logo.png" />
+    <title>Stevo's Blog - ZXE Cross Platform</title>
+    <link rel="stylesheet" type="text/css" href="default.css" />
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7QJF2MQ5R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-H7QJF2MQ5R');
+    </script>
+</head>
+<body>
+<div class="header">
+    <span>Outside</span> <span>Context</span> <span>Problem</span>
+    <a href="contents.html">&#x2630;</a>
+</div>
+<div class="post">
+    <div class="title">
+        ZXE Cross Platform
+    </div>
+    <hr />
+    <div class="content">
+        <p>
+            So, now Microsoft is embracing cross-platform development, I thought I'd try and get my emulator running under macOS.
+        </p>
+        <p>
+            This was surprisingly easy in the end. All my emulation code is basically a load of class libraries.
+            These use no platform specific features and are written in `net7.0`, so compiled under Rider on macOS no problem.
+        </p>
+        <p>
+            Unfortunately the emulator host wouldn't compile even though I'd used MonoGame which is itself cross-platform.
+        </p>
+        <p>
+            Turns out MonoGame has two NuGet libraries with the same (as far as I can tell) APIs.
+            <ul>
+                <li>MonoGame.Framework.WindowsDX</li>
+                <li>MonoGame.Framework.DesktopGL</li>
+            </ul>
+            I'd chosen WindowsDX, which given it's name, is Windows-specific funnily enough.
+        </p>
+        <p>
+            I created a new project, <a href="https://github.com/stevehjohn/ZXE/tree/master/src/ZXE.Desktop.Host">ZXE.Desktop.Host</a> using the DesktopGL framework and copied across most of the code
+            from <a href="https://github.com/stevehjohn/ZXE/tree/master/src/ZXE.Windows.Host">ZXE.Windows.Host</a>. 
+        </p>
+        <p>
+            Hey presto, a working cross-platform emulator host!
+        </p>
+        <div class="image-container">
+            <img src="Images/mac-os-plus-3.png"/>
+        </div>
+        <div class="image-container">
+            <img src="Images/mac-os-menu.png"/>
+        </div>
+        <div class="image-container">
+            <img src="Images/mac-os-batman.png"/>
+        </div>
+        <p>
+            Mostly.
+        </p>
+        <p>
+            I had to edit any code dealing with paths to use forward slashes (Windows these days is happy with either).
+        </p>
+        <p>
+            Also, I was using the built-in <span class="inline">OpenFileDialog</span> to allow the user to browse for Z80/Sna images.
+            This is very Windows-specific.
+        </p>
+        <img src="logo.png" class="fox"/>
+    </div>
+</div>
+<div>
+    <a href="zxe-all-systems-working.html" class="previous">Previous</a>
+</div>
+<div class="comments">
+    <script src="https://utteranc.es/client.js"
+            repo="stevehjohn/Blog"
+            issue-term="55"
+            theme="github-dark"
+            crossorigin="anonymous"
+            async>
+    </script>
+</div>
+</body>
+</html>

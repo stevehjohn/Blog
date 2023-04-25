@@ -61,7 +61,7 @@ body {
 
 .fox { height: 5vh; }
 
-a {
+a:link, a:visited, a:active {
     color: #ffffff;
     text-decoration: none;
     text-shadow: 0 0 1vw #ffffff;

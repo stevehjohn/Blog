@@ -23,7 +23,7 @@ body {
     width: 100%;
 }
 
-.header a {
+.header a:link, .header a:active, .header a:visited {
     text-shadow: none;
     font-size: 7vh;
     position: absolute;

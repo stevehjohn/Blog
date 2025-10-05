@@ -16,7 +16,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::6666-6768-4658:role/gh-oidc-s3-deploy
-          aws-region: eu-west-1
+          aws-region: eu-west-2
 
       - name: Sync to S3
         run: |

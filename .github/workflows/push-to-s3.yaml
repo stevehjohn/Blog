@@ -1,0 +1,31 @@
+name: Deploy to S3
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::6666-6768-4658:role/gh-oidc-s3-deploy
+          aws-region: eu-west-1
+
+      - name: Sync to S3
+        run: |
+          aws s3 sync ./dist s3://www.outsidecontextproblem.com/ \
+            --delete \
+            --exclude ".*" \
+            --exclude "*/.*"
+            --cache-control "public,max-age=300" \
+            --metadata-directive REPLACE
+
+      - name: Invalidate CloudFront
+        run: aws cloudfront create-invalidation --distribution-id EMC0K2KX8ZOVA --paths "/*"

@@ -23,7 +23,8 @@ jobs:
           aws s3 sync ./ s3://www.outsidecontextproblem.com/ \
             --delete \
             --exclude ".*" \
-            --exclude "*/.*"
+            --exclude "*/.*" \
+            --cache-control "public,max-age=300" \
             --metadata-directive REPLACE
 
       - name: Invalidate CloudFront

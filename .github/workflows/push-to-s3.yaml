@@ -24,7 +24,6 @@ jobs:
             --delete \
             --exclude ".*" \
             --exclude "*/.*"
-            --cache-control "public,max-age=300" \
             --metadata-directive REPLACE
 
       - name: Invalidate CloudFront

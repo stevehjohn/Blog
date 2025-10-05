@@ -23,11 +23,7 @@ body {
     width: 100%;
 }
 
-.header a[href="/"]:any-link {
-    left: 0;
-}
-
-.header a[href="contents.html"]:any-link {
+.header a:link, .header a:active, .header a:visited {
     text-shadow: none;
     font-size: 7vh;
     position: absolute;

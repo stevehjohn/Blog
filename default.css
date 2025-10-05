@@ -23,6 +23,10 @@ body {
     width: 100%;
 }
 
+.header a[href="/"]:any-link {
+    left: 0;
+}
+
 .header a[href="contents.html"]:any-link {
     text-shadow: none;
     font-size: 7vh;
